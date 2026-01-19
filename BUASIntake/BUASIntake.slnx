@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="TransformIntake/TransformIntake.vcxproj" />
+  <Project Path="TransformIntake/TransformIntake.vcxproj" Id="d87973d7-2f07-4305-a1b7-9c7c57d03d2e" />
 </Solution>

@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\main.cpp(6,6): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  TransformIntake.vcxproj -> D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe
