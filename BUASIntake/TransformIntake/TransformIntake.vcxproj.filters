@@ -7,6 +7,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="PathNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -14,5 +15,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="PathNode.h" />
   </ItemGroup>
 </Project>
