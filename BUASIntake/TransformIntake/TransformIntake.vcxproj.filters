@@ -2,5 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Tower.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Tower.h" />
+    <ClInclude Include="Projectile.h" />
   </ItemGroup>
 </Project>
