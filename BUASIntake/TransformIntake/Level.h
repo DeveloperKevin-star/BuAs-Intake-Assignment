@@ -19,9 +19,9 @@ public:
 	static Level createCitySmogLevel();
 
 private:
-	void SpawnEnemies(float dt);
-	void UpdateEnemies(float dt);
-	void UpdateTowers(float dt);
+	void spawnEnemies(float dt);
+	void updateEnemies(float dt);
+	void updateTowers(float dt);
 	void handleCollision();
 
 
