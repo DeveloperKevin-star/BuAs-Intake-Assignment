@@ -35,6 +35,9 @@ Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)
 //This the firing logic of the towers
 void Tower::update(float dt, std::vector<std::unique_ptr<Enemy>>& enemies)
 {
+    if (fireRate <= 0.0f;)
+       return
+
     fireCooldown -= dt;
 
     if (fireCooldown > 0.0f)

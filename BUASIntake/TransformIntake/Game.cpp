@@ -1,4 +1,6 @@
 #include "Game.h"
+
+
 //this handles the whole game, while the level class handles the levels
 Game::Game() {}
 
@@ -23,7 +25,13 @@ void Game::run()
 
 void Game::handleInput()
 {
+    inputState.placeTowerPressed = false;
+
     // Add keyboard/mouse handling here later.
+
+
+    inputState.mouseX = mouseX;
+    inputState.mouseY = mouseY;
 }
 
 void Game::update(float dt)
@@ -55,5 +63,10 @@ void Game::render()
     if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
     {
         levels[currentLevelIndex].render();
+    }
+    
+    if (inputState.placeTowerPressed)
+    {
+        level.tryPlaceTower(mouseX, mouseY);
     }
 }

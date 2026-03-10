@@ -19,4 +19,6 @@ private:
     bool running = false;
     std::vector<Level> levels;
     int currentLevelIndex = 0;
+
+    InputState inputState;
 };
