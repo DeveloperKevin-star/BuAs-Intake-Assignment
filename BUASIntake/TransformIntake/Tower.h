@@ -2,6 +2,8 @@
 #include <vector>
 #include <memory>
 #include "Enemy.h"
+#include "Projectile.h" 
+
 //THis handles the stats for a tower
 class Tower
 {
@@ -12,6 +14,7 @@ public:
 
     float getX() const { return x; }
     float getY() const { return y; }
+    float getRange() const { return range; }
 
 private:
     float x = 0.0f;

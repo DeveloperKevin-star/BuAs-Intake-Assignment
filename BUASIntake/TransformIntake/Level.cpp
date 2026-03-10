@@ -17,6 +17,7 @@ void Level::update(float dt)
     spawnEnemies(dt);
     updateEnemies(dt);
     updateTowers(dt);
+    updateProjectiles(dt);
     handleCollision();
 
     if (ecoSystemHealth <= 0)
@@ -163,13 +164,40 @@ void Level::updateTowers(float dt)
 {
     for (auto& tower : towers)
     {
-        tower->update(dt, enemies);
+        tower->update(dt, enemies, projectiles);
+    }
+}
+
+void Level::updateProjectiles(float dt)
+{
+    for (auto it = projectiles.begin(); it != projectiles.end();)
+    {
+        (*it)->update(dt);
+
+        if ((*it)->hasHitTarget())
+        {
+            Enemy* target = (*it)->getTarget();
+            if (target && target->isAlive() && !target->hasReachedGoal())
+            {
+                target->takeDamage((*it)->getDamage());
+            }
+
+            it = projectiles.erase(it);
+        }
+        else if ((*it)->isExpired())
+        {
+            it = projectiles.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 
 void Level::handleCollision()
 {
-    // Reserved for projectile logic later.
+    // Not needed yery, because hit handling happens in updateProjectiles()
 }
 
 void Level::render()

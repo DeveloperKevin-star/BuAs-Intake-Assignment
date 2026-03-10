@@ -32,8 +32,10 @@ Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)
     return bestTarget;
 }
 
-//This the firing logic of the towers
-void Tower::update(float dt, std::vector<std::unique_ptr<Enemy>>& enemies)
+//This the firing logic of the towers and adds a difference between the fire time and hit time for improved visuals for the players
+void Tower::update(float dt,
+                   std::vector<std::unique_ptr<Enemy>>& enemies,
+                   std::vector<std::unique_ptr<Projectile>>& projectiles)
 {
     if (fireRate <= 0.0f;)
        return
@@ -46,7 +48,7 @@ void Tower::update(float dt, std::vector<std::unique_ptr<Enemy>>& enemies)
     Enemy* target = findTarget(enemies);
     if (target)
     {
-        target->takeDamage(damage);
+        projectiles.push_back(std::make_unique<Projectile>(x, y, target, 220.0f, damage));
         fireCooldown = 1.0f / fireRate;
     }
 }
