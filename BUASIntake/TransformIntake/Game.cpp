@@ -1,5 +1,5 @@
 #include "Game.h"
-
+//this handles the whole game, while the level class handles the levels
 Game::Game() {}
 
 bool Game::init()

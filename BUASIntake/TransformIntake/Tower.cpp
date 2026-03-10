@@ -7,6 +7,7 @@ Tower::Tower(float px, float py, float towerRange, float towerFireRate, int towe
 {
 }
 
+//This looks if an enemy is in range for a tower to attack and checks if an enemy is still in range
 Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)
 {
     Enemy* bestTarget = nullptr;
@@ -31,6 +32,7 @@ Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)
     return bestTarget;
 }
 
+//This the firing logic of the towers
 void Tower::update(float dt, std::vector<std::unique_ptr<Enemy>>& enemies)
 {
     fireCooldown -= dt;

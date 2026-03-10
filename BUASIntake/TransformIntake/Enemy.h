@@ -3,6 +3,9 @@
 #include "PathNode.h"
 #include "WaveLogic.h"
 
+//This class contains the enemy base logic, with the type of enemy, what their path is, their current position,
+//their movement speed, health, damage to the player if reaches the end, the next node it is moving to and if it reached the end
+
 class Enemy
 {
 public:

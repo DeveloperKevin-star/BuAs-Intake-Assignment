@@ -13,7 +13,7 @@ Enemy::Enemy(EnemyType enemyType, const std::vector<PathNode>& enemyPath)
         targetNodeIndex = path.size() > 1 ? 1 : 0;
     }
 }
-
+//This function applies the stats to each enemy type
 void Enemy::applyTypeStats()
 {
     switch (type)
@@ -36,6 +36,9 @@ void Enemy::applyTypeStats()
     }
 }
 
+
+//This checks whether an enemy has reached the goal, if they are still alive so can move the a new node if needed.
+// also checks their movespeed
 void Enemy::update(float dt)
 {
     if (reachedGoal || !isAlive() || path.size() < 2)
@@ -79,7 +82,34 @@ void Enemy::update(float dt)
     }
 }
 
+
+//This handles the enemies health, and if returns certain points so that the game knows what an enemy has done. 
 void Enemy::takeDamage(int damage)
 {
     health -= damage;
+}
+
+bool Enemy::isAlive() const
+{
+    return health > 0;
+}
+
+bool Enemy::hasReachedGoal() const
+{
+    return reachedGoal;
+}
+
+int Enemy::getPollutionDamage() const
+{
+    return pollutionDamage;
+}
+
+float Enemy::getX() const
+{
+    return x;
+}
+
+float Enemy::getY() const
+{
+    return y;
 }

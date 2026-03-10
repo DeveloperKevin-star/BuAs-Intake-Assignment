@@ -7,6 +7,8 @@ Level::Level(const LevelConfig& cfg)
     towers.push_back(std::make_unique<Tower>(150.0f, 120.0f, 100.0f, 1.0f, 3));
 }
 
+
+//This checks if a level is failed or completed
 void Level::update(float dt)
 {
     if (completed || failed)
@@ -27,6 +29,8 @@ void Level::update(float dt)
     }
 }
 
+//This spawns the enemies in the level and handles the waves.
+//And makes it so that enemies spawn over time and not all one time.
 void Level::spawnEnemies(float dt)
 {
     if (currentWaveIndex >= static_cast<int>(config.waves.size()))
@@ -51,6 +55,7 @@ void Level::spawnEnemies(float dt)
     }
 }
 
+//this is the enemy handler
 void Level::updateEnemies(float dt)
 {
     for (auto it = enemies.begin(); it != enemies.end();)
@@ -73,6 +78,7 @@ void Level::updateEnemies(float dt)
     }
 }
 
+//This makes the attack every frame.
 void Level::updateTowers(float dt)
 {
     for (auto& tower : towers)
@@ -82,9 +88,8 @@ void Level::updateTowers(float dt)
 }
 
 void Level::handleCollision()
-{
-    // Not needed yet if towers directly damage enemies.
-    // Use this later if you add projectile movement.
+
+    // This can be used if i want to make projectiles, for now its not used as towers damage enemies directly
 }
 
 void Level::render()
@@ -92,6 +97,7 @@ void Level::render()
     // Hook this up to SDL/SFML/raylib later.
 }
 
+//this creates the first level
 Level Level::createCitySmogLevel()
 {
     LevelConfig cfg;

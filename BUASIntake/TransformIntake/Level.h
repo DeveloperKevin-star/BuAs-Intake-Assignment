@@ -25,6 +25,7 @@ private:
     void updateTowers(float dt);
     void handleCollision();
 
+    //This makes sure that a level owns the towers and enemies and so that things will automcatuly be deleted. 
     LevelConfig config;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Tower>> towers;
