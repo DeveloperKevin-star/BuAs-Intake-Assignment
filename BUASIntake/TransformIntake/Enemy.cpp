@@ -44,26 +44,48 @@ void Enemy::update(float dt)
     if (reachedGoal || !isAlive() || path.size() < 2)
         return;
 
-    if (targetNodeIndex >= path.size())
+    float remainingMove = speed * dt;
+
+    while (remainingMove > 0.0f && !reachedGoal)
     {
-        reachedGoal = true;
-        return;
-    }
-
-    const PathNode& target = path[targetNodeIndex];
-
-    float dx = target.x - x;
-    float dy = target.y - y;
-    float distance = std::sqrt(dx * dx + dy * dy);
-
-    if (distance < 0.001f)
-    {
-        ++targetNodeIndex;
         if (targetNodeIndex >= path.size())
+        {
             reachedGoal = true;
-        return;
-    }
+            break;
+        }
 
+        const PathNode& target = path[targetNodeIndex];
+
+        float dx = target.x - x;
+        float dy = target.y - y;
+        float distance = std::sqrt(dx * dx + dy * dy);
+
+        if (distance < 0.001f)
+        {
+            ++targetNodeIndex;
+            if (targetNodeIndex >= path.size())
+                reachedGoal = true;
+            continue;
+        }
+
+        if (remainingMove >= distance)
+        {
+            x = target.x;
+            y = target.y;
+            remainingMove -= distance;
+            ++targetNodeIndex;
+
+            if (targetNodeIndex >= path.size())
+                reachedGoal = true;
+        }
+        else
+        {
+            x += (dx / distance) * remainingMove;
+            y += (dy / distance) * remainingMove;
+            remainingMove = 0.0f;
+        }
+    }
+}
     float moveDistance = speed * dt;
 
     if (moveDistance >= distance)

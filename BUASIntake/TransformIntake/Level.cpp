@@ -51,6 +51,7 @@ void Level::spawnEnemies(float dt)
         if (wave.enemiesToSpawn.empty())
         {
             ++currentWaveIndex;
+            waveTimer = 0.0f;
         }
     }
 }
@@ -113,20 +114,13 @@ Level Level::createCitySmogLevel()
 
     WaveConfig wave1;
     wave1.spawnInterval = 1.0f;
-    wave1.enemiesToSpawn = {
-        EnemyType::Smog,
-        EnemyType::Smog,
-        EnemyType::Plastic,
-        EnemyType::Smog
-    };
+    EnemyType type = wave.enemiesToSpawn.front();
+    wave.enemiesToSpawn.erase(wave.enemiesToSpawn.begin());
 
     WaveConfig wave2;
     wave2.spawnInterval = 0.75f;
-    wave2.enemiesToSpawn = {
-        EnemyType::Plastic,
-        EnemyType::Plastic,
-        EnemyType::Oil
-    };
+    EnemyType type = wave.enemiesToSpawn.front();
+    wave.enemiesToSpawn.erase(wave.enemiesToSpawn.begin());
 
     cfg.waves.push_back(wave1);
     cfg.waves.push_back(wave2);
