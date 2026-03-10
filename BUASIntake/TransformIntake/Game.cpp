@@ -2,46 +2,58 @@
 
 Game::Game() {}
 
-bool Game::init() {
-	// Here the levels, assets etc will be loaded into the game
-
-	levels.emplace_back(Level::createCitySmogLevel());
-	running = true;
-	return true;
+bool Game::init()
+{
+    levels.emplace_back(Level::createCitySmogLevel());
+    running = true;
+    return true;
 }
 
+void Game::run()
+{
+    const float fixedDt = 1.0f / 60.0f;
 
-void Game::run() {
-
-//This will handle the running of the game
-	const float fixedDt = 1.0f / 60.0f;
-	while (running) {
-		handleInput();
-		update(fixedDt);
-		render();
-	}
+    while (running)
+    {
+        handleInput();
+        update(fixedDt);
+        render();
+    }
 }
 
-void Game::handleInput() {
-	//This will handle the input of the game
+void Game::handleInput()
+{
+    // Add keyboard/mouse handling here later.
 }
 
-void Game::update(float dt){
-	if (currentLevelIndex < 0 || currentLevelIndex >= (int)Levels.size()) return;
-	Level& lvl = levels[currentLevelIndex];
+void Game::update(float dt)
+{
+    if (currentLevelIndex < 0 || currentLevelIndex >= static_cast<int>(levels.size()))
+        return;
 
-	// this handles the level quiting if there are no more levels or if the game is failed
-	lvl.update(dt);
-	if (lvl.isCompleted()) {
-		++currentLevelIndex;
-		if (currentLevelIndex >= (int)Levels.size()) {
-			quit();
-		}
-	}
+    Level& lvl = levels[currentLevelIndex];
+    lvl.update(dt);
+
+    if (lvl.isFailed())
+    {
+        quit();
+        return;
+    }
+
+    if (lvl.isCompleted())
+    {
+        ++currentLevelIndex;
+        if (currentLevelIndex >= static_cast<int>(levels.size()))
+        {
+            quit();
+        }
+    }
 }
 
-void Game::render() {
-	//clear screen
-	//levels[currentlevelindex]
-	//present
+void Game::render()
+{
+    if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
+    {
+        levels[currentLevelIndex].render();
+    }
 }

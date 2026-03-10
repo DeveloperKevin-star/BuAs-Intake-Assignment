@@ -9,30 +9,30 @@
 class Level
 {
 public:
-	Level(const LevelConfig& config);
-	void update(float dt);
-	void render();
+    Level(const LevelConfig& config);
 
-	bool isCompleted() const { return completed; }
-	bool isFailed() const { return failed; }
+    void update(float dt);
+    void render();
 
-	static Level createCitySmogLevel();
+    bool isCompleted() const { return completed; }
+    bool isFailed() const { return failed; }
+
+    static Level createCitySmogLevel();
 
 private:
-	void spawnEnemies(float dt);
-	void updateEnemies(float dt);
-	void updateTowers(float dt);
-	void handleCollision();
+    void spawnEnemies(float dt);
+    void updateEnemies(float dt);
+    void updateTowers(float dt);
+    void handleCollision();
 
+    LevelConfig config;
+    std::vector<std::unique_ptr<Enemy>> enemies;
+    std::vector<std::unique_ptr<Tower>> towers;
 
-	LevelConfig config;
-	std::vector<std::unique_ptr<Enemy>> enemies;
-	std::vector<std::unique_ptr<Tower>> towers;
+    float waveTimer = 0.0f;
+    int currentWaveIndex = 0;
+    int ecoSystemHealth = 0;
 
-	float waveTimer = 0.0f;
-	int currentWaveIndex = 0;
-	int EcoSystemHealth;
-	bool completed = false;
-	bool failed = false;
+    bool completed = false;
+    bool failed = false;
 };
-
