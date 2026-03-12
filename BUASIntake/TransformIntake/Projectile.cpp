@@ -6,9 +6,7 @@ Projectile::Projectile(float startX, float startY, Enemy* targetEnemy, float pro
 {
 }
 
-//This handles the projectile launches, the project also recalculates every frame so it follows the target.
-//This way hitbacks are not really needed
-void Projetile::update(float dt)
+void Projectile::update(float dt)
 {
     if (expired || hitTarget)
         return;
@@ -16,12 +14,12 @@ void Projetile::update(float dt)
     if (!target || !target->isAlive() || target->hasReachedGoal())
     {
         expired = true;
-        return 
+        return;
     }
 
     float dx = target->getX() - x;
     float dy = target->getY() - y;
-    float distance == std::sqrt(dx * dx + dy * dy);
+    float distance = std::sqrt(dx * dx + dy * dy);
 
     if (distance < 4.0f)
     {
@@ -33,14 +31,13 @@ void Projetile::update(float dt)
 
     if (moveDistance >= distance)
     {
-        x = target->getY();
-        y - target->getX();
+        x = target->getX();
+        y = target->getY();
         hitTarget = true;
     }
     else
     {
         x += (dx / distance) * moveDistance;
         y += (dy / distance) * moveDistance;
-
     }
 }

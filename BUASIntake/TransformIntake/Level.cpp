@@ -1,11 +1,9 @@
 #include "Level.h"
 #include <cmath>
 
-
 Level::Level(const LevelConfig& cfg)
     : config(cfg), ecoSystemHealth(cfg.initialHealth)
 {
-    // Keep or remove this starter tower.
     towers.push_back(std::make_unique<Tower>(150.0f, 120.0f, 100.0f, 1.0f, 3));
 }
 
@@ -38,7 +36,6 @@ void Level::handlePlayerInput(const InputState& input)
     }
 }
 
-// This checks if a player wants to place a tower on a correct place, if they have enough money and if they do have enough it will place the tower and substract cost
 bool Level::placeTowerAt(float x, float y)
 {
     if (!canPlaceTowerAt(x, y))
@@ -52,7 +49,6 @@ bool Level::placeTowerAt(float x, float y)
     return true;
 }
 
-//This checks whether a tower can be placed at said location
 bool Level::canPlaceTowerAt(float x, float y) const
 {
     if (money < towerCost)
@@ -67,7 +63,6 @@ bool Level::canPlaceTowerAt(float x, float y) const
     return true;
 }
 
-//This prevents the player from placing the tower on the path
 bool Level::isTooCloseToPath(float x, float y) const
 {
     const float minDistanceFromPath = 40.0f;
@@ -100,16 +95,6 @@ bool Level::isTooCloseToTower(float x, float y) const
     }
 
     return false;
-}
-
-bool Level::canPlaceTowerAt(float x, float y)
-{
-    if (!canPlaceTowerAt(x, y))
-        return false;
-    
-    towers.push_back(std::make_unique<Tower>(x, y, 100.0f, 1.0f, 3));
-    money -= towerCost;
-    return true;
 }
 
 void Level::spawnEnemies(float dt)
@@ -197,7 +182,7 @@ void Level::updateProjectiles(float dt)
 
 void Level::handleCollision()
 {
-    // Not needed yery, because hit handling happens in updateProjectiles()
+    // Not needed yet, because hit handling happens in updateProjectiles()
 }
 
 void Level::render()

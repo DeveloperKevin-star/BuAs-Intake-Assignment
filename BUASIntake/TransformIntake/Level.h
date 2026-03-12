@@ -22,8 +22,18 @@ public:
     void update(float dt);
     void render();
 
+    void handlePlayerInput(const InputState& input);
+
+    bool placeTowerAt(float x, float y);
+    bool canPlaceTowerAt(float x, float y) const;
+
     bool isCompleted() const { return completed; }
     bool isFailed() const { return failed; }
+
+    int getEcoSystemHealth() const { return ecoSystemHealth; }
+    int getMoney() const { return money; }
+    int getCurrentWaveIndex() const { return currentWaveIndex; }
+    int getTowerCost() const { return towerCost; }
 
     static Level createCitySmogLevel();
 
@@ -34,6 +44,9 @@ private:
     void updateProjectiles(float dt);
     void handleCollision();
 
+    bool isTooCloseToPath(float x, float y) const;
+    bool isTooCloseToTower(float x, float y) const;
+
     LevelConfig config;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Tower>> towers;
@@ -42,6 +55,10 @@ private:
     float waveTimer = 0.0f;
     int currentWaveIndex = 0;
     int ecoSystemHealth = 0;
+
+    int money = 100;
+    int towerCost = 50;
+    int killReward = 10;
 
     bool completed = false;
     bool failed = false;
