@@ -1,8 +1,17 @@
 #include "Game.h"
 
+#pragma comment(lib, "sfml-graphics-d.lib")
+#pragma comment(lib, "sfml-window-d.lib")
+#pragma comment(lib, "sfml-system-d.lib")
+
+
 
 //this handles the whole game, while the level class handles the levels
-Game::Game() {}
+Game::Game() 
+    : window(sf::VideoMode(1280, 720), "Eco Tower Defence")
+{
+
+}
 
 bool Game::init()
 {
@@ -15,7 +24,7 @@ void Game::run()
 {
     const float fixedDt = 1.0f / 60.0f;
 
-    while (running)
+    while (running && window.isOpen())
     {
         handleInput();
         update(fixedDt);
@@ -50,7 +59,9 @@ void Game::update(float dt)
     if (currentLevelIndex < 0 || currentLevelIndex >= static_cast<int>(levels.size()))
         return;
 
-    Level& lvl = levels[currentLevelIndex];
+    //Level& lvl = levels[currentLevelIndex];
+    Level& lvl = levels.at(currentLevelIndex);
+    lvl.handlePlayerInput(inputState);
     lvl.update(dt);
 
     if (lvl.isFailed())

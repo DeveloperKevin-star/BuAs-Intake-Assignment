@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "SFML/Graphics.hpp"
 #include "Enemy.h"
 #include "Tower.h"
 #include "Projectile.h"
@@ -20,7 +21,7 @@ public:
     Level(const LevelConfig& config);
 
     void update(float dt);
-    void render();
+    void render(sf::RenderWindow& window);
 
     void handlePlayerInput(const InputState& input);
 

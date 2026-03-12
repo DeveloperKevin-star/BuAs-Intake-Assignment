@@ -8,7 +8,6 @@
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="PathNode.cpp" />
-    <ClCompile Include="FileName.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />

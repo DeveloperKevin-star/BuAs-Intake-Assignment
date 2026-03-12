@@ -1,11 +1,12 @@
 #include "Game.h"
 
-int main() {
-	Game game;
+int main()
+{
+    Game game;
 
-	if (!game.init())
-		return 1;
+    if (!game.init())
+        return 1;
 
-	game.run();
-	return 0;
+    game.run();
+    return 0;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <SFML/Graphics.hpp>
 #include "Level.h"
 
 //this is base game
@@ -15,6 +16,8 @@ private:
     void handleInput();
     void update(float dt);
     void render();
+
+    sf::RenderWindow window;
 
     bool running = false;
     std::vector<Level> levels;

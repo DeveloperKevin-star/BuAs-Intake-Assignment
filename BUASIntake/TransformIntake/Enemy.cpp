@@ -8,8 +8,10 @@ Enemy::Enemy(EnemyType enemyType, const std::vector<PathNode>& enemyPath)
 
     if (!path.empty())
     {
-        x = path[0].x;
-        y = path[0].y;
+        //x = path[0].x;
+        //y = path[0].y;
+        x = path.at(0).x;
+        y = path.at(0).y;
         targetNodeIndex = (path.size() > 1) ? 1 : 0;
     }
 }
@@ -53,7 +55,8 @@ void Enemy::update(float dt)
             break;
         }
 
-        const PathNode& target = path[targetNodeIndex];
+        //const PathNode& target = path[targetNodeIndex];
+        const PathNode& target = path.at(targetNodeIndex);
 
         float dx = target.x - x;
         float dy = target.y - y;
@@ -84,4 +87,10 @@ void Enemy::update(float dt)
             remainingMove = 0.0f;
         }
     }
+}
+
+
+void Enemy::takeDamage(int damage)
+{
+    health -= damage;
 }

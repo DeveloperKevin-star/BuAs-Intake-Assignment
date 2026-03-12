@@ -1,49 +1,6 @@
 ﻿  Enemy.cpp
-  FileName.cpp
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(89,26): error C2065: 'speed': undeclared identifier
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(89,34): error C2065: 'dt': undeclared identifier
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(91,5): error C2059: syntax error: 'if'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(92,5): error C2143: syntax error: missing ';' before '{'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(92,5): error C2447: '{': missing function header (old-style formal list?)
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(100,5): error C2059: syntax error: 'else'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(101,5): error C2143: syntax error: missing ';' before '{'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(101,5): error C2447: '{': missing function header (old-style formal list?)
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(105,1): error C2059: syntax error: '}'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(105,1): error C2143: syntax error: missing ';' before '}'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(110,1): error C2143: syntax error: missing ';' before '{'
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(110,1): error C2447: '{': missing function header (old-style formal list?)
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(114,13): error C2084: function 'bool Enemy::isAlive(void) const' already has a body
-      C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.h(17,10):
-      see previous definition of 'Enemy::isAlive'
-  
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(119,13): error C2084: function 'bool Enemy::hasReachedGoal(void) const' already has a body
-      C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.h(18,10):
-      see previous definition of 'Enemy::hasReachedGoal'
-  
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(124,12): error C2084: function 'int Enemy::getPollutionDamage(void) const' already has a body
-      C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.h(19,9):
-      see previous definition of 'Enemy::getPollutionDamage'
-  
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(129,14): error C2084: function 'float Enemy::getX(void) const' already has a body
-      C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.h(21,11):
-      see previous definition of 'Enemy::getX'
-  
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.cpp(134,14): error C2084: function 'float Enemy::getY(void) const' already has a body
-      C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Enemy.h(22,11):
-      see previous definition of 'Enemy::getY'
-  
   Game.cpp
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.cpp(33,25): error C2065: 'mouseX': undeclared identifier
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.cpp(34,25): error C2065: 'mouseY': undeclared identifier
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.cpp(70,9): error C2065: 'level': undeclared identifier
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.cpp(70,29): error C2065: 'mouseX': undeclared identifier
-C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.cpp(70,37): error C2065: 'mouseY': undeclared identifier
   Level.cpp
   main.cpp
-\main.cpp(1,1): error C1083: Cannot open source file: 'main.cpp': No such file or directory
-  (compiling source file '/main.cpp')
-  
-  PathNode.cpp
-  Projectile.cpp
-  Tower.cpp
   Generating Code...
+  TransformIntake.vcxproj -> C:\Users\xshad\Documents\GitHub\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe

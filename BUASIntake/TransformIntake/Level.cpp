@@ -49,6 +49,19 @@ bool Level::placeTowerAt(float x, float y)
     return true;
 }
 
+bool Level::canPlaceTowerAt(float x, float y) const
+{
+    if (money < towerCost)
+        return false;
+
+    if (isTooCloseToPath(x, y))
+        return false;
+
+    if (isTooCloseToTower(x, y))
+        return false;
+
+    return true;
+}
 
 bool Level::isTooCloseToPath(float x, float y) const
 {
@@ -90,7 +103,8 @@ void Level::spawnEnemies(float dt)
         return;
 
     waveTimer += dt;
-    WaveConfig& wave = config.waves[currentWaveIndex];
+    //WaveConfig& wave = config.waves[currentWaveIndex];
+    WaveConfig& wave = config.waves.at(currentWaveIndex);
 
     while (!wave.enemiesToSpawn.empty() && waveTimer >= wave.spawnInterval)
     {
@@ -172,10 +186,52 @@ void Level::handleCollision()
     // Not needed yet, because hit handling happens in updateProjectiles()
 }
 
-void Level::render()
+void Level::render(sf::RenderWindow& window)
 {
-    // Hook to your rendering library later.
+    //this draws the path
+    for (size_t i = 1; i < config.enemyPath.size(); ++i)
+    {
+        sf::Vertex line[] =
+        {
+            sf::Vertex(sf::Vector2f(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y), sf::Color::White),
+            sf::Vertex(sf::Vector2f(config.enemyPath[i].x, config.enemyPath[i].y), sf::Color::White)
+        };
+
+        window.draw(line, 2, sf::Lines);
+    }
+
+
+    //this draws the enemies
+    for(const auto& enemy : enemies)
+    {
+        sf::CircleShape shape(10.0f);
+        shape.setFillColor(sf::Color::Red);
+        shape.setOrigin(10.0f, 10.0f);
+        shape.setPosition(enemy->getX(), enemy->getY());
+        window.draw(shape);
+    }
+
+    //this draws the towers
+    for (const auto& tower : towers)
+    {
+        sf::CircleShape shape(15.0f);
+        shape.setFillColor(sf::Color::Green);
+        shape.setOrigin(15.0f, 15.0f);
+        shape.setPosition(tower->getX(), tower->getY());
+        window.draw(shape);
+    }
+
+    // this is drawing the projectiles
+    for (const auto& projectile : projectiles)
+    {
+        sf::CircleShape shape(4.0f);
+        shape.setFillColor(sf::Color::Yellow);
+        shape.setOrigin(4.0f, 4.0f);
+        shape.setPosition(projectile->getX(), projectile->getY());
+        window.draw(shape);
+    }
 }
+
 
 Level Level::createCitySmogLevel()
 {
