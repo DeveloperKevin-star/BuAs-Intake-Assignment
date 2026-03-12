@@ -19,6 +19,9 @@ private:
 
     sf::RenderWindow window;
 
+    sf::Font font;
+    sf::Text hudText;
+
     bool running = false;
     std::vector<Level> levels;
     int currentLevelIndex = 0;

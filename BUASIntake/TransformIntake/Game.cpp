@@ -16,6 +16,15 @@ Game::Game()
 bool Game::init()
 {
     levels.emplace_back(Level::createCitySmogLevel());
+
+    if (!font.loadFromFile("ARIAL.TTF"))
+        return false;
+
+    hudText.setFont(font);
+    hudText.setCharacterSize(20);
+    hudText.setFillColor(sf::Color::White);
+    hudText.setPosition(10.f, 10.f);
+
     running = true;
     return true;
 }
@@ -96,7 +105,16 @@ void Game::render()
 
         bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
 
-        // preview drawing can go here later using canPlace
+        std::string hud =
+            "Health: " + std::to_string(lvl.getEcoSystemHealth()) +
+            "   Money: " + std::to_string(lvl.getMoney()) +
+            "   Wave: " + std::to_string(lvl.getCurrentWaveIndex()) +
+            "   Tower Cost:" + std::to_string(lvl.getTowerCost());
+
+
+        hudText.setString(hud);
+
+        window.draw(hudText);
     }
 
     window.display();
