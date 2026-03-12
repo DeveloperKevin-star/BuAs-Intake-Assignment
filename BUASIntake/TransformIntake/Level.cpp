@@ -17,6 +17,7 @@ void Level::update(float dt)
     updateTowers(dt);
     updateProjectiles(dt);
     handleCollision();
+    updateEffects(dt);
 
     if (ecoSystemHealth <= 0)
     {
@@ -136,6 +137,7 @@ void Level::updateEnemies(float dt)
         }
         else if (!(*it)->isAlive())
         {
+            spawnDeathFlash((*it)->getX(), (*it)->getY());
             money += killReward;
             it = enemies.erase(it);
         }
@@ -290,6 +292,49 @@ void Level::drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy)
     frontBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
     frontBar.move(-(barWidth * (1.0f - healthPercent)) / 2.0f, 0.0f);
     window.draw(frontBar);
+}
+
+void Level::spawnDeathFlash(float x, float y)
+{
+    FlashEffect flash;
+    flash.x = x;
+    flash.y = y;
+    flash.timer = flash.duration;
+
+    deathFlashes.push_back(flash);
+}
+
+void Level::updateEffects(float dt) 
+{
+    for (auto it = deathFlashes.begin(); it != deathFlashes.end();)
+    {
+        it->timer -= dt;
+
+        if (it->timer <= 0.0f)
+        {
+            it = deathFlashes.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+void Level::drawEffects(sf::RenderWindow& window)
+{
+    for (const auto& flash : deathFlashes)
+    {
+        float percent = flash.timer / flash.duration;
+        float radius = 10.f + (1.f - percent) * 12.f; 
+
+        sf::CircleShape flashShape(radius);
+        flashShape.setOrigin(radius, radius);
+        flashShape.setPosition(flash.x, flash.y);
+        flashShape.setFillColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(180 * percent)));
+
+        window.draw(flashShape);
+    }
 }
 
 void Level::drawTowers(sf::RenderWindow& window)

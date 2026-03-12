@@ -15,6 +15,14 @@ struct InputState
     bool placeTowerPressed = false;
 };
 
+struct FlashEffect 
+{
+    float x = 0.0f;
+    float y = 0.0f;
+    float timer = 0.0f;
+    float duration = 0.15f;
+};
+
 class Level
 {
 public:
@@ -50,6 +58,11 @@ private:
     sf::Color getEnemyColor(EnemyType type) const; // this handles the enemy colors
     sf::Color getHealthBarColor(float healthPercent) const;
     void drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy);
+    //enemy flashes
+    std::vector<FlashEffect> deathFlashes; // this handles the deathflashes of the enemies
+    void updateEffects(float dt);
+    void drawEffects(sf::RenderWindow& window);
+    void spawnDeathFlash(float x, float y);
 
     // tower functions
     void updateTowers(float dt);
