@@ -10,7 +10,7 @@
 Game::Game() 
     : window(sf::VideoMode(1280, 720), "Eco Tower Defence")
 {
-
+    window.setFramerateLimit(60);
 }
 
 bool Game::init()
@@ -22,12 +22,17 @@ bool Game::init()
 
 void Game::run()
 {
-    const float fixedDt = 1.0f / 60.0f;
+    sf::Clock clock;
 
     while (running && window.isOpen())
     {
+        float dt = clock.restart().asSeconds();
+
+        if (dt > 0.5f)
+            dt = 0.5f;
+
         handleInput();
-        update(fixedDt);
+        update(dt);
         render();
     }
 }
