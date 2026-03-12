@@ -49,19 +49,6 @@ bool Level::placeTowerAt(float x, float y)
     return true;
 }
 
-bool Level::canPlaceTowerAt(float x, float y) const
-{
-    if (money < towerCost)
-        return false;
-
-    if (isTooCloseToPath(x, y))
-        return false;
-
-    if (isTooCloseToTower(x, y))
-        return false;
-
-    return true;
-}
 
 bool Level::isTooCloseToPath(float x, float y) const
 {

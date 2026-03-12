@@ -27,11 +27,22 @@ void Game::handleInput()
 {
     inputState.placeTowerPressed = false;
 
-    // Add keyboard/mouse handling here later.
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+            window.close();
 
+        if (event.type == sf::Event::MouseButtonPressed &&
+            event.mouseButton.button == sf::Mouse::Left)
+        {
+            inputState.placeTowerPressed = true;
+        }
+    }
 
-    inputState.mouseX = mouseX;
-    inputState.mouseY = mouseY;
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    inputState.mouseX = static_cast<float>(mousePos.x);
+    inputState.mouseY = static_cast<float>(mousePos.y);
 }
 
 void Game::update(float dt)
@@ -60,13 +71,17 @@ void Game::update(float dt)
 
 void Game::render()
 {
+    window.clear(sf::Color(20, 20, 20));
+
     if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
     {
-        levels[currentLevelIndex].render();
+        Level& lvl = levels[currentLevelIndex];
+        lvl.render(window);
+
+        bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
+
+        // preview drawing can go here later using canPlace
     }
-    
-    if (inputState.placeTowerPressed)
-    {
-        level.tryPlaceTower(mouseX, mouseY);
-    }
+
+    window.display();
 }
