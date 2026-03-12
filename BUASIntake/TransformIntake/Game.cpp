@@ -105,6 +105,39 @@ void Game::render()
 
         bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
 
+        //This draws the circle preview for a tower
+        sf::CircleShape rangePreview(100.0f);
+        rangePreview.setOrigin(100.f, 100.f);
+        rangePreview.setPosition(inputState.mouseX, inputState.mouseY);
+        rangePreview.setFillColor(sf::Color(0, 0, 0, 0));
+        rangePreview.setOutlineThickness(2.0f);
+
+        if (canPlace) 
+        {
+            rangePreview.setOutlineColor(sf::Color(0, 255, 0, 120));
+        }
+        else
+        {
+            rangePreview.setOutlineColor(sf::Color(255, 0, 0, 120));
+        }
+
+        //this draws the tower ghost preview
+        sf::CircleShape towerPreview(15.f);
+        towerPreview.setOrigin(15.f, 15.f);
+        towerPreview.setPosition(inputState.mouseX, inputState.mouseY);
+
+        if (canPlace)
+        {
+            towerPreview.setFillColor(sf::Color(0, 255, 0, 150));
+        }
+        else
+        {
+            towerPreview.setFillColor(sf::Color(255, 0, 0, 150));
+        }
+
+        window.draw(towerPreview);
+
+        //Here is the hud drawn on the screen so the player sees it
         std::string hud =
             "Health: " + std::to_string(lvl.getEcoSystemHealth()) +
             "   Money: " + std::to_string(lvl.getMoney()) +
