@@ -21,6 +21,10 @@ public:
     float getX() const { return x; }
     float getY() const { return y; }
 
+    int getHealth() const { return health; }
+    int getMaxHealth() const { return maxHealth; }
+    EnemyType getType() const {return type;}
+
 private:
     EnemyType type;
     std::vector<PathNode> path;
@@ -30,6 +34,7 @@ private:
     float speed = 40.0f;
 
     int health = 10;
+    int maxHealth = 10;
     int pollutionDamage = 1;
 
     size_t targetNodeIndex = 1;

@@ -188,6 +188,14 @@ void Level::handleCollision()
 
 void Level::render(sf::RenderWindow& window)
 {
+    drawPath(window);
+    drawEnemies(window);
+    drawTowers(window);
+    drawProjectiles(window);
+}
+
+void  Level::drawPath(sf::RenderWindow& window)
+{
     //this draws the path
     for (size_t i = 1; i < config.enemyPath.size(); ++i)
     {
@@ -199,18 +207,93 @@ void Level::render(sf::RenderWindow& window)
 
         window.draw(line, 2, sf::Lines);
     }
+}
 
-
-    //this draws the enemies
-    for(const auto& enemy : enemies)
+void  Level::drawEnemies(sf::RenderWindow& window) // in the function the enemies and their healthbars are drawn
+{
+    for (const auto& enemy : enemies)
     {
+        //this draws the enemies
         sf::CircleShape shape(10.0f);
-        shape.setFillColor(sf::Color::Red);
         shape.setOrigin(10.0f, 10.0f);
         shape.setPosition(enemy->getX(), enemy->getY());
+        shape.setFillColor(getEnemyColor(enemy->getType()));
+
         window.draw(shape);
+
+        drawEnemyHealthbars(window, *enemy);
+
+    }
+}
+
+sf::Color Level::getEnemyColor(EnemyType type) const //this function is the collouring of the enemies, this make expansion easier
+{
+    //this switch is to make the enemies different from each other so its easier for the player to identifie them
+    switch (type)
+    {
+    case EnemyType::Smog:
+        return sf::Color(120, 120, 120); // smog is gray
+        break;
+
+    case EnemyType::Plastic:
+        return sf::Color(255, 220, 50); // plastic is yellow
+        break;
+
+    case EnemyType::Oil:
+        return sf::Color(40, 40, 40); // oil is dark gray/black
+        break;
+
+    default:
+        return sf::Color::Magenta; // debugging
+    }
+}
+
+sf::Color Level::getHealthBarColor(float healthPercentage) const
+{
+    if (healthPercentage > 0.6f)
+    {
+        return sf::Color::Green;
+    }
+    else if (healthPercentage > 0.3f)
+    {
+        return sf::Color::Yellow;
+    }
+    else
+    {
+        return sf::Color::Red;
+    }
+}
+
+void Level::drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy)
+{
+    //These are the enemy health bar settings
+    const float barWidth = 20.0f;
+    const float barHeight = 4.0f;
+    const float barOffsetY = 18.0f;
+
+    float healthPercent = 0.0f;
+
+    if (enemy.getMaxHealth() > 0) // this a safety measure so that game doesnt try to divide by zero
+    {
+        healthPercent = static_cast<float>(enemy.getHealth()) / enemy.getMaxHealth();
     }
 
+    sf::RectangleShape backBar(sf::Vector2f(barWidth, barHeight));
+    backBar.setFillColor(sf::Color(120, 0, 0));
+    backBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
+    backBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
+    window.draw(backBar);
+
+    sf::RectangleShape frontBar(sf::Vector2f(barWidth * healthPercent, barHeight));
+    frontBar.setFillColor(sf::Color::Green);
+    frontBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
+    frontBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
+    frontBar.move(-(barWidth * (1.0f - healthPercent)) / 2.0f, 0.0f);
+    window.draw(frontBar);
+}
+
+void Level::drawTowers(sf::RenderWindow& window)
+{
     //this draws the towers
     for (const auto& tower : towers)
     {
@@ -220,7 +303,10 @@ void Level::render(sf::RenderWindow& window)
         shape.setPosition(tower->getX(), tower->getY());
         window.draw(shape);
     }
+}
 
+void Level::drawProjectiles(sf::RenderWindow& window)
+{
     // this is drawing the projectiles
     for (const auto& projectile : projectiles)
     {
@@ -231,7 +317,6 @@ void Level::render(sf::RenderWindow& window)
         window.draw(shape);
     }
 }
-
 
 Level Level::createCitySmogLevel()
 {

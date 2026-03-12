@@ -22,18 +22,21 @@ void Enemy::applyTypeStats()
     {
     case EnemyType::Smog:
         health = 8;
+        maxHealth = 8;
         speed = 45.0f;
         pollutionDamage = 1;
         break;
 
     case EnemyType::Plastic:
         health = 15;
+        maxHealth = 15;
         speed = 30.0f;
         pollutionDamage = 2;
         break;
 
     case EnemyType::Oil:
         health = 25;
+        maxHealth = 25;
         speed = 20.0f;
         pollutionDamage = 4;
         break;
@@ -88,7 +91,6 @@ void Enemy::update(float dt)
         }
     }
 }
-
 
 void Enemy::takeDamage(int damage)
 {
