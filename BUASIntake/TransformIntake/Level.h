@@ -47,6 +47,7 @@ public:
     int getMoney() const { return money; }
     int getCurrentWaveIndex() const { return currentWaveIndex; }
     int getTowerCost() const { return towerCost; }
+    const std::string& getName() const { return config.name; }
 
     static Level createCitySmogLevel();
     static Level createIndustrialLevel();

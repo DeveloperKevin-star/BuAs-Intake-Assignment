@@ -87,10 +87,25 @@ void Game::handleInput()
 
 void Game::update(float dt)
 {
+    if (isTransitioning)
+    {
+        transistionTimer -= dt;
+
+        if (transistionTimer <= 0.0f) {
+            isTransitioning = false;
+            ++currentLevelIndex;
+
+            if (currentLevelIndex >= static_cast<int>(levels.size()))
+            {
+                quit();
+            }
+        }
+    }
+
     if (currentLevelIndex < 0 || currentLevelIndex >= static_cast<int>(levels.size()))
         return;
 
-    //Level& lvl = levels[currentLevelIndex];
+
     Level& lvl = levels.at(currentLevelIndex);
     lvl.handlePlayerInput(inputState);
     lvl.update(dt);
@@ -103,11 +118,21 @@ void Game::update(float dt)
 
     if (lvl.isCompleted())
     {
-        ++currentLevelIndex;
-        if (currentLevelIndex >= static_cast<int>(levels.size()))
+        isTransitioning = true;
+        transistionTimer = transistionTimer;
+
+        if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
         {
-            quit();
+            transitionText.setString(
+                "Level Complete!\nNext: " + levels.at(currentLevelIndex + 1).getName()
+            );
         }
+        else
+        {
+            transitionText.setString("All Levels Complete!");
+        }
+        
+        return;
     }
 }
 
@@ -179,6 +204,10 @@ void Game::render()
         }
 
         window.draw(waveText);
+
+        //Here the transition text will be drawn
+        if (isTransitioning)
+            window.draw(transitionText);
     }
 
     window.display();
