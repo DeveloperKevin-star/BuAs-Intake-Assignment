@@ -144,13 +144,15 @@ void Game::update(float dt)
 
                 if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
                 {
-                    transitionText.setString("LevelCiomplete!\nNext: " + levels.at(currentLevelIndex + 1).getName() + ".");
+                    transitionText.setString("LevelComplete!\nNext: " + levels.at(currentLevelIndex + 1).getName() + ".");
+                    currentState = GameState::Victory;
                 }
                 else
                     transitionText.setString("Final Level Complete!");
 
                 return;
             }
+            break;
         }
         case GameState::LevelTransition:
             transistionTimer -= dt;
@@ -164,9 +166,10 @@ void Game::update(float dt)
                 }
                 else
                 {
-                    currentState == GameState::Playing;
+                    currentState = GameState::Playing;
                 }
             }
+            break;
 
         //Both victory and defeat will wait for the enter input
         case GameState::Victory:
@@ -176,99 +179,82 @@ void Game::update(float dt)
             break;
     }
 }
-
 void Game::render()
 {
     window.clear(sf::Color(20, 20, 20));
 
     switch (currentState)
     {
-        case GameState::MainMenu:
+    case GameState::MainMenu:
+    {
+        window.draw(titleText);
+        window.draw(menuText);
+        break;
+    }
+
+    case GameState::Playing:
+    {
+        if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
         {
-            window.draw(titleText);
-            window.draw(menuText);
-            break;
+            Level& lvl = levels.at(currentLevelIndex);
+            lvl.render(window);
+
+            bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
+
+            sf::CircleShape rangePreview(100.0f);
+            rangePreview.setOrigin(100.f, 100.f);
+            rangePreview.setPosition(inputState.mouseX, inputState.mouseY);
+            rangePreview.setFillColor(sf::Color(0, 0, 0, 0));
+            rangePreview.setOutlineThickness(2.0f);
+            rangePreview.setOutlineColor(
+                canPlace ? sf::Color(0, 255, 0, 120)
+                : sf::Color(255, 0, 0, 120)
+            );
+            window.draw(rangePreview);
+
+            sf::CircleShape towerPreview(15.f);
+            towerPreview.setOrigin(15.f, 15.f);
+            towerPreview.setPosition(inputState.mouseX, inputState.mouseY);
+            towerPreview.setFillColor(
+                canPlace ? sf::Color(0, 255, 0, 150)
+                : sf::Color(255, 0, 0, 150)
+            );
+            window.draw(towerPreview);
+
+            std::string hud =
+                "Health: " + std::to_string(lvl.getEcoSystemHealth()) +
+                "   Money: " + std::to_string(lvl.getMoney()) +
+                "   Wave: " + std::to_string(lvl.getCurrentWaveIndex()) +
+                "   Tower Cost: " + std::to_string(lvl.getTowerCost());
+
+            hudText.setString(hud);
+            window.draw(hudText);
+
+            if (lvl.hasMoreWaves())
+            {
+                float countdown = lvl.getNextSpawnCountdown();
+                waveText.setString("Next Enemy in: " + std::to_string(countdown).substr(0, 4) + "s");
+            }
+            else
+            {
+                waveText.setString("All waves spawned");
+            }
+
+            window.draw(waveText);
         }
-
-        case GameState::Playing:
-        {
-             if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
-             {
-                Level& lvl = levels[currentLevelIndex];
-                lvl.render(window);
-
-                bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
-
-                //This draws the circle preview for a tower
-                sf::CircleShape rangePreview(100.0f);
-                rangePreview.setOrigin(100.f, 100.f);
-                rangePreview.setPosition(inputState.mouseX, inputState.mouseY);
-                rangePreview.setFillColor(sf::Color(0, 0, 0, 0));
-                rangePreview.setOutlineThickness(2.0f);
-
-                if (canPlace)
-                {
-                    rangePreview.setOutlineColor(sf::Color(0, 255, 0, 120));
-                }
-                else
-                {
-                    rangePreview.setOutlineColor(sf::Color(255, 0, 0, 120));
-                }
-
-                //this draws the tower ghost preview
-                sf::CircleShape towerPreview(15.f);
-                towerPreview.setOrigin(15.f, 15.f);
-                towerPreview.setPosition(inputState.mouseX, inputState.mouseY);
-
-                if (canPlace)
-                {
-                    towerPreview.setFillColor(sf::Color(0, 255, 0, 150));
-                }
-                else
-                {
-                    towerPreview.setFillColor(sf::Color(255, 0, 0, 150));
-                }
-
-                window.draw(towerPreview);
-
-                //Here is the hud drawn on the screen so the player sees it
-                std::string hud =
-                    "Health: " + std::to_string(lvl.getEcoSystemHealth()) +
-                    "   Money: " + std::to_string(lvl.getMoney()) +
-                    "   Wave: " + std::to_string(lvl.getCurrentWaveIndex()) +
-                    "   Tower Cost: " + std::to_string(lvl.getTowerCost()) +
-                    "   WaveCountdown: " + std::to_string(lvl.getNextSpawnCountdown());
-
-
-                hudText.setString(hud);
-
-                window.draw(hudText);
-
-                //This is the wave countdown text
-                if (lvl.hasMoreWaves())
-                {
-                    float countdown = lvl.getNextSpawnCountdown();
-                    waveText.setString("Next Enemy in: " + std::to_string(countdown).substr(0, 4) + "s");
-                }
-                else
-                {
-                    waveText.setString("All waves spawned");
-                }
-
-                window.draw(waveText);
-                break;
-             }
+        break;
     }
 
     case GameState::LevelTransition:
-        {
+    {
         if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
+        {
             levels.at(currentLevelIndex).render(window);
+        }
 
         window.draw(transitionText);
         break;
-        }
-     
+    }
 
     case GameState::Victory:
     {
@@ -276,7 +262,6 @@ void Game::render()
         window.draw(endScreenText);
         break;
     }
-     
 
     case GameState::Defeat:
     {
@@ -284,8 +269,9 @@ void Game::render()
         window.draw(endScreenText);
         break;
     }
-        window.display();
     }
+
+    window.display();
 }
 
 void Game::setupLevels() {

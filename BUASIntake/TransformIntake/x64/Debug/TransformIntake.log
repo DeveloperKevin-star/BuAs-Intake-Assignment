@@ -1,5 +1,2 @@
 ﻿  Game.cpp
-D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.cpp(167,34): warning C4553: '==': result of expression not used; did you intend '='?
-  main.cpp
-  Generating Code...
   TransformIntake.vcxproj -> D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe
