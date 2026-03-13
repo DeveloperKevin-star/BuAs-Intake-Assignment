@@ -50,6 +50,11 @@ public:
 
     static Level createCitySmogLevel();
 
+    //waves
+
+    float getNextSpawnCountdown() const;
+    bool hasMoreWaves() const;
+
 private:
     //enemy functions
     void spawnEnemies(float dt);

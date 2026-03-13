@@ -37,67 +37,21 @@ void Level::handlePlayerInput(const InputState& input)
     }
 }
 
-bool Level::placeTowerAt(float x, float y)
+void Level::handleCollision()
 {
-    if (!canPlaceTowerAt(x, y))
-        return false;
-
-    if (money < towerCost)
-        return false;
-
-    towers.push_back(std::make_unique<Tower>(x, y, 100.0f, 1.0f, 3));
-    money -= towerCost;
-    return true;
+    // Not needed yet, because hit handling happens in updateProjectiles()
 }
 
-bool Level::canPlaceTowerAt(float x, float y) const
+void Level::render(sf::RenderWindow& window)
 {
-    if (money < towerCost)
-        return false;
-
-    if (isTooCloseToPath(x, y))
-        return false;
-
-    if (isTooCloseToTower(x, y))
-        return false;
-
-    return true;
+    drawPath(window);
+    drawEnemies(window);
+    drawEffects(window);
+    drawTowers(window);
+    drawProjectiles(window);
 }
 
-bool Level::isTooCloseToPath(float x, float y) const
-{
-    const float minDistanceFromPath = 40.0f;
-
-    for (const PathNode& node : config.enemyPath)
-    {
-        float dx = node.x - x;
-        float dy = node.y - y;
-        float dist = std::sqrt(dx * dx + dy * dy);
-
-        if (dist < minDistanceFromPath)
-            return true;
-    }
-
-    return false;
-}
-
-bool Level::isTooCloseToTower(float x, float y) const
-{
-    const float minTowerSpacing = 50.0f;
-
-    for (const auto& tower : towers)
-    {
-        float dx = tower->getX() - x;
-        float dy = tower->getY() - y;
-        float dist = std::sqrt(dx * dx + dy * dy);
-
-        if (dist < minTowerSpacing)
-            return true;
-    }
-
-    return false;
-}
-
+//Enemies Functions
 void Level::spawnEnemies(float dt)
 {
     if (currentWaveIndex >= static_cast<int>(config.waves.size()))
@@ -148,54 +102,7 @@ void Level::updateEnemies(float dt)
     }
 }
 
-void Level::updateTowers(float dt)
-{
-    for (auto& tower : towers)
-    {
-        tower->update(dt, enemies, projectiles);
-    }
-}
-
-void Level::updateProjectiles(float dt)
-{
-    for (auto it = projectiles.begin(); it != projectiles.end();)
-    {
-        (*it)->update(dt);
-
-        if ((*it)->hasHitTarget())
-        {
-            Enemy* target = (*it)->getTarget();
-            if (target && target->isAlive() && !target->hasReachedGoal())
-            {
-                target->takeDamage((*it)->getDamage());
-            }
-
-            it = projectiles.erase(it);
-        }
-        else if ((*it)->isExpired())
-        {
-            it = projectiles.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-}
-
-void Level::handleCollision()
-{
-    // Not needed yet, because hit handling happens in updateProjectiles()
-}
-
-void Level::render(sf::RenderWindow& window)
-{
-    drawPath(window);
-    drawEnemies(window);
-    drawTowers(window);
-    drawProjectiles(window);
-}
-
+// Path Functios
 void  Level::drawPath(sf::RenderWindow& window)
 {
     //this draws the path
@@ -211,6 +118,7 @@ void  Level::drawPath(sf::RenderWindow& window)
     }
 }
 
+//Enemies functions
 void  Level::drawEnemies(sf::RenderWindow& window) // in the function the enemies and their healthbars are drawn
 {
     for (const auto& enemy : enemies)
@@ -337,6 +245,103 @@ void Level::drawEffects(sf::RenderWindow& window)
     }
 }
 
+// tower functions
+bool Level::placeTowerAt(float x, float y)
+{
+    if (!canPlaceTowerAt(x, y))
+        return false;
+
+    if (money < towerCost)
+        return false;
+
+    towers.push_back(std::make_unique<Tower>(x, y, 100.0f, 1.0f, 3));
+    money -= towerCost;
+    return true;
+}
+
+bool Level::canPlaceTowerAt(float x, float y) const
+{
+    if (money < towerCost)
+        return false;
+
+    if (isTooCloseToPath(x, y))
+        return false;
+
+    if (isTooCloseToTower(x, y))
+        return false;
+
+    return true;
+}
+
+bool Level::isTooCloseToPath(float x, float y) const
+{
+    const float minDistanceFromPath = 40.0f;
+
+    for (const PathNode& node : config.enemyPath)
+    {
+        float dx = node.x - x;
+        float dy = node.y - y;
+        float dist = std::sqrt(dx * dx + dy * dy);
+
+        if (dist < minDistanceFromPath)
+            return true;
+    }
+
+    return false;
+}
+
+bool Level::isTooCloseToTower(float x, float y) const
+{
+    const float minTowerSpacing = 50.0f;
+
+    for (const auto& tower : towers)
+    {
+        float dx = tower->getX() - x;
+        float dy = tower->getY() - y;
+        float dist = std::sqrt(dx * dx + dy * dy);
+
+        if (dist < minTowerSpacing)
+            return true;
+    }
+
+    return false;
+}
+
+void Level::updateTowers(float dt)
+{
+    for (auto& tower : towers)
+    {
+        tower->update(dt, enemies, projectiles);
+    }
+}
+
+void Level::updateProjectiles(float dt)
+{
+    for (auto it = projectiles.begin(); it != projectiles.end();)
+    {
+        (*it)->update(dt);
+
+        if ((*it)->hasHitTarget())
+        {
+            Enemy* target = (*it)->getTarget();
+            if (target && target->isAlive() && !target->hasReachedGoal())
+            {
+                target->takeDamage((*it)->getDamage());
+            }
+
+            it = projectiles.erase(it);
+        }
+        else if ((*it)->isExpired())
+        {
+            it = projectiles.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
 void Level::drawTowers(sf::RenderWindow& window)
 {
     //this draws the towers
@@ -347,6 +352,19 @@ void Level::drawTowers(sf::RenderWindow& window)
         shape.setOrigin(15.0f, 15.0f);
         shape.setPosition(tower->getX(), tower->getY());
         window.draw(shape);
+
+        //This is the fire flash drawing system
+        if (tower->getFireFlashTimer() > 0.0f)
+        {
+            float percent = tower->getFireFlashTimer() / tower->getFireFlashDuration();
+
+            sf::CircleShape flash(20.f);
+            flash.setOrigin(20.f, 20.f);
+            flash.setPosition(tower->getX(), tower->getY());
+            flash.setFillColor(sf::Color(255, 255, 100, static_cast<sf::Uint8>(150 * percent)));
+
+            window.draw(flash); 
+        }
     }
 }
 
@@ -363,6 +381,7 @@ void Level::drawProjectiles(sf::RenderWindow& window)
     }
 }
 
+//Levels + Waves
 Level Level::createCitySmogLevel()
 {
     LevelConfig cfg;
@@ -397,4 +416,26 @@ Level Level::createCitySmogLevel()
     cfg.waves.push_back(wave2);
 
     return Level(cfg);
+}
+
+bool Level::hasMoreWaves() const
+{
+    return currentWaveIndex < static_cast<int>(config.waves.size());
+}
+
+float Level::getNextSpawnCountdown() const
+{
+    if (!hasMoreWaves())
+        return 0.f;
+
+    const WaveConfig& wave = config.waves.at(currentWaveIndex);
+    if (wave.enemiesToSpawn.empty())
+        return 0.f;
+
+    float remaining = wave.spawnInterval - waveTimer;
+
+    if (remaining < 0.f)
+        remaining = 0.f;
+
+    return remaining;
 }

@@ -10,6 +10,7 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so
@@ -26,12 +27,21 @@
 *.a
 *.lib
 
+# Ignore binaries except SFML
+
+!Libraries/SFML/lib/*.lib
+!Libraries/SFML/bin/*.dll
+
 # Executables
 *.exe
 *.out
 *.app
 
+
+#VS Cache files
 *.vs
 *.vsidx
-
+ipch/
+Debug/
+Release/
 

@@ -19,11 +19,17 @@ bool Game::init()
 
     if (!font.loadFromFile("ARIAL.TTF"))
         return false;
-
+    // hud text
     hudText.setFont(font);
     hudText.setCharacterSize(20);
     hudText.setFillColor(sf::Color::White);
     hudText.setPosition(10.f, 10.f);
+
+    //wave text
+    waveText.setFont(font);
+    waveText.setCharacterSize(18);
+    waveText.setFillColor(sf::Color::Cyan);
+    waveText.setPosition(10.f, 40.f);
 
     running = true;
     return true;
@@ -142,12 +148,26 @@ void Game::render()
             "Health: " + std::to_string(lvl.getEcoSystemHealth()) +
             "   Money: " + std::to_string(lvl.getMoney()) +
             "   Wave: " + std::to_string(lvl.getCurrentWaveIndex()) +
-            "   Tower Cost:" + std::to_string(lvl.getTowerCost());
+            "   Tower Cost: " + std::to_string(lvl.getTowerCost()) +
+            "   WaveCountdown: " + std::to_string(lvl.getNextSpawnCountdown());
 
 
         hudText.setString(hud);
 
         window.draw(hudText);
+
+        //This is the wave countdown text
+        if (lvl.hasMoreWaves())
+        {
+            float countdown = lvl.getNextSpawnCountdown();
+            waveText.setString("Next Enemy in: " + std::to_string(countdown).substr(0, 4) + "s");
+        }
+        else 
+        {
+            waveText.setString("All waves spawned");
+        }
+
+        window.draw(waveText);
     }
 
     window.display();

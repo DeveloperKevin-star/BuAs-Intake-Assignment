@@ -21,6 +21,7 @@ private:
 
     sf::Font font;
     sf::Text hudText;
+    sf::Text waveText;
 
     bool running = false;
     std::vector<Level> levels;
