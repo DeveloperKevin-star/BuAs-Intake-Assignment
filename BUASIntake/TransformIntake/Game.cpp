@@ -16,6 +16,11 @@ Game::Game()
 bool Game::init()
 {
     levels.emplace_back(Level::createCitySmogLevel());
+    levels.emplace_back(Level::createIndustrialLevel());
+    levels.emplace_back(Level::createHarborLevel());
+    levels.emplace_back(Level::createToxicLevel());
+    levels.emplace_back(Level::createMFactoryLevel());
+
 
     if (!font.loadFromFile("ARIAL.TTF"))
         return false;
@@ -31,6 +36,12 @@ bool Game::init()
     waveText.setFillColor(sf::Color::Cyan);
     waveText.setPosition(10.f, 40.f);
 
+    //Trans text
+    transitionText.setFont(font);
+    transitionText.setCharacterSize(32);
+    transitionText.setFillColor(sf::Color::White);
+    transitionText.setPosition(400.f, 300.f);
+    
     running = true;
     return true;
 }

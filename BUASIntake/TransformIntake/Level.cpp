@@ -418,6 +418,231 @@ Level Level::createCitySmogLevel()
     return Level(cfg);
 }
 
+Level Level::createIndustrialLevel()
+{
+    LevelConfig cfg;
+    cfg.name = "Industrial Waste";
+
+    cfg.initialHealth = 40;
+
+    cfg.enemyPath =
+    {
+        {0.f, 200.f},
+        {300.f, 200.f},
+        {300.f, 400.f},
+        {700.f, 400.f}
+    };
+
+    WaveConfig wave1;
+    wave1.spawnInterval = 0.9f;
+    wave1.enemiesToSpawn =
+    {
+        EnemyType::Smog,
+        EnemyType::Smog,
+        EnemyType::Plastic,
+        EnemyType::Plastic
+    };
+
+    WaveConfig wave2;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Plastic,
+        EnemyType::Oil,
+        EnemyType::Plastic,
+        EnemyType::Oil
+    };
+
+    cfg.waves.push_back(wave1);
+    cfg.waves.push_back(wave2);
+
+    return Level(cfg);
+}
+
+Level Level::createHarborLevel()
+{
+    LevelConfig cfg;
+    cfg.name = "Harbor Polution";
+
+    cfg.initialHealth = 25;
+
+    cfg.enemyPath =
+    {
+        {0.f, 150.f},
+        {200.f, 150.f},
+        {200.f, 350.f},
+        {500.f, 350.f},
+        {500.f, 500.f}
+    };
+
+    WaveConfig wave1;
+    wave1.spawnInterval = 0.9f;
+    wave1.enemiesToSpawn =
+    {
+        EnemyType::Plastic,
+        EnemyType::Plastic,
+        EnemyType::Smog
+    };
+
+    WaveConfig wave2;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Oil,
+        EnemyType::Plastic,
+        EnemyType::Oil,
+        EnemyType::Plastic
+    };
+
+    cfg.waves.push_back(wave1);
+    cfg.waves.push_back(wave2);
+
+    return Level(cfg);
+}
+
+Level Level::createToxicLevel()
+{
+    LevelConfig cfg;
+    cfg.name = "Toxic River";
+
+    cfg.initialHealth = 40;
+
+    cfg.enemyPath =
+    {
+        {0.f, 150.f},
+        {300.f, 200.f},
+        {300.f, 400.f},
+        {700.f, 400.f},
+        {700.f, 450.f},
+        {750.f, 500.f},
+        {1000.f, 650.f}
+           
+    };
+
+    WaveConfig wave1;
+    wave1.spawnInterval = 0.9f;
+    wave1.enemiesToSpawn =
+    {
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Plastic
+    };
+
+    WaveConfig wave2;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Plastic,
+        EnemyType::Oil,
+        EnemyType::Plastic,
+        EnemyType::Oil,
+        EnemyType::Plastic,
+        EnemyType::Oil
+    };
+
+    WaveConfig wave3;
+    wave3.spawnInterval = 0.5f;
+    wave3.enemiesToSpawn =
+    {
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil
+    };
+
+    cfg.waves.push_back(wave1);
+    cfg.waves.push_back(wave2);
+    cfg.waves.push_back(wave3);
+
+    return Level(cfg);
+}
+
+Level Level::createMFactoryLevel()
+{
+    LevelConfig cfg;
+    cfg.name = "Mega Factory";
+
+    cfg.initialHealth = 25;
+
+    cfg.enemyPath =
+    {
+        {0.f, 200.f},
+        {300.f, 200.f},
+        {300.f, 400.f},
+        {700.f, 400.f},
+        {800.f, 500.f},
+        {1000.f, 500.f},
+        {1000.f, 550.f},
+        {1100.f, 575.f},
+        {1200.f, 600.f},
+        {1500.f, 1500.f}
+    };
+
+    WaveConfig wave1;
+    wave1.spawnInterval = 0.9f;
+    wave1.enemiesToSpawn =
+    {
+        EnemyType::Smog,
+        EnemyType::Smog,
+        EnemyType::Smog
+    };
+
+    WaveConfig wave2;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Plastic,
+        EnemyType::Plastic,
+        EnemyType::Plastic
+
+    };
+    WaveConfig wave3;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil
+
+    };
+    WaveConfig wave4;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Plastic,
+        EnemyType::Smog
+
+    };
+    WaveConfig wave5;
+    wave2.spawnInterval = 0.7f;
+    wave2.enemiesToSpawn =
+    {
+        EnemyType::Plastic,
+        EnemyType::Plastic,
+        EnemyType::Plastic,
+        EnemyType::Smog,
+        EnemyType::Smog,
+        EnemyType::Smog,
+        EnemyType::Oil,
+        EnemyType::Oil,
+        EnemyType::Oil
+
+    };
+
+    cfg.waves.push_back(wave1);
+    cfg.waves.push_back(wave2);
+    cfg.waves.push_back(wave3);
+    cfg.waves.push_back(wave4);
+    cfg.waves.push_back(wave5);
+
+    return Level(cfg);
+}
+
 bool Level::hasMoreWaves() const
 {
     return currentWaveIndex < static_cast<int>(config.waves.size());

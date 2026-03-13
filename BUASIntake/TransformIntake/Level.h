@@ -49,6 +49,11 @@ public:
     int getTowerCost() const { return towerCost; }
 
     static Level createCitySmogLevel();
+    static Level createIndustrialLevel();
+    static Level createHarborLevel();
+    static Level createToxicLevel();
+    static Level createMFactoryLevel();
+
 
     //waves
 

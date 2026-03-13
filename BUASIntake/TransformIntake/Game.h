@@ -17,6 +17,13 @@ private:
     void update(float dt);
     void render();
 
+    // Level Transistion
+    bool isTransitioning = false;
+    float transistionTimer = 0.f; 
+    float transitionDuration = 2.f; 
+    sf::Text transitionText;
+
+    // rendering
     sf::RenderWindow window;
 
     sf::Font font;
