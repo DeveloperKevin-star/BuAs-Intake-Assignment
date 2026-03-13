@@ -3,6 +3,16 @@
 #include <SFML/Graphics.hpp>
 #include "Level.h"
 
+// these are the game state for the state machines
+enum class GameState
+{
+    MainMenu,
+    Playing,
+    LevelTransition,
+    Victory,
+    Defeat
+};
+
 //this is base game
 class Game
 {
@@ -16,6 +26,9 @@ private:
     void handleInput();
     void update(float dt);
     void render();
+    void setupLevels();
+
+    GameState currentState = GameState::MainMenu;
 
     // Level Transistion
     bool isTransitioning = false;
@@ -35,4 +48,9 @@ private:
     int currentLevelIndex = 0;
 
     InputState inputState;
+
+    //Menu Members
+    sf::Text titleText;
+    sf::Text menuText;
+    sf::Text endScreenText;
 };

@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -30,8 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Game.h",
+              "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h",
+              "RelativeDocumentMoniker": "TransformIntake\\Game.h",
+              "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h",
+              "RelativeToolTip": "TransformIntake\\Game.h",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-13T12:04:09.14Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -39,19 +52,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Game.h",
-              "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h",
-              "RelativeDocumentMoniker": "TransformIntake\\Game.h",
-              "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h",
-              "RelativeToolTip": "TransformIntake\\Game.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-03-13T12:04:09.14Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -68,26 +68,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Game.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Game.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp",
               "RelativeToolTip": "TransformIntake\\Game.cpp",
-              "ViewState": "AgIAADUAAAAAAAAAAAAwwK0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAUBAAAAAAAAAAAswBEBAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-13T12:00:00.481Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Level.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Level.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp",
               "RelativeToolTip": "TransformIntake\\Level.cpp",
-              "ViewState": "AgIAAN4AAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA0BAAAAAAAAAAAwwIECAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-13T11:50:43.053Z",
               "EditorCaption": ""
@@ -100,7 +100,7 @@
               "RelativeDocumentMoniker": "TransformIntake\\Level.h",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.h",
               "RelativeToolTip": "TransformIntake\\Level.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwCoAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-01-27T20:37:58.216Z",
               "EditorCaption": ""
