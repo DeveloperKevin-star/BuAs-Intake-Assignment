@@ -25,4 +25,7 @@ struct LevelConfig
     int initialHealth = 50;
     std::vector<PathNode> enemyPath;
     std::vector<WaveConfig> waves;
+
+    std::string backgroundTexturePath;
+    std::string pathTexturePath;
 };

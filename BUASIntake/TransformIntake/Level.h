@@ -29,6 +29,8 @@ public:
     //game
     Level(const LevelConfig& config);
 
+    void addMoney(int amount) { money += amount; }
+
     void update(float dt);
     void render(sf::RenderWindow& window);
 
@@ -56,8 +58,8 @@ public:
     static Level createMFactoryLevel();
 
 
-    //waves
 
+    //waves
     float getNextSpawnCountdown() const;
     bool hasMoreWaves() const;
 
@@ -75,6 +77,24 @@ private:
     void drawEffects(sf::RenderWindow& window);
     void spawnDeathFlash(float x, float y);
 
+    //Textures
+    sf::Texture smogTexture;
+    sf::Texture plasticTexture;
+    sf::Texture oilTexture;
+    sf::Texture towerTexture;
+    sf::Texture projectileTexture;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
+    
+    sf::Texture pathTexture;
+   
+    bool loadTextures();
+    bool loadLevelVisual();
+
+    const sf::Texture& getEnemyTexture(EnemyType type) const;
+    void drawBackground(sf::RenderWindow& window);
+
+
     // tower functions
     void updateTowers(float dt);
     void updateProjectiles(float dt);
@@ -86,6 +106,8 @@ private:
     bool isTooCloseToPath(float x, float y) const;
     bool isTooCloseToTower(float x, float y) const;
     void drawPath(sf::RenderWindow& windwow);
+    sf::Color getPathColor() const;
+
 
     //config
     LevelConfig config;

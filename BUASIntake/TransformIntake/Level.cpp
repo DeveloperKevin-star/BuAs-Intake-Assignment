@@ -4,6 +4,9 @@
 Level::Level(const LevelConfig& cfg)
     : config(cfg), ecoSystemHealth(cfg.initialHealth)
 {
+    loadTextures(); 
+    loadLevelVisual();
+    
     towers.push_back(std::make_unique<Tower>(150.0f, 120.0f, 100.0f, 1.0f, 3));
 }
 
@@ -108,13 +111,22 @@ void  Level::drawPath(sf::RenderWindow& window)
     //this draws the path
     for (size_t i = 1; i < config.enemyPath.size(); ++i)
     {
-        sf::Vertex line[] =
-        {
-            sf::Vertex(sf::Vector2f(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y), sf::Color::White),
-            sf::Vertex(sf::Vector2f(config.enemyPath[i].x, config.enemyPath[i].y), sf::Color::White)
-        };
+        sf::Vector2f start(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y);
+        sf::Vector2f end(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y);
+        
+        sf::Vector2f direction = end - start;
 
-        window.draw(line, 2, sf::Lines);
+        float lenght = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+        sf::RectangleShape segment(sf::Vector2f(lenght, 24.f));
+        segment.setPosition(start); 
+
+        segment.setFillColor(getPathColor());
+
+        float angle = std::atan2(direction.y, direction.x) * 180.f / 3.14159265f;
+        segment.setRotation(angle);
+
+        window.draw(segment);
     }
 }
 
@@ -123,13 +135,18 @@ void  Level::drawEnemies(sf::RenderWindow& window) // in the function the enemie
 {
     for (const auto& enemy : enemies)
     {
-        //this draws the enemies
-        sf::CircleShape shape(10.0f);
-        shape.setOrigin(10.0f, 10.0f);
-        shape.setPosition(enemy->getX(), enemy->getY());
-        shape.setFillColor(getEnemyColor(enemy->getType()));
+        sf::Sprite enemySprite;
+        enemySprite.setTexture(getEnemyTexture(enemy->getType()));
 
-        window.draw(shape);
+        enemySprite.setOrigin(
+            enemySprite.getLocalBounds().width / 2.f,
+            enemySprite.getLocalBounds().height / 2.f
+            );
+        enemySprite.setPosition(enemy->getX(), enemy->getY());
+        enemySprite.setScale(.15f, .15f);
+
+        window.draw(enemySprite);
+
 
         drawEnemyHealthbars(window, *enemy);
 
@@ -347,11 +364,18 @@ void Level::drawTowers(sf::RenderWindow& window)
     //this draws the towers
     for (const auto& tower : towers)
     {
-        sf::CircleShape shape(15.0f);
-        shape.setFillColor(sf::Color::Green);
-        shape.setOrigin(15.0f, 15.0f);
-        shape.setPosition(tower->getX(), tower->getY());
-        window.draw(shape);
+        sf::Sprite towerSprite;
+        towerSprite.setTexture(towerTexture);
+
+        towerSprite.setOrigin(
+            towerSprite.getLocalBounds().width / 2.f,
+            towerSprite.getLocalBounds().height / 2.f
+        );
+
+        towerSprite.setPosition(tower->getX(), tower->getY());
+        towerSprite.setScale(.2f, .2f);
+
+        window.draw(towerSprite);
 
         //This is the fire flash drawing system
         if (tower->getFireFlashTimer() > 0.0f)
@@ -373,11 +397,17 @@ void Level::drawProjectiles(sf::RenderWindow& window)
     // this is drawing the projectiles
     for (const auto& projectile : projectiles)
     {
-        sf::CircleShape shape(4.0f);
-        shape.setFillColor(sf::Color::Yellow);
-        shape.setOrigin(4.0f, 4.0f);
-        shape.setPosition(projectile->getX(), projectile->getY());
-        window.draw(shape);
+        sf::Sprite projectileSprite;
+        projectileSprite.setTexture(projectileTexture);
+        projectileSprite.setOrigin(
+            projectileSprite.getLocalBounds().width / 2.f,
+            projectileSprite.getLocalBounds().height / 2.f
+        );
+
+        projectileSprite.setPosition(projectile->getX(), projectile->getY());
+        projectileSprite.setScale(.8f, .8f);
+
+        window.draw(projectileSprite);
     }
 }
 
@@ -663,4 +693,95 @@ float Level::getNextSpawnCountdown() const
         remaining = 0.f;
 
     return remaining;
+}
+
+//Textures
+bool Level::loadTextures()
+{
+    bool ok = true;
+
+    //Enemy Textures 
+    ok &= smogTexture.loadFromFile("assets/smog.png");
+    ok &= plasticTexture.loadFromFile("assets/plastic.png");
+    ok &= oilTexture.loadFromFile("assets/oil.png");
+
+    //TowerTextures
+    ok &= towerTexture.loadFromFile("assets/tower.png");
+    ok &= projectileTexture.loadFromFile("assets/projectile.png");
+    return ok;
+}
+
+//Here is all the texture stuff
+bool Level::loadLevelVisual() {
+
+    bool succes = true;
+    if (!config.backgroundTexturePath.empty())
+    {
+        if (backgroundTexture.loadFromFile(config.backgroundTexturePath))
+        {
+            backgroundSprite.setTexture(backgroundTexture);
+        }
+        else
+        {
+            succes = false;
+        }
+    }
+
+    if (!config.pathTexturePath.empty())
+    {
+        if (!pathTexture.loadFromFile(config.pathTexturePath))
+        {
+            succes = false;
+        }
+    }
+
+    return false;
+}
+
+const sf::Texture& Level::getEnemyTexture(EnemyType type) const
+{
+    switch (type)
+    {
+    case EnemyType::Smog:
+        return smogTexture;
+    case EnemyType::Plastic:
+        return plasticTexture;
+    case EnemyType::Oil:
+        return oilTexture;
+    default:
+        return smogTexture;
+    }
+}
+
+void Level::drawBackground(sf::RenderWindow& window)
+{
+    if (backgroundTexture.getSize().x > 0)
+    {
+        backgroundSprite.setScale(
+            1280.f / backgroundTexture.getSize().x,
+            720.f / backgroundTexture.getSize().y
+        );
+
+        window.draw(backgroundSprite);
+    }
+    else
+    {
+        sf::RectangleShape fallback(sf::Vector2(1280.f, 720.f));
+        fallback.setFillColor(sf::Color(30, 30, 30));
+        window.draw(fallback);
+    }
+}
+
+sf::Color Level::getPathColor() const
+{
+    if (config.name == "City Smog Defence")
+        return sf::Color(120, 120, 120);
+    if (config.name == "Industrial Waste")
+        return sf::Color(50, 151, 129);
+    if (config.name == "Harbor Polution")
+        return sf::Color(140, 100, 60);
+    if (config.name == "Toxic River")
+        return sf::Color(80, 200, 80);
+    if (config.name == "Mega Factory")
+        return sf::Color(90, 90, 90);
 }

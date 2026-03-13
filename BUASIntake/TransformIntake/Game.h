@@ -27,14 +27,37 @@ private:
     void update(float dt);
     void render();
     void setupLevels();
+    
 
+    //State Machine
     GameState currentState = GameState::MainMenu;
+    InputState inputState;
+
+
+    //butttons
+    sf::RectangleShape startButton;
+    sf::RectangleShape exitButton;
+    sf::RectangleShape retryButton;
+    sf::RectangleShape menuButton;
+
+    sf::Text startButtonText;
+    sf::Text exitButtonText;
+    sf::Text retryButtonText;
+    sf::Text menuButtonText;
+
+    void setupButtons();
+    bool isMouseOverButton(const sf::RectangleShape& button) const;
+    void centerTextInButton(sf::Text& text, const sf::RectangleShape& button);
+
 
     // Level Transistion
     bool isTransitioning = false;
     float transistionTimer = 0.f; 
     float transitionDuration = 2.f; 
     sf::Text transitionText;
+
+    int carryoverMoney = 0;
+    
 
     // rendering
     sf::RenderWindow window;
@@ -47,7 +70,6 @@ private:
     std::vector<Level> levels;
     int currentLevelIndex = 0;
 
-    InputState inputState;
 
     //Menu Members
     sf::Text titleText;

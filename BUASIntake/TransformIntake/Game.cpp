@@ -17,8 +17,13 @@ bool Game::init()
 {
     setupLevels();
 
+
     if (!font.loadFromFile("ARIAL.TTF"))
         return false;
+
+    //buttons
+    setupButtons();
+
     // hud text
     hudText.setFont(font);
     hudText.setCharacterSize(20);
@@ -57,6 +62,9 @@ bool Game::init()
     endScreenText.setFillColor(sf::Color::White);
     endScreenText.setPosition(350.f, 260.f);
     
+    //buttons
+
+
     currentState = GameState::MainMenu;
     running = true;
     return true;
@@ -84,22 +92,62 @@ void Game::handleInput()
     inputState.placeTowerPressed = false;
 
     sf::Event event;
+
+
     while (window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            window.close();
-
-        if (event.type == sf::Event::KeyPressed)
         {
-            if (currentState == GameState::MainMenu && event.key.code == sf::Keyboard::Enter)
+            window.close();
+        }
+
+        if (event.type == sf::Event::MouseButtonPressed &&
+            event.mouseButton.button == sf::Mouse::Left)
+        {
+            if (currentState == GameState::MainMenu)
             {
-                setupLevels();
-                currentState = GameState::Playing;
+                if (isMouseOverButton(startButton))
+                {
+                    setupLevels();
+                    carryoverMoney = 0;
+                    currentState = GameState::Playing;
+                }
+                else if (isMouseOverButton(exitButton))
+                {
+                    window.close();
+                }
             }
-            else if ((currentState == GameState::Victory || currentState == GameState::Defeat) &&
-                event.key.code == sf::Keyboard::Enter)
-                currentState = GameState::MainMenu;
-                
+            else if (currentState == GameState::Victory)
+            {
+                if (isMouseOverButton(menuButton))
+                {
+                    currentState = GameState::MainMenu;
+                }
+                else if (isMouseOverButton(exitButton))
+                {
+                    window.close();
+                }
+            }
+            else if (currentState == GameState::Defeat)
+            {
+                if (isMouseOverButton(retryButton))
+                {
+                    setupLevels();
+                    currentState = GameState::Playing;
+                }
+                else if (isMouseOverButton(menuButton))
+                {
+                    currentState = GameState::MainMenu;
+                }
+                else if (isMouseOverButton(exitButton))
+                {
+                    window.close();
+                }
+            }
+            else if (currentState == GameState::Playing)
+            {
+                inputState.placeTowerPressed = true;
+            }
         }
 
         if (currentState == GameState::Playing &&
@@ -139,16 +187,20 @@ void Game::update(float dt)
 
             if (lvl.isCompleted())
             {
+                carryoverMoney = lvl.getMoney();
                 currentState = GameState::LevelTransition;
                 transistionTimer = transitionDuration;
+               
 
                 if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
                 {
-                    transitionText.setString("LevelComplete!\nNext: " + levels.at(currentLevelIndex + 1).getName() + ".");
-                    currentState = GameState::Victory;
+                    transitionText.setString("LevelComplete!\n\nSavedMoney: " + std::to_string(carryoverMoney) +
+                        "\nNext: " + levels.at(currentLevelIndex + 1).getName() + ".");
                 }
                 else
+                {
                     transitionText.setString("Final Level Complete!");
+                }
 
                 return;
             }
@@ -163,11 +215,14 @@ void Game::update(float dt)
                 if (currentLevelIndex >= static_cast<int>(levels.size()))
                 {
                     endScreenText.setString("Victory!\nPress Enter for Main Menu.");
+                    currentState = GameState::Victory;
                 }
                 else
                 {
+                    levels.at(currentLevelIndex).addMoney(carryoverMoney);
                     currentState = GameState::Playing;
                 }
+                return;
             }
             break;
 
@@ -179,16 +234,30 @@ void Game::update(float dt)
             break;
     }
 }
+
 void Game::render()
 {
     window.clear(sf::Color(20, 20, 20));
+
+    startButton.setFillColor(
+        isMouseOverButton(startButton) ? sf::Color(100, 160, 210) : sf::Color(70, 130, 180)
+    );
+
+    exitButton.setFillColor(
+        isMouseOverButton(exitButton) ? sf::Color(210, 90, 90) : sf::Color(180, 70, 70)
+    );
+
+    
 
     switch (currentState)
     {
     case GameState::MainMenu:
     {
         window.draw(titleText);
-        window.draw(menuText);
+        window.draw(startButton);
+        window.draw(startButtonText);
+        window.draw(exitButton);
+        window.draw(exitButtonText);
         break;
     }
 
@@ -259,6 +328,10 @@ void Game::render()
     case GameState::Victory:
     {
         window.draw(titleText);
+        window.draw(menuButton);
+        window.draw(menuButtonText);
+        window.draw(exitButton);
+        window.draw(exitButtonText);
         window.draw(endScreenText);
         break;
     }
@@ -267,6 +340,12 @@ void Game::render()
     {
         window.draw(titleText);
         window.draw(endScreenText);
+        window.draw(retryButton);
+        window.draw(retryButtonText);
+        window.draw(menuButton);
+        window.draw(menuButtonText);
+        window.draw(exitButton);
+        window.draw(exitButtonText);
         break;
     }
     }
@@ -283,4 +362,75 @@ void Game::setupLevels() {
     levels.emplace_back(Level::createMFactoryLevel());
 
     currentLevelIndex = 0;
+}
+
+void Game::setupButtons() {
+    // Start button
+    startButton.setSize(sf::Vector2f(220.f, 60.f));
+    startButton.setPosition(530.f, 280.f);
+    startButton.setFillColor(sf::Color(70, 130, 180));
+
+    startButtonText.setFont(font);
+    startButtonText.setCharacterSize(24);
+    startButtonText.setFillColor(sf::Color::White);
+    startButtonText.setString("Start Game");
+    centerTextInButton(startButtonText, startButton);
+
+
+    // Exit button
+    exitButton.setSize(sf::Vector2f(220.f, 60.f));
+    exitButton.setPosition(530.f, 370.f);
+    exitButton.setFillColor(sf::Color(180, 70, 70));
+
+    exitButtonText.setFont(font);
+    exitButtonText.setCharacterSize(24);
+    exitButtonText.setFillColor(sf::Color::White);
+    exitButtonText.setString("Exit");
+    centerTextInButton(exitButtonText, exitButton);
+
+
+    // Retry button
+    retryButton.setSize(sf::Vector2f(220.f, 60.f));
+    retryButton.setPosition(530.f, 320.f);
+    retryButton.setFillColor(sf::Color(70, 160, 70));
+
+    retryButtonText.setFont(font);
+    retryButtonText.setCharacterSize(24);
+    retryButtonText.setFillColor(sf::Color::White);
+    retryButtonText.setString("Retry");
+    centerTextInButton(retryButtonText, retryButton);
+
+
+    // Menu button
+    menuButton.setSize(sf::Vector2f(220.f, 60.f));
+    menuButton.setPosition(530.f, 410.f);
+    menuButton.setFillColor(sf::Color(100, 100, 180));
+
+    menuButtonText.setFont(font);
+    menuButtonText.setCharacterSize(24);
+    menuButtonText.setFillColor(sf::Color::White);
+    menuButtonText.setString("Main Menu");
+    centerTextInButton(menuButtonText, menuButton);
+}
+
+void Game::centerTextInButton(sf::Text& text, const sf::RectangleShape& button)
+{
+    sf::FloatRect textBounds = text.getLocalBounds();
+    sf::FloatRect buttonBounds = button.getGlobalBounds();
+
+    text.setOrigin(
+        textBounds.left + textBounds.width / 2.f,
+        textBounds.top + textBounds.height / 2.f
+    );
+
+    text.setPosition(
+        buttonBounds.left + buttonBounds.width / 2.f,
+        buttonBounds.top + buttonBounds.height / 2.f
+    );
+}
+
+bool Game::isMouseOverButton(const sf::RectangleShape& button) const
+{
+    sf::Vector2 mousePos(inputState.mouseX, inputState.mouseY);
+    return button.getGlobalBounds().contains(mousePos);
 }
