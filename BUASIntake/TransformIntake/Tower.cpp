@@ -35,6 +35,16 @@ void Tower::update(float dt,
     std::vector<std::unique_ptr<Enemy>>& enemies,
     std::vector<std::unique_ptr<Projectile>>& projectiles)
 {
+    
+    // This is the fire flash system
+    if (fireFlashTimer > 0.0f)
+    {
+        fireFlashTimer -= dt;
+        if (fireFlashTimer < 0.0f)
+            fireFlashTimer = 0.0f;
+    }
+    
+    // This is fire rate code
     if (fireRate <= 0.0f)
         return;
 
@@ -43,10 +53,12 @@ void Tower::update(float dt,
     if (fireCooldown > 0.0f)
         return;
 
+    // this is the enemy target system
     Enemy* target = findTarget(enemies);
     if (target)
     {
         projectiles.push_back(std::make_unique<Projectile>(x, y, target, 220.0f, damage));
         fireCooldown = 1.0f / fireRate;
+        fireFlashTimer = fireFlashDuratio;
     }
 }

@@ -347,6 +347,19 @@ void Level::drawTowers(sf::RenderWindow& window)
         shape.setOrigin(15.0f, 15.0f);
         shape.setPosition(tower->getX(), tower->getY());
         window.draw(shape);
+
+        //This is the fire flash drawing system
+        if (tower->getFireFlashTimer() > 0.0f)
+        {
+            float percent = tower->getFireFlashTimer() / tower->getFireFlashDuration();
+
+            sf::CircleShape flash(20.f);
+            flash.setOrigin(20.f, 20.f);
+            flash.setPosition(tower->getX(), tower->getY());
+            flash.setFillColor(sf::Color(255, 255, 100, static_cast<sf::Uint8>(150 * percent)));
+
+            window.draw(flash); 
+        }
     }
 }
 
