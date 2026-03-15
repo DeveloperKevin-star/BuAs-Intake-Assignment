@@ -2,6 +2,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Level.h"
+#include <memory>
 
 // these are the game state for the state machines
 enum class GameState
@@ -67,7 +68,7 @@ private:
     sf::Text waveText;
 
     bool running = false;
-    std::vector<Level> levels;
+    std::vector<std::unique_ptr<Level>> levels;
     int currentLevelIndex = 0;
 
 

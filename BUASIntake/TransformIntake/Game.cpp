@@ -174,7 +174,7 @@ void Game::update(float dt)
             if (currentLevelIndex >= static_cast<int>(levels.size()))
                 return;
 
-            Level& lvl = levels.at(currentLevelIndex);
+            Level& lvl = *levels.at(currentLevelIndex);
             lvl.handlePlayerInput(inputState);
             lvl.update(dt);
 
@@ -195,7 +195,7 @@ void Game::update(float dt)
                 if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
                 {
                     transitionText.setString("LevelComplete!\n\nSavedMoney: " + std::to_string(carryoverMoney) +
-                        "\nNext: " + levels.at(currentLevelIndex + 1).getName() + ".");
+                        "\nNext: " + levels.at(currentLevelIndex + 1)->getName() + ".");
                 }
                 else
                 {
@@ -219,7 +219,7 @@ void Game::update(float dt)
                 }
                 else
                 {
-                    levels.at(currentLevelIndex).addMoney(carryoverMoney);
+                    levels.at(currentLevelIndex)->addMoney(carryoverMoney);
                     currentState = GameState::Playing;
                 }
                 return;
@@ -265,7 +265,7 @@ void Game::render()
     {
         if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
         {
-            Level& lvl = levels.at(currentLevelIndex);
+            Level& lvl = *levels.at(currentLevelIndex);
             lvl.render(window);
 
             bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
@@ -318,7 +318,7 @@ void Game::render()
     {
         if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
         {
-            levels.at(currentLevelIndex).render(window);
+            levels.at(currentLevelIndex)->render(window);
         }
 
         window.draw(transitionText);
@@ -355,11 +355,11 @@ void Game::render()
 
 void Game::setupLevels() {
     levels.clear();
-    levels.emplace_back(Level::createCitySmogLevel());
-    levels.emplace_back(Level::createIndustrialLevel());
-    levels.emplace_back(Level::createHarborLevel());
-    levels.emplace_back(Level::createToxicLevel());
-    levels.emplace_back(Level::createMFactoryLevel());
+    levels.emplace_back(std::make_unique<Level>(Level::createCitySmogLevel()));
+    levels.emplace_back(std::make_unique<Level>(Level::createIndustrialLevel()));
+    levels.emplace_back(std::make_unique<Level>(Level::createHarborLevel()));
+    levels.emplace_back(std::make_unique<Level>(Level::createToxicLevel()));
+    levels.emplace_back(std::make_unique<Level>(Level::createMFactoryLevel()));
 
     currentLevelIndex = 0;
 }

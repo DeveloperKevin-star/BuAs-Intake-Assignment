@@ -701,13 +701,13 @@ bool Level::loadTextures()
     bool ok = true;
 
     //Enemy Textures 
-    ok &= smogTexture.loadFromFile("assets/smog.png");
-    ok &= plasticTexture.loadFromFile("assets/plastic.png");
-    ok &= oilTexture.loadFromFile("assets/oil.png");
+    ok &= smogTexture.loadFromFile("assets/Textures/Enemies/Smog.png");
+    ok &= plasticTexture.loadFromFile("assets/Textures/Enemies/Plastic.png");
+    ok &= oilTexture.loadFromFile("assets/Textures/Enemies/Oil.png");
 
     //TowerTextures
-    ok &= towerTexture.loadFromFile("assets/tower.png");
-    ok &= projectileTexture.loadFromFile("assets/projectile.png");
+    ok &= towerTexture.loadFromFile("assets/textures/towers/tower.png");
+    ok &= projectileTexture.loadFromFile("assets/textures/towers/projectile.png");
     return ok;
 }
 
