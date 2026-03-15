@@ -18,7 +18,7 @@ bool Game::init()
     setupLevels();
 
 
-    if (!font.loadFromFile("ARIAL.TTF"))
+    if (!font.loadFromFile("assets/fonts/ARIAL.TTF"))
         return false;
 
     //buttons

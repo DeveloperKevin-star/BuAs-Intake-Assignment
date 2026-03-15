@@ -1,4 +1,6 @@
 #include "Level.h"
+#include <iostream>
+#include <windows.h>
 #include <cmath>
 
 Level::Level(const LevelConfig& cfg)
@@ -418,6 +420,8 @@ Level Level::createCitySmogLevel()
     cfg.name = "City Smog Defence";
     cfg.initialHealth = 50;
 
+    cfg.backgroundTexturePath = "assets/textures/levels/CityPolutionLevel.png";
+
     cfg.enemyPath = {
         {0.0f, 100.0f},
         {200.0f, 100.0f},
@@ -452,8 +456,9 @@ Level Level::createIndustrialLevel()
 {
     LevelConfig cfg;
     cfg.name = "Industrial Waste";
-
     cfg.initialHealth = 40;
+
+    cfg.backgroundTexturePath = "assets/textures/levels/IndustrialWasteLevel.png";
 
     cfg.enemyPath =
     {
@@ -496,6 +501,8 @@ Level Level::createHarborLevel()
 
     cfg.initialHealth = 25;
 
+    cfg.backgroundTexturePath = "assets/textures/levels/HarborLevel.png";
+
     cfg.enemyPath =
     {
         {0.f, 150.f},
@@ -536,6 +543,8 @@ Level Level::createToxicLevel()
     cfg.name = "Toxic River";
 
     cfg.initialHealth = 40;
+
+    cfg.backgroundTexturePath = "assets/textures/levels/ToxicLakeLevel.png";
 
     cfg.enemyPath =
     {
@@ -595,6 +604,8 @@ Level Level::createMFactoryLevel()
     cfg.name = "Mega Factory";
 
     cfg.initialHealth = 25;
+
+    cfg.backgroundTexturePath = "assets/textures/levels/MFactoryLevel.png";
 
     cfg.enemyPath =
     {
@@ -724,6 +735,9 @@ bool Level::loadLevelVisual() {
         else
         {
             succes = false;
+            std::cout << "Failed to laod background: "
+                << config.backgroundTexturePath << std::endl;
+            OutputDebugStringA("LoadLevelVisual called\n");
         }
     }
 
@@ -732,10 +746,13 @@ bool Level::loadLevelVisual() {
         if (!pathTexture.loadFromFile(config.pathTexturePath))
         {
             succes = false;
+            std::cout << "Failed to laod background: "
+                << config.backgroundTexturePath << std::endl;
+            OutputDebugStringA("LoadLevelVisual called\n");
         }
     }
 
-    return false;
+    return succes;
 }
 
 const sf::Texture& Level::getEnemyTexture(EnemyType type) const
