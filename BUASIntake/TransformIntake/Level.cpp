@@ -752,6 +752,19 @@ bool Level::loadLevelVisual() {
         }
     }
 
+    if (!projectileTexture.loadFromFile("assets/textures/towers/projectile.png"))
+    {
+        succes = false;
+    }
+    
+    projectileRects =
+    {
+        {0,0,128,128},
+        {128,0,128,128},
+        {256,0,128,128},
+        {384,0,128,128}
+    };
+
     return succes;
 }
 

@@ -85,7 +85,8 @@ private:
     sf::Texture projectileTexture;
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
-    
+    sf::Texture projectileTexture;
+
     sf::Texture pathTexture;
    
     bool loadTextures();
@@ -101,6 +102,7 @@ private:
     void handleCollision();
     void drawTowers(sf::RenderWindow& window);
     void drawProjectiles(sf::RenderWindow& window);
+    std::vector<sf::IntRect> projectileRects;
 
     //path functions
     bool isTooCloseToPath(float x, float y) const;

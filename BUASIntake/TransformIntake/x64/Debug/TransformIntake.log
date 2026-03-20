@@ -1,2 +1,36 @@
-﻿  Game.cpp
-  TransformIntake.vcxproj -> D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe
+﻿  Enemy.cpp
+  Game.cpp
+D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.h(88,17): error C2086: 'sf::Texture Level::projectileTexture': redefinition
+  Level.cpp
+  (compiling source file 'Game.cpp')
+  
+D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.h(72,41): error C2086: 'std::vector<std::unique_ptr<Level,std::default_delete<Level>>,std::allocator<std::unique_ptr<Level,std::default_delete<Level>>>> Game::levels': redefinition
+  (compiling source file 'Game.cpp')
+  
+D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.h(88,17): error C2086: 'sf::Texture Level::projectileTexture': redefinition
+  (compiling source file 'Level.cpp')
+  
+  main.cpp
+D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.h(88,17): error C2086: 'sf::Texture Level::projectileTexture': redefinition
+  (compiling source file 'main.cpp')
+  
+D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Game.h(72,41): error C2086: 'std::vector<std::unique_ptr<Level,std::default_delete<Level>>,std::allocator<std::unique_ptr<Level,std::default_delete<Level>>>> Game::levels': redefinition
+  (compiling source file 'main.cpp')
+  
+  PathNode.cpp
+  Projectile.cpp
+  Tower.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\memory(3659,35): error C2661: 'Projectile::Projectile': no overloaded function takes 5 arguments
+  (compiling source file 'Tower.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\memory(3659,35):
+      while trying to match the argument list '(float, float, Enemy *, _Ty, int)'
+          with
+          [
+              _Ty=float
+          ]
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\memory(3659,35):
+      the template instantiation context (the oldest one first) is
+          D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Tower.cpp(60,36):
+          see reference to function template instantiation 'std::unique_ptr<Projectile,std::default_delete<Projectile>> std::make_unique<Projectile,float&,float&,Enemy*&,float,int&,0>(float &,float &,Enemy *&,float &&,int &)' being compiled
+  
+  Generating Code...

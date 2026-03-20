@@ -69,6 +69,7 @@ private:
 
     bool running = false;
     std::vector<std::unique_ptr<Level>> levels;
+    std::vector<std::unique_ptr<Level>> levels;
     int currentLevelIndex = 0;
 
 
