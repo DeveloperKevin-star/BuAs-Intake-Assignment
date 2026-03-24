@@ -330,7 +330,7 @@ void Level::updateTowers(float dt)
 {
     for (auto& tower : towers)
     {
-        tower->update(dt, enemies, projectiles);
+        tower->update(dt, enemies, projectiles, projectileTexture, projectileRects);
     }
 }
 
@@ -399,17 +399,19 @@ void Level::drawProjectiles(sf::RenderWindow& window)
     // this is drawing the projectiles
     for (const auto& projectile : projectiles)
     {
-        sf::Sprite projectileSprite;
-        projectileSprite.setTexture(projectileTexture);
-        projectileSprite.setOrigin(
-            projectileSprite.getLocalBounds().width / 2.f,
-            projectileSprite.getLocalBounds().height / 2.f
-        );
+        //sf::Sprite projectileSprite;
+        //projectileSprite.setTexture(projectileTexture);
+        //projectileSprite.setOrigin(
+        //    projectileSprite.getLocalBounds().width / 2.f,
+        //    projectileSprite.getLocalBounds().height / 2.f
+        //);
 
-        projectileSprite.setPosition(projectile->getX(), projectile->getY());
-        projectileSprite.setScale(.8f, .8f);
+        //projectileSprite.setPosition(projectile->getX(), projectile->getY());
+        //projectileSprite.setScale(.08f, .08f);
 
-        window.draw(projectileSprite);
+        //window.draw(projectileSprite);
+
+        projectile->render(window);
     }
 }
 
@@ -759,10 +761,12 @@ bool Level::loadLevelVisual() {
     
     projectileRects =
     {
-        {0,0,128,128},
-        {128,0,128,128},
-        {256,0,128,128},
-        {384,0,128,128}
+    {180, 220, 140, 240},
+    {760, 210, 150, 250},
+    {520, 430, 140, 240},
+    {760, 860, 150, 250},
+    {170, 860, 150, 260},
+    {170, 860, 150, 260}
     };
 
     return succes;

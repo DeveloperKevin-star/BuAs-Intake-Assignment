@@ -11,7 +11,9 @@ public:
 
     void update(float dt,
         std::vector<std::unique_ptr<Enemy>>& enemies,
-        std::vector<std::unique_ptr<Projectile>>& projectiles);
+        std::vector<std::unique_ptr<Projectile>>& projectiles,
+        const sf::Texture& projectileTexture,
+        const std::vector<sf::IntRect>& projectileRects);
 
     float getX() const { return x; }
     float getY() const { return y; }

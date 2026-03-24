@@ -13,8 +13,7 @@ Projectile::Projectile(
     float projectileSpeed, 
     int projectileDamage
 )
-    : x(startX), 
-      y(startY), 
+    : pos(startX,startY), 
       speed(projectileSpeed), 
       damage(projectileDamage), 
       target(targetEnemy)
@@ -28,9 +27,11 @@ Projectile::Projectile(
     sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
+    sprite.setScale(.12f, .12f);
+    sprite.setPosition(pos);
+     
     //Here the direction will be calculated
     sf::Vector2f dir(targetX - startX, targetY - startY);
-
     float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 
     if (length != 0)
@@ -56,9 +57,8 @@ void Projectile::update(float dt)
         return;
     }
 
-    float dx = target->getX() - x;
-    float dy = target->getY() - y;
-    float distance = std::sqrt(dx * dx + dy * dy);
+    sf::Vector2f toTarget(target->getX() - pos.x, target->getY() - pos.y);
+    float distance = std::sqrt(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
 
     if (distance < 4.0f)
     {
@@ -66,23 +66,26 @@ void Projectile::update(float dt)
         return;
     }
 
-    pos += vel * dt;
+    if (distance > .0f) 
+    {
+        sf::Vector2f direction = toTarget / distance;
+        float moveDistance = speed * dt;
 
-    sprite.setPosition(pos);
+        if (moveDistance >= distance)
+        {
+            pos.x = target->getX();
+            pos.y = target->getY();
+            sprite.setPosition(pos);
+            hitTarget = true;
+            return;
+        }
 
-    //float moveDistance = speed * dt;
+        pos += direction * moveDistance;
+        sprite.setPosition(pos);
 
-    //if (moveDistance >= distance)
-    //{
-    //    x = target->getX();
-    //    y = target->getY();
-    //    hitTarget = true;
-    //}
-    //else
-    //{
-    //    x += (dx / distance) * moveDistance;
-    //    y += (dy / distance) * moveDistance;
-    //}
+        float angle = std::atan2(direction.y, direction.x) * 180.f / 3.14159265f;
+        sprite.setRotation(angle);
+    } 
 }
 void Projectile::render(sf::RenderWindow& window)
 {

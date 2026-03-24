@@ -85,7 +85,6 @@ private:
     sf::Texture projectileTexture;
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
-    sf::Texture projectileTexture;
 
     sf::Texture pathTexture;
    

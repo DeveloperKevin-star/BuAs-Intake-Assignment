@@ -26,8 +26,8 @@ public:
     Enemy* getTarget() const { return target; }
     int getDamage() const { return damage; }
 
-    float getX() const { return x; }
-    float getY() const { return y; }
+    float getX() const { return pos.x; }
+    float getY() const { return pos.y; }
 
 private:
     sf::Vector2f pos;
