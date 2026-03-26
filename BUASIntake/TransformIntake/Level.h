@@ -83,6 +83,7 @@ private:
     sf::Texture oilTexture;
     sf::Texture towerTexture;
     sf::Texture projectileTexture;
+
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
 

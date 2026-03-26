@@ -1,10 +1,2 @@
-﻿  Enemy.cpp
-  Game.cpp
-  Level.cpp
-  main.cpp
-  PathNode.cpp
-  Projectile.cpp
-  Tower.cpp
-  Generating Code...
-D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.cpp(821,1): warning C4715: 'Level::getPathColor': not all control paths return a value
+﻿  Game.cpp
   TransformIntake.vcxproj -> D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe

@@ -49,11 +49,13 @@ void Level::handleCollision()
 
 void Level::render(sf::RenderWindow& window)
 {
+    drawBackground(window);
     drawPath(window);
     drawEnemies(window);
-    drawEffects(window);
     drawTowers(window);
     drawProjectiles(window);
+    drawEffects(window);
+
 }
 
 //Enemies Functions
@@ -114,15 +116,14 @@ void  Level::drawPath(sf::RenderWindow& window)
     for (size_t i = 1; i < config.enemyPath.size(); ++i)
     {
         sf::Vector2f start(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y);
-        sf::Vector2f end(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y);
-        
+        sf::Vector2f end(config.enemyPath[i].x, config.enemyPath[i].y);
+
         sf::Vector2f direction = end - start;
+        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-        float lenght = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-        sf::RectangleShape segment(sf::Vector2f(lenght, 24.f));
-        segment.setPosition(start); 
-
+        sf::RectangleShape segment(sf::Vector2f(length, 24.f));
+        segment.setOrigin(0.f, 12.f);
+        segment.setPosition(start);
         segment.setFillColor(getPathColor());
 
         float angle = std::atan2(direction.y, direction.x) * 180.f / 3.14159265f;
@@ -399,18 +400,6 @@ void Level::drawProjectiles(sf::RenderWindow& window)
     // this is drawing the projectiles
     for (const auto& projectile : projectiles)
     {
-        //sf::Sprite projectileSprite;
-        //projectileSprite.setTexture(projectileTexture);
-        //projectileSprite.setOrigin(
-        //    projectileSprite.getLocalBounds().width / 2.f,
-        //    projectileSprite.getLocalBounds().height / 2.f
-        //);
-
-        //projectileSprite.setPosition(projectile->getX(), projectile->getY());
-        //projectileSprite.setScale(.08f, .08f);
-
-        //window.draw(projectileSprite);
-
         projectile->render(window);
     }
 }
@@ -727,36 +716,33 @@ bool Level::loadTextures()
 //Here is all the texture stuff
 bool Level::loadLevelVisual() {
 
-    bool succes = true;
+    bool success = true;
+
     if (!config.backgroundTexturePath.empty())
     {
         if (backgroundTexture.loadFromFile(config.backgroundTexturePath))
         {
-            backgroundSprite.setTexture(backgroundTexture);
+            backgroundSprite.setTexture(backgroundTexture, true);
+            backgroundSprite.setPosition(0.f, 0.f);
+
+            sf::Vector2u texSize = backgroundTexture.getSize();
+            backgroundSprite.setScale(
+                1280.f / texSize.x,
+                720.f / texSize.y
+            );
+            OutputDebugStringA("Background loaded OK\n");
         }
         else
         {
-            succes = false;
-            std::cout << "Failed to laod background: "
-                << config.backgroundTexturePath << std::endl;
-            OutputDebugStringA("LoadLevelVisual called\n");
+            OutputDebugStringA("Background failed to load\n");
+            success = false;
         }
     }
 
-    if (!config.pathTexturePath.empty())
-    {
-        if (!pathTexture.loadFromFile(config.pathTexturePath))
-        {
-            succes = false;
-            std::cout << "Failed to laod background: "
-                << config.backgroundTexturePath << std::endl;
-            OutputDebugStringA("LoadLevelVisual called\n");
-        }
-    }
 
     if (!projectileTexture.loadFromFile("assets/textures/towers/projectile.png"))
     {
-        succes = false;
+        success = false;
     }
     
     projectileRects =
@@ -769,7 +755,7 @@ bool Level::loadLevelVisual() {
     {170, 860, 150, 260}
     };
 
-    return succes;
+    return success;
 }
 
 const sf::Texture& Level::getEnemyTexture(EnemyType type) const
@@ -788,20 +774,29 @@ const sf::Texture& Level::getEnemyTexture(EnemyType type) const
 }
 
 void Level::drawBackground(sf::RenderWindow& window)
-{
-    if (backgroundTexture.getSize().x > 0)
+{    
+    if (backgroundTexture.getSize().x > 0 && backgroundTexture.getSize().y > 0)
     {
-        backgroundSprite.setScale(
+        sf::Sprite background;
+        background.setTexture(backgroundTexture, true);
+        background.setTextureRect(sf::IntRect(
+            0,
+            0,
+            backgroundTexture.getSize().x,
+            backgroundTexture.getSize().y
+        ));
+        background.setPosition(0.f, 0.f);
+        background.setScale(
             1280.f / backgroundTexture.getSize().x,
             720.f / backgroundTexture.getSize().y
         );
 
-        window.draw(backgroundSprite);
+        window.draw(background);
     }
     else
     {
-        sf::RectangleShape fallback(sf::Vector2(1280.f, 720.f));
-        fallback.setFillColor(sf::Color(30, 30, 30));
+        sf::RectangleShape fallback(sf::Vector2f(1280.f, 720.f));
+        fallback.setFillColor(sf::Color(255, 0, 255)); // bright magenta fallback
         window.draw(fallback);
     }
 }
