@@ -6,6 +6,11 @@
 Level::Level(const LevelConfig& cfg)
     : config(cfg), ecoSystemHealth(cfg.initialHealth)
 {
+    totalEnemies = 0;
+
+    for (const auto& wave : config.waves)
+        totalEnemies += wave.enemiesToSpawn.size();
+    
     loadTextures(); 
     loadLevelVisual();
     
@@ -100,6 +105,7 @@ void Level::updateEnemies(float dt)
         {
             spawnDeathFlash((*it)->getX(), (*it)->getY());
             money += killReward;
+            enemiesKilled++;
             it = enemies.erase(it);
         }
         else
@@ -367,30 +373,48 @@ void Level::drawTowers(sf::RenderWindow& window)
     //this draws the towers
     for (const auto& tower : towers)
     {
-        sf::Sprite towerSprite;
-        towerSprite.setTexture(towerTexture);
-
-        towerSprite.setOrigin(
-            towerSprite.getLocalBounds().width / 2.f,
-            towerSprite.getLocalBounds().height / 2.f
-        );
-
-        towerSprite.setPosition(tower->getX(), tower->getY());
-        towerSprite.setScale(.2f, .2f);
-
-        window.draw(towerSprite);
-
-        //This is the fire flash drawing system
-        if (tower->getFireFlashTimer() > 0.0f)
+        for (const auto& tower : towers)
         {
-            float percent = tower->getFireFlashTimer() / tower->getFireFlashDuration();
+            float range = tower->getRange();
 
-            sf::CircleShape flash(20.f);
-            flash.setOrigin(20.f, 20.f);
-            flash.setPosition(tower->getX(), tower->getY());
-            flash.setFillColor(sf::Color(255, 255, 100, static_cast<sf::Uint8>(150 * percent)));
+            // --- Draw Tower Sprite ---
+            if (towerTexture.getSize().x > 0 && towerTexture.getSize().y > 0)
+            {
+                sf::Sprite towerSprite;
+                towerSprite.setTexture(towerTexture, true);
 
-            window.draw(flash); 
+                sf::FloatRect bounds = towerSprite.getLocalBounds();
+                towerSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+
+                // Size Based on Range (with clamp to prevent too big/too smal towers)
+                float minSize = 80.f;
+                float maxSize = 120.f;
+
+                float desiredSize = range * 0.5f;
+                
+                // said clamp
+                desiredSize = std::max(minSize, std::min(maxSize, desiredSize));
+                
+                float scaleX = desiredSize / bounds.width;
+                float scaleY = desiredSize / bounds.height;
+
+                towerSprite.setScale(scaleX, scaleY);
+                towerSprite.setPosition(tower->getX(), tower->getY());
+                
+                window.draw(towerSprite);
+            }
+            else
+            {
+                // fallback incase texture fails
+                float baseSize = std::max(10.f, range * .15f);
+
+                sf::CircleShape towerShape(baseSize);
+                towerShape.setOrigin(baseSize, baseSize);
+                towerShape.setPosition(tower->getX(), tower->getY());
+                towerShape.setFillColor(sf::Color::Green);
+
+                window.draw(towerShape);
+            }
         }
     }
 }
@@ -410,6 +434,13 @@ Level Level::createCitySmogLevel()
     LevelConfig cfg;
     cfg.name = "City Smog Defence";
     cfg.initialHealth = 50;
+    cfg.backgroundStages =
+    { 
+        "assets/Textures/Levels/city/city_stage_1.png",
+        "assets/Textures/Levels/city/city_stage_2.png",
+        "assets/Textures/Levels/city/city_stage_3.png",
+        "assets/Textures/Levels/city/city_stage_4.png" 
+    };
 
     cfg.backgroundTexturePath = "assets/textures/levels/CityPolutionLevel.png";
 
@@ -449,7 +480,13 @@ Level Level::createIndustrialLevel()
     cfg.name = "Industrial Waste";
     cfg.initialHealth = 40;
 
-    cfg.backgroundTexturePath = "assets/textures/levels/IndustrialWasteLevel.png";
+    cfg.backgroundStages =
+    {
+        "assets/Textures/Levels/Waste/Industrial_stage_1.png",
+        "assets/Textures/Levels/Waste/Industrial_stage_2.png",
+        "assets/Textures/Levels/Waste/Industrial_stage_3.png",
+        "assets/Textures/Levels/Waste/Industrial_stage_4.png"
+    };
 
     cfg.enemyPath =
     {
@@ -492,7 +529,13 @@ Level Level::createHarborLevel()
 
     cfg.initialHealth = 25;
 
-    cfg.backgroundTexturePath = "assets/textures/levels/HarborLevel.png";
+    cfg.backgroundStages =
+    {
+        "assets/Textures/Levels/Harbor/harbor_stage_1.png",
+        "assets/Textures/Levels/Harbor/harbor_stage_2.png",
+        "assets/Textures/Levels/Harbor/harbor_stage_3.png",
+        "assets/Textures/Levels/Harbor/harbor_stage_4.png"
+    };
 
     cfg.enemyPath =
     {
@@ -535,7 +578,13 @@ Level Level::createToxicLevel()
 
     cfg.initialHealth = 40;
 
-    cfg.backgroundTexturePath = "assets/textures/levels/ToxicLakeLevel.png";
+    cfg.backgroundStages =
+    {
+        "assets/Textures/Levels/Toxic/river_stage_1.png",
+        "assets/Textures/Levels/Toxic/river_stage_2.png",
+        "assets/Textures/Levels/Toxic/river_stage_3.png",
+        "assets/Textures/Levels/Toxic/river_stage_4.png"
+    };
 
     cfg.enemyPath =
     {
@@ -596,7 +645,13 @@ Level Level::createMFactoryLevel()
 
     cfg.initialHealth = 25;
 
-    cfg.backgroundTexturePath = "assets/textures/levels/MFactoryLevel.png";
+    cfg.backgroundStages =
+    {
+        "assets/Textures/Levels/Factory/factory_stage_1.png",
+        "assets/Textures/Levels/Factory/factory_stage_2.png",
+        "assets/Textures/Levels/Factory/factory_stage_3.png",
+        "assets/Textures/Levels/Factory/factory_stage_4.png"
+    };
 
     cfg.enemyPath =
     {
@@ -605,11 +660,7 @@ Level Level::createMFactoryLevel()
         {300.f, 400.f},
         {700.f, 400.f},
         {800.f, 500.f},
-        {1000.f, 500.f},
-        {1000.f, 550.f},
-        {1100.f, 575.f},
-        {1200.f, 600.f},
-        {1500.f, 1500.f}
+        {1000.f, 500.f}
     };
 
     WaveConfig wave1;
@@ -631,8 +682,8 @@ Level Level::createMFactoryLevel()
 
     };
     WaveConfig wave3;
-    wave2.spawnInterval = 0.7f;
-    wave2.enemiesToSpawn =
+    wave3.spawnInterval = 0.7f;
+    wave3.enemiesToSpawn =
     {
         EnemyType::Oil,
         EnemyType::Oil,
@@ -640,8 +691,8 @@ Level Level::createMFactoryLevel()
 
     };
     WaveConfig wave4;
-    wave2.spawnInterval = 0.7f;
-    wave2.enemiesToSpawn =
+    wave4.spawnInterval = 0.7f;
+    wave4.enemiesToSpawn =
     {
         EnemyType::Oil,
         EnemyType::Oil,
@@ -651,8 +702,8 @@ Level Level::createMFactoryLevel()
 
     };
     WaveConfig wave5;
-    wave2.spawnInterval = 0.7f;
-    wave2.enemiesToSpawn =
+    wave5.spawnInterval = 0.7f;
+    wave5.enemiesToSpawn =
     {
         EnemyType::Plastic,
         EnemyType::Plastic,
@@ -718,28 +769,40 @@ bool Level::loadLevelVisual() {
 
     bool success = true;
 
-    if (!config.backgroundTexturePath.empty())
-    {
-        if (backgroundTexture.loadFromFile(config.backgroundTexturePath))
-        {
-            backgroundSprite.setTexture(backgroundTexture, true);
-            backgroundSprite.setPosition(0.f, 0.f);
+    backgroundTextures.clear();
+    backgroundSprites.clear();
 
-            sf::Vector2u texSize = backgroundTexture.getSize();
-            backgroundSprite.setScale(
+    backgroundTextures.reserve(config.backgroundStages.size());
+    backgroundSprites.reserve(config.backgroundStages.size());
+    
+    for (const auto& path : config.backgroundStages)
+        {
+            sf::Texture tex;
+            if (tex.loadFromFile(path))
+            {
+                backgroundTextures.push_back(std::move(tex));
+            }
+            else
+            {
+                OutputDebugStringA(("FAILED: " + path + "\n").c_str());
+                success = false;
+            }
+        }
+    for (auto& tex : backgroundTextures)
+        {
+            sf::Sprite sprite;
+            sprite.setTexture(tex, true);
+            sprite.setPosition(0.f, 0.f); 
+
+            sf::Vector2u texSize = tex.getSize();
+            sprite.setScale(
                 1280.f / texSize.x,
                 720.f / texSize.y
             );
-            OutputDebugStringA("Background loaded OK\n");
-        }
-        else
-        {
-            OutputDebugStringA("Background failed to load\n");
-            success = false;
-        }
-    }
 
-
+            backgroundSprites.push_back(sprite);
+        }
+    //--- This handles the drawing of the projectiles ---
     if (!projectileTexture.loadFromFile("assets/textures/towers/projectile.png"))
     {
         success = false;
@@ -775,30 +838,33 @@ const sf::Texture& Level::getEnemyTexture(EnemyType type) const
 
 void Level::drawBackground(sf::RenderWindow& window)
 {    
-    if (backgroundTexture.getSize().x > 0 && backgroundTexture.getSize().y > 0)
-    {
-        sf::Sprite background;
-        background.setTexture(backgroundTexture, true);
-        background.setTextureRect(sf::IntRect(
-            0,
-            0,
-            backgroundTexture.getSize().x,
-            backgroundTexture.getSize().y
-        ));
-        background.setPosition(0.f, 0.f);
-        background.setScale(
-            1280.f / backgroundTexture.getSize().x,
-            720.f / backgroundTexture.getSize().y
-        );
-
-        window.draw(background);
-    }
-    else
+    if (backgroundSprites.empty()) //--- This is a fallback in case the textures fails to laod ---
     {
         sf::RectangleShape fallback(sf::Vector2f(1280.f, 720.f));
-        fallback.setFillColor(sf::Color(255, 0, 255)); // bright magenta fallback
+        fallback.setFillColor(sf::Color(255, 0, 255));
         window.draw(fallback);
+        return;
     }
+
+    //--- This draws the background based on stage ---
+    int stage = getBackgroundStage();
+    stage = std::max(0, std::min(stage, static_cast<int>(backgroundSprites.size()) - 1));
+    
+    window.draw(backgroundSprites[stage]);
+    
+}
+
+int Level::getBackgroundStage() const
+{
+    if (totalEnemies == 0)
+        return 0;
+
+    float progress = static_cast<float>(enemiesKilled) / totalEnemies;
+
+    if (progress < 0.25f) return 0;
+    else if (progress < 0.5f) return 1;
+    else if (progress < 0.75f) return 2;
+    else return 3;
 }
 
 sf::Color Level::getPathColor() const

@@ -164,173 +164,79 @@ void Game::handleInput()
 void Game::update(float dt)
 {
     // The game has gamestates to handle it better for the player in the menu's, and now certain stuff only updates when they are needed to
-    //switch (currentState)
-    //{
-    //    case GameState::MainMenu:
-    //    break;
-
-    //    case GameState::Playing:
-    //    {
-    //        if (currentLevelIndex >= static_cast<int>(levels.size()))
-    //            return;
-
-    //        Level& lvl = *levels.at(currentLevelIndex);
-    //        lvl.handlePlayerInput(inputState);
-    //        lvl.update(dt);
-
-    //        if (lvl.isFailed())
-    //        {
-    //            endScreenText.setString("Defeat!\nPress Enter for Main Menu.");
-    //            currentState = GameState::Defeat;
-    //            return;
-    //        }
-
-    //        if (lvl.isCompleted())
-    //        {
-    //            OutputDebugStringA("Entered Level transistion\n");
-    //            carryoverMoney = lvl.getMoney();
-    //            currentState = GameState::LevelTransition;
-    //            transistionTimer = transitionDuration;
-    //           
-
-    //            if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
-    //            {
-    //                transitionText.setString("LevelComplete!\n\nSavedMoney: " + std::to_string(carryoverMoney) +
-    //                    "\nNext: " + levels.at(currentLevelIndex + 1)->getName() + ".");
-    //            }
-    //            else
-    //            {
-    //                transitionText.setString("Final Level Complete!");
-    //            }
-
-    //            return;
-    //        }
-    //        break;
-    //    }
-    //    case GameState::LevelTransition:
-    //        transistionTimer -= dt;
-    //        if (transistionTimer <= 0.f)
-    //        {
-    //            OutputDebugStringA("TransitionTimer finished \n");
-    //            ++currentLevelIndex;
-
-    //            if (currentLevelIndex >= static_cast<int>(levels.size()))
-    //            {
-    //                OutputDebugStringA("Entered Victory State\n");
-    //                endScreenText.setString("Victory!\nPress Enter for Main Menu.");
-    //                currentState = GameState::Victory;
-    //            }
-    //            else
-    //            {
-    //                OutputDebugStringA("Back tro playing State\n");
-    //                levels.at(currentLevelIndex)->addMoney(carryoverMoney);
-    //                currentState = GameState::Playing;
-    //            }
-    //            return;
-    //        }
-    //        break;
-
-    //    //Both victory and defeat will wait for the enter input
-    //    case GameState::Victory:
-    //        break;
-
-    //    case GameState::Defeat:
-    //        break;
-    //}
-
     switch (currentState)
     {
-    case GameState::MainMenu:
+        case GameState::MainMenu:
         break;
 
-    case GameState::Playing:
-    {
-        if (currentLevelIndex >= static_cast<int>(levels.size()))
+        case GameState::Playing:
         {
-            OutputDebugStringA("Playing: currentLevelIndex out of range\n");
-            return;
-        }
-
-        Level& lvl = *levels.at(currentLevelIndex);
-        lvl.handlePlayerInput(inputState);
-        lvl.update(dt);
-
-        if (lvl.isFailed())
-        {
-            OutputDebugStringA("Entered Defeat\n");
-            endScreenText.setString("Defeat!\nPress Enter for Main Menu.");
-            currentState = GameState::Defeat;
-            return;
-        }
-
-        if (lvl.isCompleted())
-        {
-            std::string msg = "Entered LevelTransition from level index " + std::to_string(currentLevelIndex) + "\n";
-            OutputDebugStringA(msg.c_str());
-
-            carryoverMoney = lvl.getMoney();
-            currentState = GameState::LevelTransition;
-            transistionTimer = transitionDuration;
-
-            if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
-            {
-                transitionText.setString(
-                    "LevelComplete!\n\nSavedMoney: " + std::to_string(carryoverMoney) +
-                    "\nNext: " + levels.at(currentLevelIndex + 1)->getName() + "."
-                );
-            }
-            else
-            {
-                transitionText.setString("Final Level Complete!");
-            }
-
-            return;
-        }
-
-        break;
-    }
-
-    case GameState::LevelTransition:
-    {
-        transistionTimer -= dt;
-
-        std::string msg = "LevelTransition: timer=" + std::to_string(transistionTimer) +
-            " currentLevelIndex=" + std::to_string(currentLevelIndex) +
-            " levels.size=" + std::to_string(levels.size()) + "\n";
-        OutputDebugStringA(msg.c_str());
-
-        if (transistionTimer <= 0.f)
-        {
-            ++currentLevelIndex;
-
-            std::string msg2 = "Transition finished: currentLevelIndex now " + std::to_string(currentLevelIndex) + "\n";
-            OutputDebugStringA(msg2.c_str());
-
             if (currentLevelIndex >= static_cast<int>(levels.size()))
+                return;
+
+            Level& lvl = *levels.at(currentLevelIndex);
+            lvl.handlePlayerInput(inputState);
+            lvl.update(dt);
+
+            if (lvl.isFailed())
             {
-                OutputDebugStringA("Entered Victory state\n");
-                endScreenText.setString("Victory!\nPress Enter for Main Menu.");
-                currentState = GameState::Victory;
+                endScreenText.setString("Defeat!\nPress Enter for Main Menu.");
+                currentState = GameState::Defeat;
+                return;
             }
-            else
+
+            if (lvl.isCompleted())
             {
-                OutputDebugStringA("Returning to Playing\n");
-                levels.at(currentLevelIndex)->addMoney(carryoverMoney);
-                currentState = GameState::Playing;
+                OutputDebugStringA("Entered Level transistion\n");
+                carryoverMoney = lvl.getMoney();
+                currentState = GameState::LevelTransition;
+                transistionTimer = transitionDuration;
+               
+
+                if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
+                {
+                    transitionText.setString("LevelComplete!\n\nSavedMoney: " + std::to_string(carryoverMoney) +
+                        "\nNext: " + levels.at(currentLevelIndex + 1)->getName() + ".");
+                }
+                else
+                {
+                    transitionText.setString("Final Level Complete!");
+                }
+
+                return;
             }
-            return;
+            break;
         }
-        break;
+        case GameState::LevelTransition:
+            transistionTimer -= dt;
+            if (transistionTimer <= 0.f)
+            {
+                OutputDebugStringA("TransitionTimer finished \n");
+                ++currentLevelIndex;
+
+                if (currentLevelIndex >= static_cast<int>(levels.size()))
+                {
+                    OutputDebugStringA("Entered Victory State\n");
+                    endScreenText.setString("Victory!\nPress Enter for Main Menu.");
+                    currentState = GameState::Victory;
+                }
+                else
+                {
+                    OutputDebugStringA("Back tro playing State\n");
+                    levels.at(currentLevelIndex)->addMoney(carryoverMoney);
+                    currentState = GameState::Playing;
+                }
+                return;
+            }
+            break;
+
+        //Both victory and defeat will wait for the enter input
+        case GameState::Victory:
+            break;
+
+        case GameState::Defeat:
+            break;
     }
-
-    case GameState::Victory:
-        OutputDebugStringA("Currently in Victory\n");
-        break;
-
-    case GameState::Defeat:
-        break;
-    }
-
 }
 
 void Game::render()
@@ -366,8 +272,10 @@ void Game::render()
 
                 bool canPlace = lvl.canPlaceTowerAt(inputState.mouseX, inputState.mouseY);
 
-                sf::CircleShape rangePreview(100.0f);
-                rangePreview.setOrigin(100.f, 100.f);
+                float range = lvl.getPlacementTowerRange();
+                
+                sf::CircleShape rangePreview(range);
+                rangePreview.setOrigin(range, range);
                 rangePreview.setPosition(inputState.mouseX, inputState.mouseY);
                 rangePreview.setFillColor(sf::Color(0, 0, 0, 0));
                 rangePreview.setOutlineThickness(2.0f);

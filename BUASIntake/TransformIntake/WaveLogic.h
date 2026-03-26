@@ -28,4 +28,5 @@ struct LevelConfig
 
     std::string backgroundTexturePath;
     std::string pathTexturePath;
+    std::vector<std::string> backgroundStages;
 };

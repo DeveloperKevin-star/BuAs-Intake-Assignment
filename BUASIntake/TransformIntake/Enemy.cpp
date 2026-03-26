@@ -8,8 +8,6 @@ Enemy::Enemy(EnemyType enemyType, const std::vector<PathNode>& enemyPath)
 
     if (!path.empty())
     {
-        //x = path[0].x;
-        //y = path[0].y;
         x = path.at(0).x;
         y = path.at(0).y;
         targetNodeIndex = (path.size() > 1) ? 1 : 0;

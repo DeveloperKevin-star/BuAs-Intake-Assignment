@@ -3,44 +3,44 @@
   "WorkspaceRootPath": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Projectile.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Projectile.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\DOCUMENTS\\SCHOOL\\BUAS\\BUAS-INTAKE-ASSIGNMENT\\BUASINTAKE\\TRANSFORMINTAKE\\WAVELOGIC.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TRANSFORMINTAKE\\WAVELOGIC.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Tower.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Tower.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Tower.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Tower.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\WaveLogic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TransformIntake\\WaveLogic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Projectile.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Projectile.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Projectile.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Projectile.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{D87973D7-2F07-4305-A1B7-9C7C57D03D2E}|TransformIntake\\TransformIntake.vcxproj|solutionrelative:TransformIntake\\Level.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -75,20 +75,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "WaveLogic.h",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\WaveLogic.h",
               "RelativeDocumentMoniker": "TransformIntake\\WaveLogic.h",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\WaveLogic.h",
               "RelativeToolTip": "TransformIntake\\WaveLogic.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-03-13T18:05:17.685Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Projectile.h",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Projectile.h",
               "RelativeDocumentMoniker": "TransformIntake\\Projectile.h",
@@ -101,91 +101,91 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "Level.h",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.h",
               "RelativeDocumentMoniker": "TransformIntake\\Level.h",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.h",
               "RelativeToolTip": "TransformIntake\\Level.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAFcAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-03-13T17:16:02.369Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Game.h",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h",
               "RelativeDocumentMoniker": "TransformIntake\\Game.h",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.h",
               "RelativeToolTip": "TransformIntake\\Game.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-03-13T12:04:09.14Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Tower.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Tower.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Tower.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Tower.cpp",
               "RelativeToolTip": "TransformIntake\\Tower.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-15T16:46:50.191Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "Projectile.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Projectile.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Projectile.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Projectile.cpp",
               "RelativeToolTip": "TransformIntake\\Projectile.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFYAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAFYAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-15T16:13:56.731Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Enemy.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Enemy.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Enemy.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Enemy.cpp",
               "RelativeToolTip": "TransformIntake\\Enemy.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAF4AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-13T18:03:11.063Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Level.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Level.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Level.cpp",
               "RelativeToolTip": "TransformIntake\\Level.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAADcCAAAAAAAAAAAAAEkCAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-13T11:50:43.053Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Game.cpp",
               "DocumentMoniker": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp",
               "RelativeDocumentMoniker": "TransformIntake\\Game.cpp",
               "ToolTip": "D:\\Documents\\School\\BUAS\\BuAs-Intake-Assignment\\BUASIntake\\TransformIntake\\Game.cpp",
               "RelativeToolTip": "TransformIntake\\Game.cpp",
-              "ViewState": "AgIAAMgAAAAAAAAAAAAkwOAAAABDAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAYwGgBAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-03-13T12:00:00.481Z",
               "EditorCaption": ""

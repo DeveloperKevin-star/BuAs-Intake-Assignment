@@ -39,16 +39,18 @@ public:
     //tower
     bool placeTowerAt(float x, float y);
     bool canPlaceTowerAt(float x, float y) const;
-
+    float getPlacementTowerRange() const { return placementTowerRange; }
 
     //Level
     bool isCompleted() const { return completed; }
     bool isFailed() const { return failed; }
 
+
     int getEcoSystemHealth() const { return ecoSystemHealth; }
     int getMoney() const { return money; }
     int getCurrentWaveIndex() const { return currentWaveIndex; }
     int getTowerCost() const { return towerCost; }
+    int getBackgroundStage() const;
     const std::string& getName() const { return config.name; }
 
     static Level createCitySmogLevel();
@@ -64,28 +66,30 @@ public:
     bool hasMoreWaves() const;
 
 private:
-    //enemy functions
+    //--- Enemy functions ---
     void spawnEnemies(float dt);
     void updateEnemies(float dt);
     void drawEnemies(sf::RenderWindow& window);
     sf::Color getEnemyColor(EnemyType type) const; // this handles the enemy colors
     sf::Color getHealthBarColor(float healthPercent) const;
     void drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy);
-    //enemy flashes
+    int enemiesKilled = 0;
+    int totalEnemies = 0;
+    //Flashes
     std::vector<FlashEffect> deathFlashes; // this handles the deathflashes of the enemies
     void updateEffects(float dt);
     void drawEffects(sf::RenderWindow& window);
     void spawnDeathFlash(float x, float y);
 
-    //Textures
+    //--- Textures ---
     sf::Texture smogTexture;
     sf::Texture plasticTexture;
     sf::Texture oilTexture;
     sf::Texture towerTexture;
     sf::Texture projectileTexture;
 
-    sf::Texture backgroundTexture;
-    sf::Sprite backgroundSprite;
+    std::vector<sf::Texture> backgroundTextures;
+    std::vector<sf::Sprite> backgroundSprites;
 
     sf::Texture pathTexture;
    
@@ -96,7 +100,7 @@ private:
     void drawBackground(sf::RenderWindow& window);
 
 
-    // tower functions
+    //--- Tower functions ---
     void updateTowers(float dt);
     void updateProjectiles(float dt);
     void handleCollision();
@@ -104,20 +108,20 @@ private:
     void drawProjectiles(sf::RenderWindow& window);
     std::vector<sf::IntRect> projectileRects;
 
-    //path functions
+    //--- Path functions ---
     bool isTooCloseToPath(float x, float y) const;
     bool isTooCloseToTower(float x, float y) const;
     void drawPath(sf::RenderWindow& windwow);
     sf::Color getPathColor() const;
 
 
-    //config
+    //--- Config ---
     LevelConfig config;
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Tower>> towers;
     std::vector<std::unique_ptr<Projectile>> projectiles;
     
-    //waves
+    //--- Waves ---
     float waveTimer = 0.0f;
     int currentWaveIndex = 0;
     int ecoSystemHealth = 0;
@@ -130,4 +134,6 @@ private:
     //level status
     bool completed = false;
     bool failed = false;
+
+    float placementTowerRange = 100.f;
 };
