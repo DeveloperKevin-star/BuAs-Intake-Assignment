@@ -44,6 +44,7 @@ public:
     //Level
     bool isCompleted() const { return completed; }
     bool isFailed() const { return failed; }
+    float getCleunupProgress() const;
 
 
     int getEcoSystemHealth() const { return ecoSystemHealth; }

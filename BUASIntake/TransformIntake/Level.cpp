@@ -429,6 +429,8 @@ void Level::drawProjectiles(sf::RenderWindow& window)
 }
 
 //Levels + Waves
+
+//--- Here all the levels are created ---
 Level Level::createCitySmogLevel()
 {
     LevelConfig cfg;
@@ -751,6 +753,7 @@ float Level::getNextSpawnCountdown() const
 //Textures
 bool Level::loadTextures()
 {
+    //--- This handles all the textures that being needed in a level with the execption of the background ---
     bool ok = true;
 
     //Enemy Textures 
@@ -764,9 +767,8 @@ bool Level::loadTextures()
     return ok;
 }
 
-//Here is all the texture stuff
 bool Level::loadLevelVisual() {
-
+    //--- Here all the visual are assinged and being loaded in the levels ---
     bool success = true;
 
     backgroundTextures.clear();
@@ -823,6 +825,7 @@ bool Level::loadLevelVisual() {
 
 const sf::Texture& Level::getEnemyTexture(EnemyType type) const
 {
+    //--- Here the each enemy gets different texture based on their type ---
     switch (type)
     {
     case EnemyType::Smog:
@@ -838,6 +841,7 @@ const sf::Texture& Level::getEnemyTexture(EnemyType type) const
 
 void Level::drawBackground(sf::RenderWindow& window)
 {    
+    //--- This function handles the backgrounds. It makes the background changed based on how many enemies are killed in a stage ---
     if (backgroundSprites.empty()) //--- This is a fallback in case the textures fails to laod ---
     {
         sf::RectangleShape fallback(sf::Vector2f(1280.f, 720.f));
@@ -846,25 +850,82 @@ void Level::drawBackground(sf::RenderWindow& window)
         return;
     }
 
-    //--- This draws the background based on stage ---
-    int stage = getBackgroundStage();
-    stage = std::max(0, std::min(stage, static_cast<int>(backgroundSprites.size()) - 1));
+    if (backgroundSprites.size() < 4)//--- This is a fallback so that for some reason there are less than 4 backgrounds, the correct one will be drawn
+        { 
+            window.draw(backgroundSprites[0]);
+            return;
+        }
+
+    float progress = getCleunupProgress();
     
-    window.draw(backgroundSprites[stage]);
+    //--- This draws the final stage but only after all enemies are defeated ---
+    if (enemiesKilled >= totalEnemies && totalEnemies > 0)
+        {
+            sf::Sprite finalStage = backgroundSprites[3];
+            finalStage.setColor(sf::Color(255, 255, 255, 255));
+            window.draw(finalStage);
+            return;
+        }
+
+    sf::Sprite base;
+    sf::Sprite overlay;
+
+    //--- The fade from stage 0 -> 1 in the first half of a level ---
+    if (progress < .5f)
+      {
+        float localAlpha = progress / .5f;
+
+        base = backgroundSprites[0];
+        overlay = backgroundSprites[1];
+
+        base.setColor(sf::Color(255, 255, 255, 255));
+        overlay.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(localAlpha * 255)));
+
+        window.draw(base);
+        window.draw(overlay);
+      }
+
+    //--- The fade from stage 1 -> 2 in the second half of a level ---
+    else
+    {
+        float localAlpha = (progress - 0.5f) / 0.5f; // maps 0.5-1.0 to 0.0-1.0
+
+        base = backgroundSprites[1];
+        overlay = backgroundSprites[2];
+
+        base.setColor(sf::Color(255, 255, 255, 255));
+        overlay.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(localAlpha * 255)));
+
+        window.draw(base);
+        window.draw(overlay);
+    }
     
 }
 
 int Level::getBackgroundStage() const
 {
+    //--- This function counts how many enemies are in a stage and how many are killed.
+    //    The returned number is then used to change the backgroud. ---
     if (totalEnemies == 0)
         return 0;
 
+    if (enemiesKilled >= totalEnemies)
+        return 3; //-- This makes the last set of images apear once all enemies are killed --
+
     float progress = static_cast<float>(enemiesKilled) / totalEnemies;
 
-    if (progress < 0.25f) return 0;
-    else if (progress < 0.5f) return 1;
-    else if (progress < 0.75f) return 2;
-    else return 3;
+    if (progress < 0.5f)
+        return 0;
+    else
+        return 1;
+}
+
+float Level::getCleunupProgress() const
+{
+    if (totalEnemies == 0)
+        return 0.f;
+
+    return static_cast<float>(enemiesKilled) / totalEnemies;
 }
 
 sf::Color Level::getPathColor() const
