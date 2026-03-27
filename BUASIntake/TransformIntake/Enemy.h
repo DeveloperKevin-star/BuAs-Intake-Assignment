@@ -2,9 +2,11 @@
 #include <vector>
 #include "PathNode.h"
 #include "WaveLogic.h"
+#include "SFML/Graphics.hpp"
 
-//This class contains the enemy base logic, with the type of enemy, what their path is, their current position,
-//their movement speed, health, damage to the player if reaches the end, the next node it is moving to and if it reached the end
+
+//--- This class contains the enemy base logic, with the type of enemy, what their path is, their current position,
+//their movement speed, health, damage to the player if reaches the end, the next node it is moving to and if it reached the end ---
 
 class Enemy
 {
@@ -13,6 +15,9 @@ public:
 
     void update(float dt);
     void takeDamage(int damage);
+    
+    const sf::Sprite& getSprite() const;
+    const sf::Texture& getTexture() const; 
 
     bool isAlive() const { return health > 0; }
     bool hasReachedGoal() const { return reachedGoal; }
@@ -39,6 +44,9 @@ private:
 
     size_t targetNodeIndex = 1;
     bool reachedGoal = false;
+
+    sf::Sprite sprite;
+    sf::Texture texture;
 
     void applyTypeStats();
 };

@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "SFML/Graphics.hpp"
 #include <cmath>
 
 Enemy::Enemy(EnemyType enemyType, const std::vector<PathNode>& enemyPath)
@@ -93,4 +94,14 @@ void Enemy::update(float dt)
 void Enemy::takeDamage(int damage)
 {
     health -= damage;
+}
+
+const sf::Sprite& Enemy::getSprite() const
+{
+    return sprite;
+}
+
+const sf::Texture& Enemy::getTexture() const
+{
+    return texture;
 }

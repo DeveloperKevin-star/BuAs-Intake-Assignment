@@ -10,17 +10,18 @@
 
 struct InputState
 {
-    float mouseX = 0.0f;
-    float mouseY = 0.0f;
+    float mouseX = 0.f;
+    float mouseY = 0.f;
     bool placeTowerPressed = false;
 };
 
 struct FlashEffect 
 {
-    float x = 0.0f;
-    float y = 0.0f;
-    float timer = 0.0f;
-    float duration = 0.15f;
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sf::Vector2f baseScale{ 1.f, 1.f };
+    float timer = .0f;
+    float duration = .35f;
 };
 
 class Level
@@ -80,7 +81,7 @@ private:
     std::vector<FlashEffect> deathFlashes; // this handles the deathflashes of the enemies
     void updateEffects(float dt);
     void drawEffects(sf::RenderWindow& window);
-    void spawnDeathFlash(float x, float y);
+    void spawnDeathFlash(const sf::Sprite& enemySprite, const sf::Texture& enemyTexture);
 
     //--- Textures ---
     sf::Texture smogTexture;
@@ -123,7 +124,7 @@ private:
     std::vector<std::unique_ptr<Projectile>> projectiles;
     
     //--- Waves ---
-    float waveTimer = 0.0f;
+    float waveTimer = .0f;
     int currentWaveIndex = 0;
     int ecoSystemHealth = 0;
 

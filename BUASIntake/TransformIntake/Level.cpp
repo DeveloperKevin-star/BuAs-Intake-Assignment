@@ -39,7 +39,7 @@ void Level::update(float dt)
     }
 }
 
-void Level::handlePlayerInput(const InputState& input)
+void Level::handlePlayerInput(const InputState& input) //--- This function handles the player input for placing of a tower ---
 {
     if (input.placeTowerPressed)
     {
@@ -60,7 +60,6 @@ void Level::render(sf::RenderWindow& window)
     drawTowers(window);
     drawProjectiles(window);
     drawEffects(window);
-
 }
 
 //Enemies Functions
@@ -103,9 +102,9 @@ void Level::updateEnemies(float dt)
         }
         else if (!(*it)->isAlive())
         {
-            spawnDeathFlash((*it)->getX(), (*it)->getY());
             money += killReward;
             enemiesKilled++;
+            spawnDeathFlash((*it)->getSprite(), (*it)->getTexture());
             it = enemies.erase(it);
         }
         else
@@ -158,7 +157,6 @@ void  Level::drawEnemies(sf::RenderWindow& window) // in the function the enemie
 
 
         drawEnemyHealthbars(window, *enemy);
-
     }
 }
 
@@ -202,18 +200,19 @@ sf::Color Level::getHealthBarColor(float healthPercentage) const
 
 void Level::drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy)
 {
-    //These are the enemy health bar settings
+    //--- These are the enemy health bar settings ---
     const float barWidth = 20.0f;
     const float barHeight = 4.0f;
-    const float barOffsetY = 18.0f;
+    const float barOffsetY = 30.0f;
 
     float healthPercent = 0.0f;
 
-    if (enemy.getMaxHealth() > 0) // this a safety measure so that game doesnt try to divide by zero
+    if (enemy.getMaxHealth() > 0) //--- This a safety measure so that game doesnt try to divide by zero ---
     {
         healthPercent = static_cast<float>(enemy.getHealth()) / enemy.getMaxHealth();
     }
 
+    //--- Here the setting of the bar will aplied for both the green front and red back bar ---
     sf::RectangleShape backBar(sf::Vector2f(barWidth, barHeight));
     backBar.setFillColor(sf::Color(120, 0, 0));
     backBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
@@ -228,47 +227,56 @@ void Level::drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy)
     window.draw(frontBar);
 }
 
-void Level::spawnDeathFlash(float x, float y)
+void Level::spawnDeathFlash(const sf::Sprite& enemySprite, const sf::Texture& enemyTexture)
 {
     FlashEffect flash;
-    flash.x = x;
-    flash.y = y;
+
+    flash.texture = enemyTexture;                //Here the texture is copied
+    flash.sprite = enemySprite;                  //Here the sprite is copied
+    flash.sprite.setTexture(flash.texture, false);//Here the texture is rebound to the sprite
+
+    flash.baseScale = enemySprite.getScale();
     flash.timer = flash.duration;
+
+    flash.sprite.setColor(sf::Color(255, 220, 180, 255));
 
     deathFlashes.push_back(flash);
 }
 
 void Level::updateEffects(float dt) 
 {
-    for (auto it = deathFlashes.begin(); it != deathFlashes.end();)
+    //--- This makes it so that the deathflash is like a copy of the enemy sprite ---
+    for (auto& flash : deathFlashes)
     {
-        it->timer -= dt;
+        flash.timer -= dt;
 
-        if (it->timer <= 0.0f)
-        {
-            it = deathFlashes.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
+        float remaining = std::max(0.f, flash.timer);
+        float progress = 1.f - (remaining / flash.duration);
+
+        float alpha = (remaining / flash.duration) * 255.f;
+        flash.sprite.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(alpha)));
+
+        float scale = 1.f + progress * .5f;
+        flash.sprite.setScale(flash.baseScale.x * scale,flash.baseScale.y * scale);
     }
+
+    // Cleanup for finished flashes
+    deathFlashes.erase(
+        std::remove_if(deathFlashes.begin(), deathFlashes.end(),
+            [](const FlashEffect& f)
+            {
+                return f.timer <= 0.f;
+            }),
+        deathFlashes.end()
+        );
 }
 
 void Level::drawEffects(sf::RenderWindow& window)
 {
     for (const auto& flash : deathFlashes)
     {
-        float percent = flash.timer / flash.duration;
-        float radius = 10.f + (1.f - percent) * 12.f; 
-
-        sf::CircleShape flashShape(radius);
-        flashShape.setOrigin(radius, radius);
-        flashShape.setPosition(flash.x, flash.y);
-        flashShape.setFillColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(180 * percent)));
-
-        window.draw(flashShape);
-    }
+      window.draw(flash.sprite);
+   }
 }
 
 // tower functions
