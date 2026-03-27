@@ -34,8 +34,7 @@ Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)//--- This
 void Tower::update(float dt,
     std::vector<std::unique_ptr<Enemy>>& enemies,
     std::vector<std::unique_ptr<Projectile>>& projectiles,
-    const sf::Texture& projectileTexture,
-    const std::vector<sf::IntRect>& projectileRects)
+    const sf::Texture& projectileTexture)
 {
     
     //-- This is the fire flash system --
@@ -60,14 +59,12 @@ void Tower::update(float dt,
     if (target)
     {
         projectiles.push_back(std::make_unique<Projectile>(
-            projectileTexture, 
-            projectileRects,
+            projectileTexture,
             x, 
             y, 
-            target->getX(),
-            target->getY(),
             target,
-            400.0f, damage));
+            400.0f, 
+            damage));
         fireCooldown = 1.0f / fireRate;
         fireFlashTimer = fireFlashDuratio;
     }

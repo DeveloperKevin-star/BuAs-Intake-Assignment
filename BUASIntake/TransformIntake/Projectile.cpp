@@ -4,11 +4,8 @@
 
 Projectile::Projectile(
     const sf::Texture& texture,
-    const std::vector<sf::IntRect>& spriteRects,
     float startX, 
     float startY,
-    float targetX,
-    float targetY,
     Enemy* targetEnemy, 
     float projectileSpeed, 
     int projectileDamage
@@ -18,32 +15,16 @@ Projectile::Projectile(
       damage(projectileDamage), 
       target(targetEnemy)
 {
-    sprite.setTexture(texture);
-
-    //-- This function picks a random bullet from a sprite sheet --
-    int index = rand() % spriteRects.size();
-    sprite.setTextureRect(spriteRects[index]);
-
+    //-- This sets the size of the sprite --
+    sprite.setTexture(texture, true);
     sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-
-    sprite.setScale(.20f, .20f);
-    sprite.setPosition(pos);
-     
-    //-- Here the direction will be calculated --
-    sf::Vector2f dir(targetX - startX, targetY - startY);
-    float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-
-    if (length != 0)
-    {
-        dir /= length;
-    }
-   
-    vel = dir * speed;
     
-    //-- This rotates the sprite towards the direction --
-    float angle = std::atan2(dir.y, dir.x) * 180.f / 3.14159265f;
-    sprite.setRotation(angle);
+    float desiredSize = 10.f;
+    float scale = desiredSize / bounds.width;
+    sprite.setScale(scale, scale);
+
+    sprite.setPosition(pos);
 }
 
 void Projectile::update(float dt)//--- This updates the projectile when needed ---
@@ -60,13 +41,13 @@ void Projectile::update(float dt)//--- This updates the projectile when needed -
     sf::Vector2f toTarget(target->getX() - pos.x, target->getY() - pos.y);//-- This handles the distance between a projectile and their target --
     float distance = std::sqrt(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
 
-    if (distance < 4.0f)
+    if (distance < 10.0f)
     {
         hitTarget = true;
         return;
     }
 
-    if (distance > .0f) 
+    if (distance > .0f) //-- This handles the movespeed of the projectile --
     {
         sf::Vector2f direction = toTarget / distance;
         float moveDistance = speed * dt;
@@ -83,7 +64,7 @@ void Projectile::update(float dt)//--- This updates the projectile when needed -
         pos += direction * moveDistance;
         sprite.setPosition(pos);
 
-        float angle = std::atan2(direction.y, direction.x) * 180.f / 3.14159265f;
+        float angle = std::atan2(direction.y, direction.x) * 90.f / 3.14159265f;
         sprite.setRotation(angle);
     } 
 }
