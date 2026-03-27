@@ -27,7 +27,7 @@ private:
     float range = 100.0f;
     float fireRate = 1.0f;
     float fireCooldown = 0.0f;
-    int damage = 1;
+    int damage = 2;
     float fireFlashTimer = 0.0f;
     float fireFlashDuratio = 0.08f;
 

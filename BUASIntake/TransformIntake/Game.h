@@ -28,6 +28,8 @@ private:
     void update(float dt);
     void render();
     void setupLevels();
+
+    void setMainMenuBackground();
     
 
     //State Machine
@@ -35,7 +37,7 @@ private:
     InputState inputState;
 
 
-    //butttons
+    //Butttons
     sf::RectangleShape startButton;
     sf::RectangleShape exitButton;
     sf::RectangleShape retryButton;
@@ -76,4 +78,6 @@ private:
     sf::Text titleText;
     sf::Text menuText;
     sf::Text endScreenText;
+    sf::Texture menuBackgroundTexture;
+    sf::Sprite menuBackgroundSprite;
 };

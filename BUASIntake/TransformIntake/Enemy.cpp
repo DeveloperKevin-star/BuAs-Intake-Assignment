@@ -24,6 +24,7 @@ void Enemy::applyTypeStats()
         maxHealth = 8;
         speed = 45.0f;
         pollutionDamage = 1;
+        killReward = 5;
         break;
 
     case EnemyType::Plastic:
@@ -31,6 +32,7 @@ void Enemy::applyTypeStats()
         maxHealth = 15;
         speed = 30.0f;
         pollutionDamage = 2;
+        killReward = 10;
         break;
 
     case EnemyType::Oil:
@@ -38,6 +40,7 @@ void Enemy::applyTypeStats()
         maxHealth = 25;
         speed = 20.0f;
         pollutionDamage = 4;
+        killReward = 20;
         break;
     }
 }

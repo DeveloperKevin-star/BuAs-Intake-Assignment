@@ -22,6 +22,7 @@ public:
     bool isAlive() const { return health > 0; }
     bool hasReachedGoal() const { return reachedGoal; }
     int getPollutionDamage() const { return pollutionDamage; }
+    int getKillReward() const { return killReward; }
 
     float getX() const { return x; }
     float getY() const { return y; }
@@ -41,6 +42,7 @@ private:
     int health = 10;
     int maxHealth = 10;
     int pollutionDamage = 1;
+    int killReward = 1;
 
     size_t targetNodeIndex = 1;
     bool reachedGoal = false;

@@ -102,7 +102,7 @@ void Level::updateEnemies(float dt)
         }
         else if (!(*it)->isAlive())
         {
-            money += killReward;
+            money += (*it)->getKillReward();
             enemiesKilled++;
             spawnDeathFlash((*it)->getSprite(), (*it)->getTexture());
             it = enemies.erase(it);

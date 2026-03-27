@@ -17,56 +17,63 @@ bool Game::init()
 {
     setupLevels();
 
-
+    //-- This loads the font used in the game  --
     if (!font.loadFromFile("assets/fonts/ARIAL.TTF"))
         return false;
 
-    //buttons
+    //-- This checks if the menumain is readable --
+    if (!menuBackgroundTexture.loadFromFile("assets/Textures/Levels/UI/MainMenu.png"))
+        return false;
+    else
+        setMainMenuBackground();
+
+
+    //-- Buttons --
     setupButtons();
 
-    // hud text
+    //-- Hud text --
     hudText.setFont(font);
     hudText.setCharacterSize(20);
     hudText.setFillColor(sf::Color::White);
     hudText.setPosition(10.f, 10.f);
 
-    //wave text
+    //-- Wave text --
     waveText.setFont(font);
     waveText.setCharacterSize(18);
     waveText.setFillColor(sf::Color::Cyan);
     waveText.setPosition(10.f, 40.f);
 
-    //Trans text
+    //-- Transition text --
     transitionText.setFont(font);
     transitionText.setCharacterSize(32);
     transitionText.setFillColor(sf::Color::White);
     transitionText.setPosition(400.f, 300.f);
 
-    //Title Screen Text
+    //-- Title Screen Text --
     titleText.setFont(font);
     titleText.setCharacterSize(42);
     titleText.setFillColor(sf::Color::White);
     titleText.setString("Eco Tower Defence");
     titleText.setPosition(350.f, 180.f);
     
-    //Menu text
+    //-- Menu text --
     menuText.setFont(font);
     menuText.setCharacterSize(24);
     menuText.setFillColor(sf::Color::White);
     menuText.setString("Press Enter to Start");
     menuText.setPosition(420.f, 300.f);
 
-    //End screen text
+    //-- End screen text --
     endScreenText.setFont(font);
     endScreenText.setCharacterSize(32);
     endScreenText.setFillColor(sf::Color::White);
     endScreenText.setPosition(350.f, 260.f);
     
-    //buttons
-
-
+    //-- GameState Handling --
     currentState = GameState::MainMenu;
     running = true;
+
+
     return true;
 }
 
@@ -251,10 +258,16 @@ void Game::render()
         isMouseOverButton(exitButton) ? sf::Color(210, 90, 90) : sf::Color(180, 70, 70)
     );
 
+    sf::RectangleShape overlay(sf::Vector2f(1280.f, 720.f));
+    overlay.setFillColor(sf::Color(0, 0, 0, 100));
+
     switch (currentState)
     {
         case GameState::MainMenu:
         {
+           
+            window.draw(menuBackgroundSprite);
+            window.draw(overlay);
             window.draw(titleText);
             window.draw(startButton);
             window.draw(startButtonText);
@@ -325,12 +338,14 @@ void Game::render()
                     levels.at(currentLevelIndex)->render(window);
                 }
 
+                window.draw(overlay);   
                 window.draw(transitionText);
                 break;
             }
 
         case GameState::Victory:
             {
+                window.draw(overlay);
                 window.draw(titleText);
                 window.draw(menuButton);
                 window.draw(menuButtonText);
@@ -342,6 +357,7 @@ void Game::render()
 
         case GameState::Defeat:
             {
+                window.draw(overlay);
                 window.draw(titleText);
                 window.draw(endScreenText);
                 window.draw(retryButton);
@@ -436,4 +452,16 @@ bool Game::isMouseOverButton(const sf::RectangleShape& button) const
 {
     sf::Vector2 mousePos(inputState.mouseX, inputState.mouseY);
     return button.getGlobalBounds().contains(mousePos);
+}
+
+void Game::setMainMenuBackground() {
+    //-- This handles the main menu backgroud --
+    menuBackgroundSprite.setTexture(menuBackgroundTexture, true);
+    menuBackgroundSprite.setPosition(0.f, 0.f);
+
+    sf::Vector2u texSize = menuBackgroundTexture.getSize();
+    menuBackgroundSprite.setScale(
+        1280.f / static_cast<float>(texSize.x),
+        720.f / static_cast<float>(texSize.y)
+    );
 }
