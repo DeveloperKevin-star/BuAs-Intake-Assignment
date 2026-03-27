@@ -1,17 +1,14 @@
 #pragma once
 #include "Enemy.h"
 #include "SFML/Graphics.hpp"
-
+// --- This class handles the projectile ---
 class Projectile
 {
 public:
     Projectile(
         const sf::Texture& texture,
-        const std::vector<sf::IntRect>& spriteRects,
         float startX,
         float startY,
-        float targetX,
-        float targetY,
         Enemy* target, 
         float speed, 
         int damage
@@ -26,9 +23,6 @@ public:
     Enemy* getTarget() const { return target; }
     int getDamage() const { return damage; }
 
-    float getX() const { return pos.x; }
-    float getY() const { return pos.y; }
-
 private:
     sf::Vector2f pos;
     sf::Vector2f vel;
@@ -36,7 +30,6 @@ private:
     sf::Sprite sprite;
 
     bool alive = true;
-
 
     float x = 0.0f;
     float y = 0.0f;

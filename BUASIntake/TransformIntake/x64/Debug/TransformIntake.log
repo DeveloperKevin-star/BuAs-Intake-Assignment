@@ -7,4 +7,41 @@ D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level
   main.cpp
   Generating Code...
 D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.cpp(292,1): warning C4715: 'Level::getPathColor': not all control paths return a value
+  LINK : D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe not found or not built by the last incremental link; performing full link
   TransformIntake.vcxproj -> D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Fonts\ARIAL.TTF
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Enemies\Oil.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Enemies\Plastic.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Enemies\Smog.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\CityPolutionLevel.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\HarborLevel.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\IndustrialWasteLevel.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\IndustrialWasteLevelClean.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\MFactoryLevel.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\ToxicLakeLevel.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_1.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_2.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_3.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_4.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_1.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_2.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_3.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_4.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_1.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_2.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_3.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_4.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_1.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_2.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_3.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_4.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\UI\MainMenu.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\UI\Victory.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_1.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_2.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_3.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_4.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Towers\3f6dc5a8-fccc-439e-8b84-18276135fd52.eps
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Towers\projectile.png
+  D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Towers\tower.png
+  35 File(s) copied

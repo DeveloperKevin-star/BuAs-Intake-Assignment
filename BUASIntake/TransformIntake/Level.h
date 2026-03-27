@@ -107,7 +107,6 @@ private:
     void updateProjectiles(float dt);
     void drawTowers(sf::RenderWindow& window);
     void drawProjectiles(sf::RenderWindow& window);
-    std::vector<sf::IntRect> projectileRects;
     float placementTowerRange = 100.f;
 
     //-- Path functions --

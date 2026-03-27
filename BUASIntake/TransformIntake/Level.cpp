@@ -357,7 +357,7 @@ void Level::updateTowers(float dt)//--- This updates the towers every frame ---
 {
     for (auto& tower : towers)
     {
-        tower->update(dt, enemies, projectiles, projectileTexture, projectileRects);
+        tower->update(dt, enemies, projectiles, projectileTexture);
     }
 }
 
@@ -823,17 +823,6 @@ bool Level::loadLevelVisual() { //--- Here all the visual are assinged and being
     {
         success = false;
     }
-    
-    projectileRects =
-    {
-    {180, 220, 140, 240},
-    {760, 210, 150, 250},
-    {520, 430, 140, 240},
-    {760, 860, 150, 250},
-    {170, 860, 150, 260},
-    {170, 860, 150, 260}
-    };
-
     return success;
 }
 
