@@ -21,12 +21,17 @@ bool Game::init()
     if (!font.loadFromFile("assets/fonts/ARIAL.TTF"))
         return false;
 
-    //-- This checks if the menumain is readable --
+    //-- This checks if the Main Menu background is readable --
     if (!menuBackgroundTexture.loadFromFile("assets/Textures/Levels/UI/MainMenu.png"))
         return false;
     else
         setMainMenuBackground();
 
+    //-- This checks if the vicory background is readable --
+    if (!victoryBackgroundTexture.loadFromFile("assets/Textures/Levels/UI/Victory.png"))
+        return false;
+    else
+        setVictoryBackground();
 
     //-- Buttons --
     setupButtons();
@@ -261,11 +266,10 @@ void Game::render()
     sf::RectangleShape overlay(sf::Vector2f(1280.f, 720.f));
     overlay.setFillColor(sf::Color(0, 0, 0, 100));
 
-    switch (currentState)
+    switch (currentState) //-- Here everything is being drawn when needed according to the state machine --
     {
         case GameState::MainMenu:
         {
-           
             window.draw(menuBackgroundSprite);
             window.draw(overlay);
             window.draw(titleText);
@@ -345,6 +349,7 @@ void Game::render()
 
         case GameState::Victory:
             {
+                window.draw(victoryBackgroundSprite);
                 window.draw(overlay);
                 window.draw(titleText);
                 window.draw(menuButton);
@@ -461,6 +466,18 @@ void Game::setMainMenuBackground() {
 
     sf::Vector2u texSize = menuBackgroundTexture.getSize();
     menuBackgroundSprite.setScale(
+        1280.f / static_cast<float>(texSize.x),
+        720.f / static_cast<float>(texSize.y)
+    );
+}
+
+void Game::setVictoryBackground() {
+    //-- This handles the vicory screen --
+    victoryBackgroundSprite.setTexture(victoryBackgroundTexture, true);
+    victoryBackgroundSprite.setPosition(0.f, 0.f);
+
+    sf::Vector2u texSize = victoryBackgroundTexture.getSize();
+    victoryBackgroundSprite.setScale(
         1280.f / static_cast<float>(texSize.x),
         720.f / static_cast<float>(texSize.y)
     );

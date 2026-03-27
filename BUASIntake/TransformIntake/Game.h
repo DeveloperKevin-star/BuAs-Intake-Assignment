@@ -30,6 +30,7 @@ private:
     void setupLevels();
 
     void setMainMenuBackground();
+    void setVictoryBackground();
     
 
     //State Machine
@@ -80,4 +81,8 @@ private:
     sf::Text endScreenText;
     sf::Texture menuBackgroundTexture;
     sf::Sprite menuBackgroundSprite;
+
+    //Victory Memebers
+    sf::Texture victoryBackgroundTexture;
+    sf::Sprite victoryBackgroundSprite;
 };
