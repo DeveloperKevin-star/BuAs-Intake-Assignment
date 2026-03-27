@@ -1,10 +1,31 @@
-﻿  Enemy.cpp
-  Game.cpp
-  Level.cpp
-D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.cpp(13,49): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-  Projectile.cpp
-  Tower.cpp
-  main.cpp
-  Generating Code...
-D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\TransformIntake\Level.cpp(292,1): warning C4715: 'Level::getPathColor': not all control paths return a value
-  TransformIntake.vcxproj -> D:\Documents\School\BUAS\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe
+﻿  TransformIntake.vcxproj -> C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\x64\Debug\TransformIntake.exe
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Fonts\ARIAL.TTF
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Enemies\Oil.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Enemies\Plastic.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Enemies\Smog.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_1.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_2.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_3.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\City\city_stage_4.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_1.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_2.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_3.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Factory\factory_stage_4.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_1.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_2.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_3.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Harbor\harbor_stage_4.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_1.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_2.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_3.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Toxic\river_stage_4.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\UI\MainMenu.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\UI\Victory.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_1.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_2.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_3.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Levels\Waste\Industrial_stage_4.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Towers\3f6dc5a8-fccc-439e-8b84-18276135fd52.eps
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Towers\projectile.png
+  C:\Users\xshad\Documents\Personal\School\BuAs-Intake-Assignment\BuAs-Intake-Assignment\BUASIntake\TransformIntake\assets\Textures\Towers\tower.png
+  29 File(s) copied
