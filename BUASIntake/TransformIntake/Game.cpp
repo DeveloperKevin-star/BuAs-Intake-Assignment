@@ -208,7 +208,7 @@ void Game::update(float dt)
 
                 if (currentLevelIndex + 1 < static_cast<int>(levels.size()))
                 {
-                    transitionText.setString("LevelComplete!\n\nSavedMoney: " + std::to_string(carryoverMoney) +
+                    transitionText.setString("LevelComplete!\n\nSaved Money: " + std::to_string(carryoverMoney) +
                         "\nNext: " + levels.at(currentLevelIndex + 1)->getName() + ".");
                 }
                 else
@@ -224,18 +224,15 @@ void Game::update(float dt)
             transistionTimer -= dt;
             if (transistionTimer <= 0.f)
             {
-                OutputDebugStringA("TransitionTimer finished \n");
                 ++currentLevelIndex;
 
                 if (currentLevelIndex >= static_cast<int>(levels.size()))
                 {
-                    OutputDebugStringA("Entered Victory State\n");
                     endScreenText.setString("Victory!\nPress Enter for Main Menu.");
                     currentState = GameState::Victory;
                 }
                 else
                 {
-                    OutputDebugStringA("Back tro playing State\n");
                     levels.at(currentLevelIndex)->addMoney(carryoverMoney);
                     currentState = GameState::Playing;
                 }
