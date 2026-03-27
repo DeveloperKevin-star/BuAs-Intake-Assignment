@@ -142,7 +142,6 @@ sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PathNode.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Tower.cpp" />
   </ItemGroup>
@@ -153,6 +152,7 @@ sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Tower.h" />
+    <ClInclude Include="GameLogic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

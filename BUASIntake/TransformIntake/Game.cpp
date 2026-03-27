@@ -6,8 +6,8 @@
 
 
 
-//this handles the whole game, while the level class handles the levels
-Game::Game() 
+
+Game::Game() //---This handles the whole game, while the level class handles the levels---
     : window(sf::VideoMode(1280, 720), "Eco Tower Defence")
 {
     window.setFramerateLimit(60);
@@ -84,6 +84,7 @@ bool Game::init()
 
 void Game::run()
 {
+    //-- This starts the game --
     sf::Clock clock;
 
     while (running && window.isOpen())
@@ -99,12 +100,11 @@ void Game::run()
     }
 }
 
-void Game::handleInput()
+void Game::handleInput() //--- This functions handles what kind of input is needed based on the current state of the game ---
 {
     inputState.placeTowerPressed = false;
 
     sf::Event event;
-
 
     while (window.pollEvent(event))
     {
@@ -114,7 +114,7 @@ void Game::handleInput()
         }
 
         if (event.type == sf::Event::MouseButtonPressed &&
-            event.mouseButton.button == sf::Mouse::Left)
+            event.mouseButton.button == sf::Mouse::Left) //-- This checks wheter a mouse button is clicked and than depening on the game state fires an action --
         {
             if (currentState == GameState::MainMenu)
             {
@@ -175,7 +175,8 @@ void Game::handleInput()
 
 void Game::update(float dt)
 {
-    // The game has gamestates to handle it better for the player in the menu's, and now certain stuff only updates when they are needed to
+    //--- The game has gamestates to handle it better for the player in the menu's, 
+    // and so that things only update when they are needed to ---
     switch (currentState)
     {
         case GameState::MainMenu:
@@ -242,7 +243,7 @@ void Game::update(float dt)
             }
             break;
 
-        //Both victory and defeat will wait for the enter input
+        //-- Both victory and defeat will wait for the enter input --
         case GameState::Victory:
             break;
 
@@ -263,6 +264,7 @@ void Game::render()
         isMouseOverButton(exitButton) ? sf::Color(210, 90, 90) : sf::Color(180, 70, 70)
     );
 
+    //-- This creates an overlay so that the non-playing screens are more readable --
     sf::RectangleShape overlay(sf::Vector2f(1280.f, 720.f));
     overlay.setFillColor(sf::Color(0, 0, 0, 100));
 
@@ -280,7 +282,7 @@ void Game::render()
             break;
         }
 
-        case GameState::Playing:
+        case GameState::Playing: //-- This renders everything that is needed whilst in the playing state --
             {
                 if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
             {
@@ -320,7 +322,8 @@ void Game::render()
                 hudText.setString(hud);
                 window.draw(hudText);
 
-                if (lvl.hasMoreWaves())
+                
+                if (lvl.hasMoreWaves()) //-- This checks if a level still has waves left en then shows timer of that all waves are done --
                 {
                     float countdown = lvl.getNextSpawnCountdown();
                     waveText.setString("Next Enemy in: " + std::to_string(countdown).substr(0, 4) + "s");
@@ -335,7 +338,7 @@ void Game::render()
                 break;
             }
 
-        case GameState::LevelTransition:
+        case GameState::LevelTransition: //-- This gives the player feedback a level is done --
             {
                 if (currentLevelIndex >= 0 && currentLevelIndex < static_cast<int>(levels.size()))
                 {
@@ -347,7 +350,7 @@ void Game::render()
                 break;
             }
 
-        case GameState::Victory:
+        case GameState::Victory://-- This draws everything on the victory screen --
             {
                 window.draw(victoryBackgroundSprite);
                 window.draw(overlay);
@@ -360,7 +363,7 @@ void Game::render()
                 break;
             }
 
-        case GameState::Defeat:
+        case GameState::Defeat://-- This draws everything on the defeat screen --
             {
                 window.draw(overlay);
                 window.draw(titleText);
@@ -377,7 +380,7 @@ void Game::render()
     window.display();
 }
 
-void Game::setupLevels() {
+void Game::setupLevels() { //--- This handles all the creation of the levels before the game starts ---
     levels.clear();
     levels.emplace_back(std::make_unique<Level>(Level::createCitySmogLevel()));
     levels.emplace_back(std::make_unique<Level>(Level::createIndustrialLevel()));
@@ -388,8 +391,8 @@ void Game::setupLevels() {
     currentLevelIndex = 0;
 }
 
-void Game::setupButtons() {
-    // Start button
+void Game::setupButtons() {//--- This function creates the buttons that are used in the game ---
+    //-- Start button --
     startButton.setSize(sf::Vector2f(220.f, 60.f));
     startButton.setPosition(530.f, 280.f);
     startButton.setFillColor(sf::Color(70, 130, 180));
@@ -401,7 +404,7 @@ void Game::setupButtons() {
     centerTextInButton(startButtonText, startButton);
 
 
-    // Exit button
+    //-- Exit button -- 
     exitButton.setSize(sf::Vector2f(220.f, 60.f));
     exitButton.setPosition(530.f, 370.f);
     exitButton.setFillColor(sf::Color(180, 70, 70));
@@ -413,7 +416,7 @@ void Game::setupButtons() {
     centerTextInButton(exitButtonText, exitButton);
 
 
-    // Retry button
+    //-- Retry button --
     retryButton.setSize(sf::Vector2f(220.f, 60.f));
     retryButton.setPosition(530.f, 320.f);
     retryButton.setFillColor(sf::Color(70, 160, 70));
@@ -425,7 +428,7 @@ void Game::setupButtons() {
     centerTextInButton(retryButtonText, retryButton);
 
 
-    // Menu button
+    //-- Menu button --
     menuButton.setSize(sf::Vector2f(220.f, 60.f));
     menuButton.setPosition(530.f, 410.f);
     menuButton.setFillColor(sf::Color(100, 100, 180));
@@ -438,7 +441,7 @@ void Game::setupButtons() {
 }
 
 void Game::centerTextInButton(sf::Text& text, const sf::RectangleShape& button)
-{
+{ //--- This makes sure that if text is in a button, it will still be in the middle ---
     sf::FloatRect textBounds = text.getLocalBounds();
     sf::FloatRect buttonBounds = button.getGlobalBounds();
 
@@ -453,7 +456,7 @@ void Game::centerTextInButton(sf::Text& text, const sf::RectangleShape& button)
     );
 }
 
-bool Game::isMouseOverButton(const sf::RectangleShape& button) const
+bool Game::isMouseOverButton(const sf::RectangleShape& button) const //--- This is a simple check to see if the mouse is over a button ---
 {
     sf::Vector2 mousePos(inputState.mouseX, inputState.mouseY);
     return button.getGlobalBounds().contains(mousePos);

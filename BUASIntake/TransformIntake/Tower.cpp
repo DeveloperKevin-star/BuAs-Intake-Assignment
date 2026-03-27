@@ -7,14 +7,14 @@ Tower::Tower(float px, float py, float towerRange, float towerFireRate, int towe
 {
 }
 
-Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)
+Enemy* Tower::findTarget(std::vector<std::unique_ptr<Enemy>>& enemies)//--- This finds the target enemy ---
 {
     Enemy* bestTarget = nullptr;
     float bestDistance = std::numeric_limits<float>::max();
 
     for (auto& enemy : enemies)
     {
-        if (!enemy || !enemy->isAlive() || enemy->hasReachedGoal())
+        if (!enemy || !enemy->isAlive() || enemy->hasReachedGoal())//-- This helps check if an enemy is still in range --
             continue;
 
         float dx = enemy->getX() - x;
@@ -38,7 +38,7 @@ void Tower::update(float dt,
     const std::vector<sf::IntRect>& projectileRects)
 {
     
-    // This is the fire flash system
+    //-- This is the fire flash system --
     if (fireFlashTimer > 0.0f)
     {
         fireFlashTimer -= dt;
@@ -46,7 +46,7 @@ void Tower::update(float dt,
             fireFlashTimer = 0.0f;
     }
     
-    // This is fire rate code
+    //-- This is fire rate system --
     if (fireRate <= 0.0f)
         return;
 
@@ -55,7 +55,7 @@ void Tower::update(float dt,
     if (fireCooldown > 0.0f)
         return;
 
-    // this is the enemy target system
+    //-- This is the enemy target system --
     Enemy* target = findTarget(enemies);
     if (target)
     {

@@ -20,17 +20,17 @@ Projectile::Projectile(
 {
     sprite.setTexture(texture);
 
-    //this function picks a random bullet from a sprite sheet
+    //-- This function picks a random bullet from a sprite sheet --
     int index = rand() % spriteRects.size();
     sprite.setTextureRect(spriteRects[index]);
 
     sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
-    sprite.setScale(.12f, .12f);
+    sprite.setScale(.20f, .20f);
     sprite.setPosition(pos);
      
-    //Here the direction will be calculated
+    //-- Here the direction will be calculated --
     sf::Vector2f dir(targetX - startX, targetY - startY);
     float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 
@@ -41,23 +41,23 @@ Projectile::Projectile(
    
     vel = dir * speed;
     
-    //This rotates the sprite towards the direction
+    //-- This rotates the sprite towards the direction --
     float angle = std::atan2(dir.y, dir.x) * 180.f / 3.14159265f;
     sprite.setRotation(angle);
 }
 
-void Projectile::update(float dt)
+void Projectile::update(float dt)//--- This updates the projectile when needed ---
 {
     if (expired || hitTarget)
         return;
 
-    if (!target || !target->isAlive() || target->hasReachedGoal())
+    if (!target || !target->isAlive() || target->hasReachedGoal()) //-- This checks if a projectile has hit their target --
     {
         expired = true;
         return;
     }
 
-    sf::Vector2f toTarget(target->getX() - pos.x, target->getY() - pos.y);
+    sf::Vector2f toTarget(target->getX() - pos.x, target->getY() - pos.y);//-- This handles the distance between a projectile and their target --
     float distance = std::sqrt(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
 
     if (distance < 4.0f)
@@ -87,7 +87,7 @@ void Projectile::update(float dt)
         sprite.setRotation(angle);
     } 
 }
-void Projectile::render(sf::RenderWindow& window)
+void Projectile::render(sf::RenderWindow& window)//--- This draws the projectile ---
 {
     window.draw(sprite);
 }

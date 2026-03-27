@@ -7,6 +7,7 @@ Enemy::Enemy(EnemyType enemyType, const std::vector<PathNode>& enemyPath)
 {
     applyTypeStats();
 
+    //-- This checks if there is a path to follow and then will follow that path --
     if (!path.empty())
     {
         x = path.at(0).x;
@@ -15,8 +16,9 @@ Enemy::Enemy(EnemyType enemyType, const std::vector<PathNode>& enemyPath)
     }
 }
 
-void Enemy::applyTypeStats()
+void Enemy::applyTypeStats()    //--- This Functions applies the stats to different enemy types ---
 {
+
     switch (type)
     {
     case EnemyType::Smog:
@@ -45,8 +47,9 @@ void Enemy::applyTypeStats()
     }
 }
 
-void Enemy::update(float dt)
+void Enemy::update(float dt) //--- This checks if an enemy has reached the end to see if the enemy still needs to move ---
 {
+   
     if (reachedGoal || !isAlive() || path.size() < 2)
         return;
 
@@ -60,7 +63,6 @@ void Enemy::update(float dt)
             break;
         }
 
-        //const PathNode& target = path[targetNodeIndex];
         const PathNode& target = path.at(targetNodeIndex);
 
         float dx = target.x - x;

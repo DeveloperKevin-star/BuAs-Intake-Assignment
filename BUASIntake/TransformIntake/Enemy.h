@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "PathNode.h"
-#include "WaveLogic.h"
+#include "GameLogic.h"
 #include "SFML/Graphics.hpp"
 
 

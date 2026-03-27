@@ -1,5 +1,5 @@
 #include "Game.h"
-
+//--- The only function of this is creating the main function of the game --- 
 int main()
 {
     Game game;

@@ -3,7 +3,8 @@
 #include <windows.h>
 #include <cmath>
 
-Level::Level(const LevelConfig& cfg)
+// Base Functions
+Level::Level(const LevelConfig& cfg)//--- This is the base config of the levels ---
     : config(cfg), ecoSystemHealth(cfg.initialHealth)
 {
     totalEnemies = 0;
@@ -17,8 +18,9 @@ Level::Level(const LevelConfig& cfg)
     towers.push_back(std::make_unique<Tower>(150.0f, 120.0f, 100.0f, 1.0f, 3));
 }
 
-void Level::update(float dt)
+void Level::update(float dt)//--- Here everything that needs constant updating is being handled ---
 {
+    //-- This checks if a level is completed or failed --
     if (completed || failed)
         return;
 
@@ -26,9 +28,9 @@ void Level::update(float dt)
     updateEnemies(dt);
     updateTowers(dt);
     updateProjectiles(dt);
-    handleCollision();
     updateEffects(dt);
 
+    //-- This checks the healt before completing a level --
     if (ecoSystemHealth <= 0)
     {
         failed = true;
@@ -47,12 +49,7 @@ void Level::handlePlayerInput(const InputState& input) //--- This function handl
     }
 }
 
-void Level::handleCollision()
-{
-    // Not needed yet, because hit handling happens in updateProjectiles()
-}
-
-void Level::render(sf::RenderWindow& window)
+void Level::render(sf::RenderWindow& window)//--- Here all the rendering functions are called ---
 {
     drawBackground(window);
     drawPath(window);
@@ -63,15 +60,16 @@ void Level::render(sf::RenderWindow& window)
 }
 
 //Enemies Functions
-void Level::spawnEnemies(float dt)
+void Level::spawnEnemies(float dt)//--- This handles the enemy spawning ---
 {
+    //-- This checks which wave a level is --
     if (currentWaveIndex >= static_cast<int>(config.waves.size()))
         return;
 
     waveTimer += dt;
-    //WaveConfig& wave = config.waves[currentWaveIndex];
     WaveConfig& wave = config.waves.at(currentWaveIndex);
 
+    //-- This spawns the enemies until there are no more waves left in a level --
     while (!wave.enemiesToSpawn.empty() && waveTimer >= wave.spawnInterval)
     {
         waveTimer -= wave.spawnInterval;
@@ -90,7 +88,7 @@ void Level::spawnEnemies(float dt)
 }
 
 void Level::updateEnemies(float dt)
-{
+{ //--- This checks if an enemy is still alive, and if they are killed that they drop killmoney and get erased ---
     for (auto it = enemies.begin(); it != enemies.end();)
     {
         (*it)->update(dt);
@@ -114,10 +112,151 @@ void Level::updateEnemies(float dt)
     }
 }
 
-// Path Functios
-void  Level::drawPath(sf::RenderWindow& window)
+sf::Color Level::getEnemyColor(EnemyType type) const //--- This function handles the enemy looks based on their type.
+                                                     //This functions also acts as a fallback when enemy sprites dont load.---
 {
-    //this draws the path
+    //--This switch is to make the enemies different from each other so its easier for the player to identify them --
+    switch (type)
+    {
+    case EnemyType::Smog:
+        return sf::Color(120, 120, 120); //-- Smog is gray --
+        break;
+
+    case EnemyType::Plastic:
+        return sf::Color(255, 220, 50); //-- Plastic is yellow --
+        break;
+
+    case EnemyType::Oil:
+        return sf::Color(40, 40, 40); //-- Oil is dark gray/black --
+        break;
+
+    default:
+        return sf::Color::Magenta; //-- Debugging --
+    }
+}
+
+void  Level::drawEnemies(sf::RenderWindow& window) //-- In the function the enemies and their healthbars are drawn --
+{
+    for (const auto& enemy : enemies)
+    {
+        sf::Sprite enemySprite;
+        enemySprite.setTexture(getEnemyTexture(enemy->getType()));
+
+        enemySprite.setOrigin(
+            enemySprite.getLocalBounds().width / 2.f,
+            enemySprite.getLocalBounds().height / 2.f
+        );
+        enemySprite.setPosition(enemy->getX(), enemy->getY());
+        enemySprite.setScale(.15f, .15f);
+
+        window.draw(enemySprite);
+
+
+        drawEnemyHealthbars(window, *enemy);
+    }
+}
+
+sf::Color Level::getHealthBarColor(float healthPercentage) const //--- This handles all the colors of the enemy health bars ---
+{
+    if (healthPercentage > 0.6f)
+    {
+        return sf::Color::Green;
+    }
+    else if (healthPercentage > 0.3f)
+    {
+        return sf::Color::Yellow;
+    }
+    else
+    {
+        return sf::Color::Red;
+    }
+}
+
+void Level::drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy)//--- Here the enemy health bar is declared and created ---
+{
+    //-- These are the enemy health bar settings --
+    const float barWidth = 20.0f;
+    const float barHeight = 4.0f;
+    const float barOffsetY = 30.0f;
+
+    float healthPercent = 0.0f;
+
+    if (enemy.getMaxHealth() > 0) //-- This a safety measure so that game doesnt try to divide by zero --
+    {
+        healthPercent = static_cast<float>(enemy.getHealth()) / enemy.getMaxHealth();
+    }
+
+    //-- Here the setting of the bar will aplied for both the green front and red back bar --
+    sf::RectangleShape backBar(sf::Vector2f(barWidth, barHeight));
+    backBar.setFillColor(sf::Color(120, 0, 0));
+    backBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
+    backBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
+    window.draw(backBar);
+
+    sf::RectangleShape frontBar(sf::Vector2f(barWidth * healthPercent, barHeight));
+    frontBar.setFillColor(sf::Color::Green);
+    frontBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
+    frontBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
+    frontBar.move(-(barWidth * (1.0f - healthPercent)) / 2.0f, 0.0f);
+    window.draw(frontBar);
+}
+
+void Level::spawnDeathFlash(const sf::Sprite& enemySprite, const sf::Texture& enemyTexture)//--- This created a deathflash when an enemy dies ---
+{
+    FlashEffect flash;
+
+    flash.texture = enemyTexture;                //-- Here the texture is copied
+    flash.sprite = enemySprite;                  //Here the sprite is copied
+    flash.sprite.setTexture(flash.texture, false);//Here the texture is rebound to the sprite --
+
+    flash.baseScale = enemySprite.getScale();
+    flash.timer = flash.duration;
+
+    flash.sprite.setColor(sf::Color(255, 220, 180, 255));
+
+    deathFlashes.push_back(flash);
+}
+
+void Level::updateEffects(float dt)//--- This updates the flashes of the enemies ---
+{
+    //-- This makes it so that the deathflash is like a copy of the enemy sprite --
+    for (auto& flash : deathFlashes)
+    {
+        flash.timer -= dt;
+
+        float remaining = std::max(0.f, flash.timer);
+        float progress = 1.f - (remaining / flash.duration);
+
+        float alpha = (remaining / flash.duration) * 255.f;
+        flash.sprite.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(alpha)));
+
+        float scale = 1.f + progress * .5f;
+        flash.sprite.setScale(flash.baseScale.x * scale, flash.baseScale.y * scale);
+    }
+
+    //-- Cleanup for finished flashes --
+    deathFlashes.erase(
+        std::remove_if(deathFlashes.begin(), deathFlashes.end(),
+            [](const FlashEffect& f)
+            {
+                return f.timer <= 0.f;
+            }),
+        deathFlashes.end()
+    );
+}
+
+void Level::drawEffects(sf::RenderWindow& window)//--- Here all the effects are being drawn ---
+{
+    for (const auto& flash : deathFlashes)
+    {
+        window.draw(flash.sprite);
+    }
+}
+
+// Path Functions
+void  Level::drawPath(sf::RenderWindow& window)//--- Here the path is being drawn ---
+{
+    //-- This draws the path --
     for (size_t i = 1; i < config.enemyPath.size(); ++i)
     {
         sf::Vector2f start(config.enemyPath[i - 1].x, config.enemyPath[i - 1].y);
@@ -138,154 +277,27 @@ void  Level::drawPath(sf::RenderWindow& window)
     }
 }
 
-//Enemies functions
-void  Level::drawEnemies(sf::RenderWindow& window) // in the function the enemies and their healthbars are drawn
+sf::Color Level::getPathColor() const //--- Here the path colors are declared ---
 {
-    for (const auto& enemy : enemies)
-    {
-        sf::Sprite enemySprite;
-        enemySprite.setTexture(getEnemyTexture(enemy->getType()));
-
-        enemySprite.setOrigin(
-            enemySprite.getLocalBounds().width / 2.f,
-            enemySprite.getLocalBounds().height / 2.f
-            );
-        enemySprite.setPosition(enemy->getX(), enemy->getY());
-        enemySprite.setScale(.15f, .15f);
-
-        window.draw(enemySprite);
-
-
-        drawEnemyHealthbars(window, *enemy);
-    }
+    if (config.name == "City Smog Defence")
+        return sf::Color(120, 120, 120);
+    if (config.name == "Industrial Waste")
+        return sf::Color(50, 151, 129);
+    if (config.name == "Harbor Polution")
+        return sf::Color(140, 100, 60);
+    if (config.name == "Toxic River")
+        return sf::Color(80, 200, 80);
+    if (config.name == "Mega Factory")
+        return sf::Color(90, 90, 90);
 }
 
-sf::Color Level::getEnemyColor(EnemyType type) const //this function is the collouring of the enemies, this make expansion easier
-{
-    //this switch is to make the enemies different from each other so its easier for the player to identifie them
-    switch (type)
-    {
-    case EnemyType::Smog:
-        return sf::Color(120, 120, 120); // smog is gray
-        break;
-
-    case EnemyType::Plastic:
-        return sf::Color(255, 220, 50); // plastic is yellow
-        break;
-
-    case EnemyType::Oil:
-        return sf::Color(40, 40, 40); // oil is dark gray/black
-        break;
-
-    default:
-        return sf::Color::Magenta; // debugging
-    }
-}
-
-sf::Color Level::getHealthBarColor(float healthPercentage) const
-{
-    if (healthPercentage > 0.6f)
-    {
-        return sf::Color::Green;
-    }
-    else if (healthPercentage > 0.3f)
-    {
-        return sf::Color::Yellow;
-    }
-    else
-    {
-        return sf::Color::Red;
-    }
-}
-
-void Level::drawEnemyHealthbars(sf::RenderWindow& window, const Enemy& enemy)
-{
-    //--- These are the enemy health bar settings ---
-    const float barWidth = 20.0f;
-    const float barHeight = 4.0f;
-    const float barOffsetY = 30.0f;
-
-    float healthPercent = 0.0f;
-
-    if (enemy.getMaxHealth() > 0) //--- This a safety measure so that game doesnt try to divide by zero ---
-    {
-        healthPercent = static_cast<float>(enemy.getHealth()) / enemy.getMaxHealth();
-    }
-
-    //--- Here the setting of the bar will aplied for both the green front and red back bar ---
-    sf::RectangleShape backBar(sf::Vector2f(barWidth, barHeight));
-    backBar.setFillColor(sf::Color(120, 0, 0));
-    backBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
-    backBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
-    window.draw(backBar);
-
-    sf::RectangleShape frontBar(sf::Vector2f(barWidth * healthPercent, barHeight));
-    frontBar.setFillColor(sf::Color::Green);
-    frontBar.setOrigin(barWidth / 2.0f, barHeight / 2.0f);
-    frontBar.setPosition(enemy.getX(), enemy.getY() - barOffsetY);
-    frontBar.move(-(barWidth * (1.0f - healthPercent)) / 2.0f, 0.0f);
-    window.draw(frontBar);
-}
-
-void Level::spawnDeathFlash(const sf::Sprite& enemySprite, const sf::Texture& enemyTexture)
-{
-    FlashEffect flash;
-
-    flash.texture = enemyTexture;                //Here the texture is copied
-    flash.sprite = enemySprite;                  //Here the sprite is copied
-    flash.sprite.setTexture(flash.texture, false);//Here the texture is rebound to the sprite
-
-    flash.baseScale = enemySprite.getScale();
-    flash.timer = flash.duration;
-
-    flash.sprite.setColor(sf::Color(255, 220, 180, 255));
-
-    deathFlashes.push_back(flash);
-}
-
-void Level::updateEffects(float dt) 
-{
-    //--- This makes it so that the deathflash is like a copy of the enemy sprite ---
-    for (auto& flash : deathFlashes)
-    {
-        flash.timer -= dt;
-
-        float remaining = std::max(0.f, flash.timer);
-        float progress = 1.f - (remaining / flash.duration);
-
-        float alpha = (remaining / flash.duration) * 255.f;
-        flash.sprite.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(alpha)));
-
-        float scale = 1.f + progress * .5f;
-        flash.sprite.setScale(flash.baseScale.x * scale,flash.baseScale.y * scale);
-    }
-
-    // Cleanup for finished flashes
-    deathFlashes.erase(
-        std::remove_if(deathFlashes.begin(), deathFlashes.end(),
-            [](const FlashEffect& f)
-            {
-                return f.timer <= 0.f;
-            }),
-        deathFlashes.end()
-        );
-}
-
-void Level::drawEffects(sf::RenderWindow& window)
-{
-    for (const auto& flash : deathFlashes)
-    {
-      window.draw(flash.sprite);
-   }
-}
-
-// tower functions
-bool Level::placeTowerAt(float x, float y)
+// Tower Functions
+bool Level::placeTowerAt(float x, float y)//--- This handles the tower placing ---
 {
     if (!canPlaceTowerAt(x, y))
         return false;
 
-    if (money < towerCost)
+    if (money < towerCost) //-- This checks if the player has the correct amount for a tower --
         return false;
 
     towers.push_back(std::make_unique<Tower>(x, y, 100.0f, 1.0f, 3));
@@ -293,21 +305,21 @@ bool Level::placeTowerAt(float x, float y)
     return true;
 }
 
-bool Level::canPlaceTowerAt(float x, float y) const
+bool Level::canPlaceTowerAt(float x, float y) const//--- This checks if a tower can be placed ---
 {
-    if (money < towerCost)
+    if (money < towerCost) //-- Here it checks if the player has enough money --
         return false;
 
-    if (isTooCloseToPath(x, y))
+    if (isTooCloseToPath(x, y)) //-- Here it checks if the tower isn't to close to the path --
         return false;
 
-    if (isTooCloseToTower(x, y))
+    if (isTooCloseToTower(x, y))//-- Here it checks if the tower isn't to close to another tower --
         return false;
 
     return true;
 }
 
-bool Level::isTooCloseToPath(float x, float y) const
+bool Level::isTooCloseToPath(float x, float y) const//--- This function checks the location of path, so that we can check if a tower isn't too close to the path ---
 {
     const float minDistanceFromPath = 40.0f;
 
@@ -324,7 +336,7 @@ bool Level::isTooCloseToPath(float x, float y) const
     return false;
 }
 
-bool Level::isTooCloseToTower(float x, float y) const
+bool Level::isTooCloseToTower(float x, float y) const //--- This checks where another tower is ---
 {
     const float minTowerSpacing = 50.0f;
 
@@ -341,7 +353,7 @@ bool Level::isTooCloseToTower(float x, float y) const
     return false;
 }
 
-void Level::updateTowers(float dt)
+void Level::updateTowers(float dt)//--- This updates the towers every frame ---
 {
     for (auto& tower : towers)
     {
@@ -349,13 +361,13 @@ void Level::updateTowers(float dt)
     }
 }
 
-void Level::updateProjectiles(float dt)
+void Level::updateProjectiles(float dt)//--- This handles the projectiles shoot by towers ---
 {
     for (auto it = projectiles.begin(); it != projectiles.end();)
     {
         (*it)->update(dt);
 
-        if ((*it)->hasHitTarget())
+        if ((*it)->hasHitTarget()) //-- This checks whether a projectile has hit an enemy --
         {
             Enemy* target = (*it)->getTarget();
             if (target && target->isAlive() && !target->hasReachedGoal())
@@ -365,7 +377,7 @@ void Level::updateProjectiles(float dt)
 
             it = projectiles.erase(it);
         }
-        else if ((*it)->isExpired())
+        else if ((*it)->isExpired()) //-- This checks if a projectile should be deleted --
         {
             it = projectiles.erase(it);
         }
@@ -376,16 +388,16 @@ void Level::updateProjectiles(float dt)
     }
 }
 
-void Level::drawTowers(sf::RenderWindow& window)
+void Level::drawTowers(sf::RenderWindow& window)//--- Here all the tower drawing is handled ---
 {
-    //this draws the towers
+    //-- This draws the towers --
     for (const auto& tower : towers)
     {
         for (const auto& tower : towers)
         {
             float range = tower->getRange();
 
-            // --- Draw Tower Sprite ---
+            // -- Draw Tower Sprite --
             if (towerTexture.getSize().x > 0 && towerTexture.getSize().y > 0)
             {
                 sf::Sprite towerSprite;
@@ -394,13 +406,13 @@ void Level::drawTowers(sf::RenderWindow& window)
                 sf::FloatRect bounds = towerSprite.getLocalBounds();
                 towerSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
-                // Size Based on Range (with clamp to prevent too big/too smal towers)
+                //-- Size Based on Range (with clamp to prevent too big/too smal towers) --
                 float minSize = 80.f;
                 float maxSize = 120.f;
 
                 float desiredSize = range * 0.5f;
                 
-                // said clamp
+                //-- Said clamp --
                 desiredSize = std::max(minSize, std::min(maxSize, desiredSize));
                 
                 float scaleX = desiredSize / bounds.width;
@@ -413,7 +425,7 @@ void Level::drawTowers(sf::RenderWindow& window)
             }
             else
             {
-                // fallback incase texture fails
+                //-- Fallback incase texture fails --
                 float baseSize = std::max(10.f, range * .15f);
 
                 sf::CircleShape towerShape(baseSize);
@@ -427,15 +439,13 @@ void Level::drawTowers(sf::RenderWindow& window)
     }
 }
 
-void Level::drawProjectiles(sf::RenderWindow& window)
+void Level::drawProjectiles(sf::RenderWindow& window)    //--- Here the projectiles are being drawn ---
 {
-    // this is drawing the projectiles
     for (const auto& projectile : projectiles)
     {
         projectile->render(window);
     }
 }
-
 //Levels + Waves
 
 //--- Here all the levels are created ---
@@ -444,15 +454,13 @@ Level Level::createCitySmogLevel()
     LevelConfig cfg;
     cfg.name = "City Smog Defence";
     cfg.initialHealth = 50;
-    cfg.backgroundStages =
+    cfg.backgroundStages = //-- Here all the backgrounds are assigned so that they can change depending on enemy kills --
     { 
         "assets/Textures/Levels/city/city_stage_1.png",
         "assets/Textures/Levels/city/city_stage_2.png",
         "assets/Textures/Levels/city/city_stage_3.png",
         "assets/Textures/Levels/city/city_stage_4.png" 
     };
-
-    cfg.backgroundTexturePath = "assets/textures/levels/CityPolutionLevel.png";
 
     cfg.enemyPath = {
         {0.0f, 100.0f},
@@ -490,7 +498,7 @@ Level Level::createIndustrialLevel()
     cfg.name = "Industrial Waste";
     cfg.initialHealth = 40;
 
-    cfg.backgroundStages =
+    cfg.backgroundStages = //-- Here all the backgrounds are assigned so that they can change depending on enemy kills --
     {
         "assets/Textures/Levels/Waste/Industrial_stage_1.png",
         "assets/Textures/Levels/Waste/Industrial_stage_2.png",
@@ -539,7 +547,7 @@ Level Level::createHarborLevel()
 
     cfg.initialHealth = 25;
 
-    cfg.backgroundStages =
+    cfg.backgroundStages = //-- Here all the backgrounds are assigned so that they can change depending on enemy kills --
     {
         "assets/Textures/Levels/Harbor/harbor_stage_1.png",
         "assets/Textures/Levels/Harbor/harbor_stage_2.png",
@@ -588,7 +596,7 @@ Level Level::createToxicLevel()
 
     cfg.initialHealth = 40;
 
-    cfg.backgroundStages =
+    cfg.backgroundStages = //-- Here all the backgrounds are assigned so that they can change depending on enemy kills --
     {
         "assets/Textures/Levels/Toxic/river_stage_1.png",
         "assets/Textures/Levels/Toxic/river_stage_2.png",
@@ -655,7 +663,7 @@ Level Level::createMFactoryLevel()
 
     cfg.initialHealth = 25;
 
-    cfg.backgroundStages =
+    cfg.backgroundStages = //-- Here all the backgrounds are assigned so that they can change depending on enemy kills --
     {
         "assets/Textures/Levels/Factory/factory_stage_1.png",
         "assets/Textures/Levels/Factory/factory_stage_2.png",
@@ -736,12 +744,12 @@ Level Level::createMFactoryLevel()
     return Level(cfg);
 }
 
-bool Level::hasMoreWaves() const
+bool Level::hasMoreWaves() const //--- This is the function that checks ---
 {
     return currentWaveIndex < static_cast<int>(config.waves.size());
 }
 
-float Level::getNextSpawnCountdown() const
+float Level::getNextSpawnCountdown() const //--- This creates the countdown for the next wave if its needed ---
 {
     if (!hasMoreWaves())
         return 0.f;
@@ -759,24 +767,22 @@ float Level::getNextSpawnCountdown() const
 }
 
 //Textures
-bool Level::loadTextures()
+bool Level::loadTextures()//--- This handles all the textures that being needed in a level with the execption of the background ---
 {
-    //--- This handles all the textures that being needed in a level with the execption of the background ---
     bool ok = true;
 
-    //Enemy Textures 
+    //-- Enemy Textures --
     ok &= smogTexture.loadFromFile("assets/Textures/Enemies/Smog.png");
     ok &= plasticTexture.loadFromFile("assets/Textures/Enemies/Plastic.png");
     ok &= oilTexture.loadFromFile("assets/Textures/Enemies/Oil.png");
 
-    //TowerTextures
+    //-- TowerTextures --
     ok &= towerTexture.loadFromFile("assets/textures/towers/tower.png");
     ok &= projectileTexture.loadFromFile("assets/textures/towers/projectile.png");
     return ok;
 }
 
-bool Level::loadLevelVisual() {
-    //--- Here all the visual are assinged and being loaded in the levels ---
+bool Level::loadLevelVisual() { //--- Here all the visual are assinged and being loaded in the levels ---
     bool success = true;
 
     backgroundTextures.clear();
@@ -785,7 +791,7 @@ bool Level::loadLevelVisual() {
     backgroundTextures.reserve(config.backgroundStages.size());
     backgroundSprites.reserve(config.backgroundStages.size());
     
-    for (const auto& path : config.backgroundStages)
+    for (const auto& path : config.backgroundStages)//-- This loads the backgrounds in to the game --
         {
             sf::Texture tex;
             if (tex.loadFromFile(path))
@@ -798,7 +804,7 @@ bool Level::loadLevelVisual() {
                 success = false;
             }
         }
-    for (auto& tex : backgroundTextures)
+    for (auto& tex : backgroundTextures)//-- This sets the size for the backgrounds --
         {
             sf::Sprite sprite;
             sprite.setTexture(tex, true);
@@ -812,7 +818,7 @@ bool Level::loadLevelVisual() {
 
             backgroundSprites.push_back(sprite);
         }
-    //--- This handles the drawing of the projectiles ---
+    //-- This handles the drawing of the projectiles --
     if (!projectileTexture.loadFromFile("assets/textures/towers/projectile.png"))
     {
         success = false;
@@ -831,9 +837,8 @@ bool Level::loadLevelVisual() {
     return success;
 }
 
-const sf::Texture& Level::getEnemyTexture(EnemyType type) const
+const sf::Texture& Level::getEnemyTexture(EnemyType type) const //--- Here the each enemy gets different texture based on their type ---
 {
-    //--- Here the each enemy gets different texture based on their type ---
     switch (type)
     {
     case EnemyType::Smog:
@@ -847,10 +852,9 @@ const sf::Texture& Level::getEnemyTexture(EnemyType type) const
     }
 }
 
-void Level::drawBackground(sf::RenderWindow& window)
+void Level::drawBackground(sf::RenderWindow& window) //--- This function handles the backgrounds. It makes the background changed based on how many enemies are killed in a stage ---
 {    
-    //--- This function handles the backgrounds. It makes the background changed based on how many enemies are killed in a stage ---
-    if (backgroundSprites.empty()) //--- This is a fallback in case the textures fails to laod ---
+    if (backgroundSprites.empty()) //-- This is a fallback in case the textures fails to load --
     {
         sf::RectangleShape fallback(sf::Vector2f(1280.f, 720.f));
         fallback.setFillColor(sf::Color(255, 0, 255));
@@ -858,7 +862,7 @@ void Level::drawBackground(sf::RenderWindow& window)
         return;
     }
 
-    if (backgroundSprites.size() < 4)//--- This is a fallback so that for some reason there are less than 4 backgrounds, the correct one will be drawn
+    if (backgroundSprites.size() < 4)//-- This is a fallback so that for some reason there are less than 4 backgrounds, the correct one will still be drawn --
         { 
             window.draw(backgroundSprites[0]);
             return;
@@ -866,7 +870,7 @@ void Level::drawBackground(sf::RenderWindow& window)
 
     float progress = getCleunupProgress();
     
-    //--- This draws the final stage but only after all enemies are defeated ---
+    //-- This draws the final stage but only after all enemies are defeated --
     if (enemiesKilled >= totalEnemies && totalEnemies > 0)
         {
             sf::Sprite finalStage = backgroundSprites[3];
@@ -878,7 +882,7 @@ void Level::drawBackground(sf::RenderWindow& window)
     sf::Sprite base;
     sf::Sprite overlay;
 
-    //--- The fade from stage 0 -> 1 in the first half of a level ---
+    //-- The fade from stage 0 -> 1 in the first half of a level --
     if (progress < .5f)
       {
         float localAlpha = progress / .5f;
@@ -893,10 +897,10 @@ void Level::drawBackground(sf::RenderWindow& window)
         window.draw(overlay);
       }
 
-    //--- The fade from stage 1 -> 2 in the second half of a level ---
+    //-- The fade from stage 1 -> 2 in the second half of a level --
     else
     {
-        float localAlpha = (progress - 0.5f) / 0.5f; // maps 0.5-1.0 to 0.0-1.0
+        float localAlpha = (progress - 0.5f) / 0.5f;
 
         base = backgroundSprites[1];
         overlay = backgroundSprites[2];
@@ -911,9 +915,9 @@ void Level::drawBackground(sf::RenderWindow& window)
 }
 
 int Level::getBackgroundStage() const
-{
-    //--- This function counts how many enemies are in a stage and how many are killed.
-    //    The returned number is then used to change the backgroud. ---
+{    //--- This function counts how many enemies are in a stage and how many are killed.
+     //    The returned number is then used to change the backgroud. ---
+
     if (totalEnemies == 0)
         return 0;
 
@@ -928,24 +932,10 @@ int Level::getBackgroundStage() const
         return 1;
 }
 
-float Level::getCleunupProgress() const
+float Level::getCleunupProgress() const //--- This is the cleanup procces for the enemies killed ---
 {
     if (totalEnemies == 0)
         return 0.f;
 
     return static_cast<float>(enemiesKilled) / totalEnemies;
-}
-
-sf::Color Level::getPathColor() const
-{
-    if (config.name == "City Smog Defence")
-        return sf::Color(120, 120, 120);
-    if (config.name == "Industrial Waste")
-        return sf::Color(50, 151, 129);
-    if (config.name == "Harbor Polution")
-        return sf::Color(140, 100, 60);
-    if (config.name == "Toxic River")
-        return sf::Color(80, 200, 80);
-    if (config.name == "Mega Factory")
-        return sf::Color(90, 90, 90);
 }

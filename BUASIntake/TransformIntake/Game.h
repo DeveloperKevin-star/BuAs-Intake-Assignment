@@ -4,7 +4,7 @@
 #include "Level.h"
 #include <memory>
 
-// these are the game state for the state machines
+//--- Here the gamestates are created ---
 enum class GameState
 {
     MainMenu,
@@ -14,31 +14,31 @@ enum class GameState
     Defeat
 };
 
-//this is base game
+//--- Here all the constructers, variables and functions are created for the base game to run ---
 class Game
 {
 public:
+    //-- Base Functions --
     Game();
     bool init();
     void run();
     void quit() { running = false; }
 
 private:
+    //-- Base Functions --
+    bool running = false;
     void handleInput();
     void update(float dt);
     void render();
     void setupLevels();
 
-    void setMainMenuBackground();
-    void setVictoryBackground();
-    
 
-    //State Machine
+    //-- State Machine --
     GameState currentState = GameState::MainMenu;
     InputState inputState;
 
 
-    //Butttons
+    //-- Butttons --
     sf::RectangleShape startButton;
     sf::RectangleShape exitButton;
     sf::RectangleShape retryButton;
@@ -54,28 +54,25 @@ private:
     void centerTextInButton(sf::Text& text, const sf::RectangleShape& button);
 
 
-    // Level Transistion
+    //-- Level Transistion --
+    sf::Text transitionText;
+    std::vector<std::unique_ptr<Level>> levels;
     bool isTransitioning = false;
     float transistionTimer = 0.f; 
     float transitionDuration = 2.f; 
-    sf::Text transitionText;
-
+    int currentLevelIndex = 0;
     int carryoverMoney = 0;
     
 
-    // rendering
+    //-- Rendering --
     sf::RenderWindow window;
-
     sf::Font font;
     sf::Text hudText;
     sf::Text waveText;
 
-    bool running = false;
-    std::vector<std::unique_ptr<Level>> levels;
-    int currentLevelIndex = 0;
-
 
     //Menu Members
+    void setMainMenuBackground();
     sf::Text titleText;
     sf::Text menuText;
     sf::Text endScreenText;
@@ -83,6 +80,7 @@ private:
     sf::Sprite menuBackgroundSprite;
 
     //Victory Memebers
+    void setVictoryBackground();
     sf::Texture victoryBackgroundTexture;
     sf::Sprite victoryBackgroundSprite;
 };
